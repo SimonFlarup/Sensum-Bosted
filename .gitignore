@@ -1,4 +1,6 @@
 nbproject/private/
+nbproject/jfx-impl_*.xml
+nbproject/*.txt
 build/
 nbbuild/
 dist/
