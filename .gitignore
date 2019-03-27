@@ -6,3 +6,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+src/data/Assignments/*
+src/data/Diary/*
+src/data/Patients/*
+src/data/User/*
