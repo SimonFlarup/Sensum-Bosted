@@ -99,11 +99,11 @@ public class CRUDFacade implements CRUDInterface {
     }
 
     @Override
-    public void update(Tables table, UUID id, Map<Enum, String> data, User user) {
-        HashMap<Enum, String> currentData = readFromKey(table, id, user);
+    public void update(Tables table, UUID primaryKey, Map<Enum, String> data, User user) {
+        HashMap<Enum, String> currentData = readFromKey(table, primaryKey, user);
         currentData.putAll(data);
-        if (id != null) {
-            currentData.put(Fields.ID, id.toString());
+        if (primaryKey != null) {
+            currentData.put(Fields.ID, primaryKey.toString());
         } else if (!isUUID(data.get(Fields.ID))) {
             System.out.println("Invalid UUID");
             return;

@@ -18,7 +18,8 @@ public interface CRUDInterface {
     //Create (C)
     public void create(Tables table, Map<Enum, String> data, User user);
     //Read (R)
-    public HashMap<Enum, String> readFromKey(Tables table, UUID primaryKey, User user);  
+    public HashMap<Enum, String> readFromKey(Tables table, UUID primaryKey, User user);
+    public HashMap<Enum, String>[] readAll(Tables table, User user);
     //Update (U)
-    public void update(Tables table, UUID id, Map<Enum, String> data, User user);
+    public void update(Tables table, UUID primaryKey, Map<Enum, String> data, User user);
 }
