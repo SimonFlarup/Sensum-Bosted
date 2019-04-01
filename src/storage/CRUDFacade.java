@@ -34,12 +34,20 @@ public class CRUDFacade implements CRUDInterface {
         }
     }
 
+    private void createDir(Tables table) {
+        File dir = new File(table.getPath());
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+    }
+
     @Override
     public void create(Tables table, Map<Enum, String> data, User user) {
         if (!isUUID(data.get(Fields.ID))) {
             System.out.println("Invalid UUID");
             return;
         }
+        createDir(table);
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(table.getPath() + data.get(Fields.ID) + ".sbdf"))) {
             out.writeObject(data);
             out.flush();
