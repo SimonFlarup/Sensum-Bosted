@@ -43,8 +43,8 @@ public interface SensumInterface {
     
      /**
      * 
-     * @param diaryId id of the diary from wich the entries are acquired.
-     * @return Map with Enum as key along with the entries.
+     * @param diaryId id of the diary from which the entries are acquired.
+     * @return Map with Enum as key along with the entries for the diary.
      */
     public Map<Enum, String> getDiaryEntries(UUID diaryId);
     
@@ -58,7 +58,7 @@ public interface SensumInterface {
     /**
      * 
      * @param diaryId id of the diary where data is saved.
-     * @param data 
+     * @param data Map with enum as key and a String with the data to be saved.
      * @return true if the diary was saved successfully.
      */
     public boolean saveDiary(UUID diaryId, Map<Enum, String> data);
