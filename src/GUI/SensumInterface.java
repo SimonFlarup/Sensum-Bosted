@@ -20,7 +20,7 @@ public interface SensumInterface {
      * 
      * @return Map containing UUIDs of all patients along with the associated names
      */
-    public Map<UUID, String> getPatientList();
+    public Map<UUID, String> getPatientMap();
     
     /**
      * 
