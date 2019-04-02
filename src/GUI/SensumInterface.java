@@ -27,7 +27,7 @@ public interface SensumInterface {
      * @param patientId id of patient from which the diaries are acquired
      * @return Map containing dates of all diaries along with the associated description (i.e. notes)
      */
-    public Map<Date, String> getDiaryList(UUID patientId);
+    public Map<Date, String> getDiaryMap(UUID patientId);
     
     /**
      * 
