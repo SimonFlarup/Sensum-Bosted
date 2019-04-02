@@ -44,10 +44,26 @@ public interface SensumInterface {
     
     public Map<Enum, String> getDiaryEntries(UUID diaryId);
     
+    /**
+     * 
+     * @param diaryId id of diary to be locked.
+     * @return true if the diary is locked successfully.
+     */
     public boolean lockDiary(UUID diaryId);
     
+    /**
+     * 
+     * @param diaryId id of the diary where data is saved.
+     * @param data 
+     * @return true if the diary was saved successfully.
+     */
     public boolean saveDiary(UUID diaryId, Map<Enum, String> data);
     
+    /**
+     * 
+     * @param diaryId id of diary to be unlocked.
+     * @return true if the diary is unlocked successfully.
+     */
     public boolean unlockDiary(UUID diaryId);
     
     /**
