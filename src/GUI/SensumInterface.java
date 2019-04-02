@@ -41,7 +41,7 @@ public interface SensumInterface {
      */
     public Map<Date, UUID> getDiariesMap(UUID patientId);
     
-        /**
+     /**
      * 
      * @param diaryId id of the diary from wich the entries are acquired.
      * @return Map with Enum as key along with the entries.
