@@ -8,7 +8,6 @@ package GUI;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
-import javafx.scene.image.Image;
 
 /**
  *
@@ -31,7 +30,7 @@ public interface SensumInterface {
     /**
      * 
      * @param patientId id of patient from which the data is acquired.
-     * @return a map with Enum as key along with the associated patient data.
+     * @return Map with Enum as key along with the associated patient data.
      */
     public Map<Enum, String> getPatientsData(UUID patientId);
     
@@ -42,6 +41,11 @@ public interface SensumInterface {
      */
     public Map<Date, UUID> getDiariesMap(UUID patientId);
     
+        /**
+     * 
+     * @param diaryId id of the diary from wich the entries are acquired.
+     * @return Map with Enum as key along with the entries.
+     */
     public Map<Enum, String> getDiaryEntries(UUID diaryId);
     
     /**
