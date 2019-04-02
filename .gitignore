@@ -1,6 +1,9 @@
 nbproject/private/
+nbproject/jfx-impl_*.xml
+nbproject/*.txt
 build/
 nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+src/data/*
