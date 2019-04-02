@@ -18,51 +18,43 @@ public interface SensumInterface {
     
     /**
      * 
-     * @return Map containing UUIDs of all patients along with the associated names
+     * @return Map containing Enum as key along with the associated user description.
      */
-    public Map<UUID, String> getPatientMap();
+    public Map<Enum, String> getUserData();
     
     /**
      * 
-     * @param patientId id of patient from which the diaries are acquired
-     * @return Map containing dates of all diaries along with the associated description (i.e. notes)
+     * @return Map containing UUIDs of all patients along with the associated names.
      */
-    public Map<Date, String> getDiaryMap(UUID patientId);
+    public Map<UUID, String> getPatientsMap();
     
     /**
      * 
-     * @param patientId id of patient from which the civil registration number is acquired
-     * @return String containing the CPR-number
+     * @param patientId id of patient from which the data is acquired.
+     * @return a map with Enum as key along with the associated patient data.
      */
-    public String getCpr(UUID patientId);
+    public Map<Enum, String> getPatientsData(UUID patientId);
     
     /**
      * 
-     * @param patientId id of patient from which the image is acquired
-     * @return image of the patient
+     * @param patientId id of patient from which the diaries are acquired.
+     * @return Map containing dates of all diaries along with the associated id.
      */
-    public Image getPatientImage(UUID patientId);
+    public Map<Date, UUID> getDiariesMap(UUID patientId);
+    
+    public Map<Enum, String> getDiaryEntries(UUID diaryId);
+    
+    public boolean lockDiary(UUID diaryId);
+    
+    public boolean saveDiary(UUID diaryId, Map<Enum, String> data);
+    
+    public boolean unlockDiary(UUID diaryId);
     
     /**
      * 
-     * @param patientId id of patient from which the info is acquired
-     * @return String containing patient info
+     * @param patientId id of patient the diary belongs to.
+     * @return id of the diary.
      */
-    public String getPatientInfo(UUID patientId);
-    
-    /**
-     * 
-     * @param patientID id of patient the diary belongs to
-     * @param date date associated with the diary
-     * @return true if the save was successful
-     */
-    public Boolean saveDiary(UUID patientID, Date date);
-    
-    /**
-     * 
-     * @param patientID id of patient the diary belongs to
-     * @return the current date
-     */
-    public Date createDiary(UUID patientID);
+    public UUID createDiary(UUID patientId);
     
 }
