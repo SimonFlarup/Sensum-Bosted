@@ -11,10 +11,14 @@ package sensum_bosted;
  */
 public enum UserRoles {
     PATIENT,
-    CARETAKER_DRUG,
+    PATIENT_DRUG,
+    PATIENT_BOTH,
     CARETAKER,
-    CASEWORKER_DRUG,
+    CARETAKER_DRUG,
+    CARETAKER_BOTH,
     CASEWORKER,
+    CASEWORKER_DRUG,
+    CASEWORKER_BOTH,
     PRIVILEGED,
     ADMINISTRATOR;
 }

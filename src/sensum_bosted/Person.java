@@ -15,9 +15,9 @@ public abstract class Person {
     private String name;
     private String username;
     private String password;
-    private Field field;
+    private UserRoles field;
 
-    public Person(String name, String username, String password, Field field) {
+    public Person(String name, String username, String password, UserRoles field) {
         this.name = name;
         this.username = username;
         this.password = password;

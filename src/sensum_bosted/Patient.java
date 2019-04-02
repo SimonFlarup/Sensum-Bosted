@@ -14,7 +14,7 @@ public class Patient extends Person {
     
     private String cpr; 
 
-    public Patient(String name, String username, String password, Field field, String cpr) {
+    public Patient(String name, String username, String password, UserRoles field, String cpr) {
         super(name, username, password, field);
         this.cpr = cpr;
     }

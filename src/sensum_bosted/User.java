@@ -13,21 +13,18 @@ import java.util.List;
  */
 public class User extends Person{
     
-    //private List<Patient> patients;
+    private List<Patient> patients;
     
-    //public User(String name, String username, String password, Field field, List<Patient> patients) {
-    public User(String name, String username, String password) {
-        super(name, username, password);
-        
-        //this.patients = patients;
+    public User(String name, String username, String password, UserRoles field) {
+        super(name, username, password, field);
     }
 
-    /*public List<Patient> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
     public void setPatients(List<Patient> patients) {
         this.patients = patients;
-    }*/
+    }
     
 }
