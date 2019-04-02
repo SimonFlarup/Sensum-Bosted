@@ -7,10 +7,21 @@ package sensum_bosted;
 
 /**
  *
- * @author simon
+ * @author Ryge
  */
-class Person {
-    public Person(String name, String username, String password){
-        
+public abstract class Person {
+
+    //Attributes
+    private String name;
+    private String username;
+    private String password;
+    private Field field;
+
+    public Person(String name, String username, String password, Field field) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.field = field;
     }
+
 }
