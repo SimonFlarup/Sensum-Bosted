@@ -11,7 +11,6 @@ package sensum_bosted;
  */
 public class Patient extends Person {
     
-    
     private String cpr; 
 
     public Patient(String name, String username, String password, UserRoles field, String cpr) {

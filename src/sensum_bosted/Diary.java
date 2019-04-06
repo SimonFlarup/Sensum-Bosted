@@ -15,5 +15,26 @@ import java.util.List;
 public class Diary {
     private Date date;
     private List<Notation> notations;
+
+    public Diary(Date date, List<Notation> notations) {
+        this.date = date;
+        this.notations = notations;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public List<Notation> getNotations() {
+        return notations;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setNotations(List<Notation> notations) {
+        this.notations = notations;
+    }
     
 }

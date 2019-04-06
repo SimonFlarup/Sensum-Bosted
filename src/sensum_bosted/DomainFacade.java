@@ -7,12 +7,11 @@ package sensum_bosted;
 
 /**
  *
- * @author Ryge
+ * @author jakob
  */
-public class Notation {
-    private String entry;
-
-    public Notation(String entry) {
-        this.entry = entry;
-    } 
+public class DomainFacade {
+    
+    public static void main(String[] args) {
+        
+    }
 }

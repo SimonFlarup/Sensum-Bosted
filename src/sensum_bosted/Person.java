@@ -24,4 +24,20 @@ public abstract class Person {
         this.field = field;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserRoles getField() {
+        return field;
+    }
+
 }
