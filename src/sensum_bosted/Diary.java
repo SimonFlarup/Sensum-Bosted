@@ -16,8 +16,7 @@ public class Diary {
     private Date date;
     private List<Notation> notations;
 
-    public Diary(Date date, List<Notation> notations) {
-        this.date = date;
+    public Diary(List<Notation> notations) {
         this.notations = notations;
     }
 

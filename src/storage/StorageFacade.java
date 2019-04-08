@@ -5,9 +5,16 @@
  */
 package storage;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sensum_bosted.Diary;
+import sensum_bosted.Notation;
 import sensum_bosted.Patient;
 import sensum_bosted.User;
 import sensum_bosted.UserRoles;
@@ -36,13 +43,14 @@ public class StorageFacade implements StorageInterface {
 
     @Override
     public boolean setPatient(UUID id, Patient data) {
+
         /*Convert object to two hashmaps (Patient and User)
         **Make sure it's not already set for both (Do it for patient, then do it again for user)
         **If so
         **Use create with the hashmap
         **If not
         **Use update with the hashmap
-        */
+         */
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -66,14 +74,51 @@ public class StorageFacade implements StorageInterface {
         **Use create with the hashmap
         **If not
         **Use update with the hashmap
-        */
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         */
+
+        HashMap<Enum, String> map = new HashMap<>();
+        map.put(Fields.UserFields.NAME, data.getName());
+        map.put(Fields.UserFields.PASSWORD, data.getPassword());
+        map.put(Fields.UserFields.USERNAME, data.getUsername());
+        map.put(Fields.UserFields.USERROLES, data.getField().toString());
+        map.put(Fields.ID, data.getId().toString());
+
+        if (CRUD.readFromKey(Tables.USERS, id, null) == null) {
+            CRUD.create(Tables.USERS, map, null);
+            return true;
+        } else {
+            CRUD.update(Tables.USERS, id, map, null);
+            return true;
+        }
     }
 
     @Override
-    public Diary getDiary(UUID id) {
-        //public Diary(Date date, List<Notation> notations) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Diary getDiary(UUID patientId) {
+        //    public Notation(String content, Date date, Notation.Field field) {
+        HashMap<Enum, String>[] array = CRUD.readAll(Tables.NOTATIONS, null);
+        ArrayList<Notation> notations = new ArrayList<>();
+        for (int i = 0; i < array.length; i++) {
+            if (patientId.toString().equals(array[i].get(Fields.NotationFields.PATIENTID))) {
+                String content = array[i].get(Fields.NotationFields.CONTENT);
+                String sDate = array[i].get(Fields.NotationFields.DATE);
+
+                Date date;
+                try {
+                    date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+                } catch (ParseException ex) {
+                    System.out.println("Parse expection while parsing to date");
+                    return null;
+                }
+
+                Notation.Field field = Notation.Field.valueOf(array[i].get(Fields.NotationFields.FIELD));
+
+                Notation notation = new Notation(content, date, field);
+                notations.add(notation);
+            }
+        }
+        Diary diary = new Diary(notations);
+
+        return diary;
     }
 
     @Override

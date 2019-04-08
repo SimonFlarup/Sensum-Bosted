@@ -5,16 +5,25 @@
  */
 package sensum_bosted;
 
+import java.util.Date;
+
 /**
  *
  * @author Ryge
  */
 public class Notation {
-    private String entry;
+    private String content;
+    private Date date;
+    private Field field;
     //Date
     //Field <- Område
 
-    public Notation(String entry) {
-        this.entry = entry;
+    public Notation(String content, Date date, Notation.Field field) {
+        this.content = content;
     } 
+    
+    public static enum Field {
+        DISABLED,
+        DRUG;
+    }
 }

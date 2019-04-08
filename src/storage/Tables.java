@@ -12,7 +12,7 @@ package storage;
 public enum Tables {
     USERS(".//src//data//User//"),
     PATIENTS(".//src//data//Patients//"),
-    DIARIES(".//src//data//Diary//"),
+    NOTATIONS(".//src//data//Notations//"),
     ASSIGNMENTS(".//src//data//Assignment//");
 
     private String path;
