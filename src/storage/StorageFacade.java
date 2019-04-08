@@ -36,6 +36,13 @@ public class StorageFacade implements StorageInterface {
 
     @Override
     public boolean setPatient(UUID id, Patient data) {
+        /*Convert object to two hashmaps (Patient and User)
+        **Make sure it's not already set for both (Do it for patient, then do it again for user)
+        **If so
+        **Use create with the hashmap
+        **If not
+        **Use update with the hashmap
+        */
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -53,11 +60,19 @@ public class StorageFacade implements StorageInterface {
 
     @Override
     public boolean setUser(UUID id, User data) {
+        /*Convert object to hashmap
+        **Make sure it's not already set
+        **If so
+        **Use create with the hashmap
+        **If not
+        **Use update with the hashmap
+        */
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Diary getDiary(UUID id) {
+        //public Diary(Date date, List<Notation> notations) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
