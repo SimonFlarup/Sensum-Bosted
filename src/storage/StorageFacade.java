@@ -122,7 +122,7 @@ public class StorageFacade implements StorageInterface {
     }
 
     @Override
-    public boolean setDiary(UUID id, Diary data) {
+    public boolean setNotation(UUID id, Notation data) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
