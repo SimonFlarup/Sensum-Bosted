@@ -22,14 +22,14 @@ public enum Fields {
     public enum PatientFields {
         NAME,
         CPR,
-        FIELDS,
         GENERAL_INFO;
     }
 
     public enum UserFields {
         USERROLES,
         USERNAME,
-        PASSWORD;
+        PASSWORD,
+        NAME;
     }
     
     public enum AssignmentFields {
