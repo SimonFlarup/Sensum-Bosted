@@ -11,6 +11,8 @@ package sensum_bosted;
  */
 public class Notation {
     private String entry;
+    //Date
+    //Field <- Område
 
     public Notation(String entry) {
         this.entry = entry;
