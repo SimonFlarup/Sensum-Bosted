@@ -20,7 +20,6 @@ public enum Fields {
     }
 
     public enum PatientFields {
-        NAME,
         CPR,
         GENERAL_INFO;
     }

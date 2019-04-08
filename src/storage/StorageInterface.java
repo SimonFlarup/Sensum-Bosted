@@ -21,13 +21,13 @@ public interface StorageInterface {
     //getDiary | Set
     //getNotation | Set
     public Patient getPatient(UUID id);
-    public boolean setPatient(UUID id, Patient data);
+    public boolean setPatient(Patient data);
     
     public User getUser(UUID id);
-    public boolean setUser(UUID id, User data);
+    public boolean setUser(User data);
     
     public Diary getDiary(UUID patientId);
-    public boolean setNotation(UUID id, Notation data);
+    public boolean setNotation(UUID patientId, Notation data);
     
     //public Notation getNotation(UUID id);
     //public boolean setNotation(UUID id, Notation data);

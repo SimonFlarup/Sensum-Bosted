@@ -6,6 +6,7 @@
 package sensum_bosted;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -15,8 +16,8 @@ public class User extends Person{
     
     private List<Patient> patients;
     
-    public User(String name, String username, String password, UserRoles field) {
-        super(name, username, password, field);
+    public User(String name, String username, String password, UserRoles field, UUID id) {
+        super(name, username, password, field, id);
     }
 
     public List<Patient> getPatients() {
