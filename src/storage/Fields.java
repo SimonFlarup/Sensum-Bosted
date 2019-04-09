@@ -12,29 +12,28 @@ package storage;
 public enum Fields {
     ID;
 
-    public static enum DiaryFields {
-        PATIENT,
+    public enum NotationFields {
         DATE,
-        DRUG_ENTRY,
-        DISABLED_ENTRY;
+        CONTENT,
+        FIELD,
+        PATIENTID;
     }
 
     public enum PatientFields {
-        NAME,
         CPR,
-        FIELDS,
         GENERAL_INFO;
     }
 
     public enum UserFields {
         USERROLES,
         USERNAME,
-        PASSWORD;
+        PASSWORD,
+        NAME;
     }
     
     public enum AssignmentFields {
         PATIENT_ID,
         USER_ID,
-        PATIENT_NAME; //Redundant information introduced to save implementing a psudo join.
+        PATIENT_NAME; //Redundant information introduced to save implementing a psuedo join.
     }
 }
