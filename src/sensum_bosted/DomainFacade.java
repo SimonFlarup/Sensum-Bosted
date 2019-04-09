@@ -9,6 +9,8 @@ import GUI.SensumInterface;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
+import storage.StorageFacade;
+import storage.StorageInterface;
 
 /**
  *
@@ -16,13 +18,26 @@ import java.util.UUID;
  */
 public class DomainFacade implements SensumInterface {
     
+    private User user;
+    private Patient patient;
+    private Diary diary;
+    private StorageInterface sf = new StorageFacade();
+
+    public DomainFacade() {
+        user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
+    }
+    
+    
+    
     public static void main(String[] args) {
         
     }
 
     @Override
     public String getUserName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        return name;
     }
 
     @Override
@@ -37,7 +52,7 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public String getPatientName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
