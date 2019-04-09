@@ -9,6 +9,24 @@ package sensum_bosted;
  *
  * @author simon
  */
-public class Sensum_Bosted {
+
+public class Sensum_Bosted extends Application {
     
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    /* public static void main(String[] args) {
+        launch(args);
+    }
+    */
 }
