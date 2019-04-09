@@ -14,6 +14,9 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import sensum_bosted.Patient;
+import sensum_bosted.User;
+import sensum_bosted.UserRoles;
 
 /**
  *
@@ -22,7 +25,41 @@ import java.util.UUID;
 public class TEST {
 
     public static void main(String[] args) throws Exception {
-        Map<Enum, String> map;
+        //public Patient(String name, String username, String password, UserRoles field, String cpr, String info, UUID id) {
+        String name = "Jonas";
+        String username = "jona";
+        String password = "xxx";
+        String cpr = "291298-xxxx";
+        String info = "It's a boy! Maybe";
+        UserRoles field = UserRoles.PATIENT_BOTH;
+        UUID id = UUID.randomUUID();
+        Patient p1 = new Patient(name, username, password, field, cpr, info, id);
+        name = "Marie";
+        username = "Mari";
+        password = "xxx";
+        cpr = "010101-xxxx";
+        info = "It's a girl! Maybe";
+        field = UserRoles.PATIENT_BOTH;
+        id = UUID.randomUUID();
+        Patient p2 = new Patient(name, username, password, field, cpr, info, id);
+        
+        //public User(String name, String username, String password, UserRoles field, Map<UUID, String> patients, UUID id) {
+        name = "Erik";
+        username = "erso";
+        password = "xxx";
+        field = UserRoles.CARETAKER_BOTH;
+        HashMap<UUID, String> map = new HashMap<>();
+        id = UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5");
+        map.put(p1.getId(), p1.getName());
+        map.put(p2.getId(), p2.getName());
+        User user = new User(name, username, password, field, map, id);
+        StorageInterface storage = new StorageFacade();
+        storage.setUser(user);
+        storage.setPatient(p1);
+        storage.setPatient(p2);
+        storage.setAssignment(id, p1.getId());
+        storage.setAssignment(id, p2.getId());
+        /*Map<Enum, String> map;
         map = new HashMap<>();
         UUID id = UUID.randomUUID();
         map.put(Fields.PatientFields.NAME, "Ida-Marie");
@@ -55,6 +92,6 @@ public class TEST {
             for (Map.Entry<Enum, String> entry : singleMap.entrySet()) {
                 System.out.println("Key = " + entry.getKey().toString() + ", Value = " + entry.getValue());
             }
-        }
+        }*/
     }
 }

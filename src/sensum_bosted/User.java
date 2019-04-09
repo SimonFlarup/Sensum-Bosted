@@ -5,7 +5,7 @@
  */
 package sensum_bosted;
 
-import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -14,17 +14,17 @@ import java.util.UUID;
  */
 public class User extends Person{
     
-    private List<Patient> patients;
+    private Map<UUID, String> patients;
     
-    public User(String name, String username, String password, UserRoles field, UUID id) {
+    public User(String name, String username, String password, UserRoles field, Map<UUID, String> patients, UUID id) {
         super(name, username, password, field, id);
     }
 
-    public List<Patient> getPatients() {
+    public Map<UUID, String> getPatients() {
         return patients;
     }
 
-    public void setPatients(List<Patient> patients) {
+    public void setPatients(Map<UUID, String> patients) {
         this.patients = patients;
     }
     

@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,6 +62,7 @@ public class StorageFacade implements StorageInterface {
         HashMap<Enum, String> patientMap = new HashMap<>();
         patientMap.put(Fields.PatientFields.CPR, data.getCpr());
         patientMap.put(Fields.PatientFields.GENERAL_INFO, data.getInfo());
+        patientMap.put(Fields.ID, data.getId().toString());
 
         if (CRUD.readFromKey(Tables.PATIENTS, id, null) == null) {
             CRUD.create(Tables.PATIENTS, patientMap, null);
@@ -78,7 +80,16 @@ public class StorageFacade implements StorageInterface {
         String username = userMap.get(Fields.UserFields.USERNAME);
         String password = userMap.get(Fields.UserFields.PASSWORD);
         UserRoles field = UserRoles.valueOf(userMap.get(Fields.UserFields.USERROLES));
-        User user = new User(name, username, password, field, id);
+        HashMap<Enum, String>[] assignments = CRUD.readAll(Tables.ASSIGNMENTS, null);
+        Map<UUID, String> map = new HashMap<>();
+        for(HashMap<Enum, String> assignment : assignments){
+            if(assignment.get(Fields.AssignmentFields.USER_ID).equals(id.toString())){
+                String patientName = assignment.get(Fields.AssignmentFields.PATIENT_NAME);
+                UUID patientId = UUID.fromString(assignment.get(Fields.AssignmentFields.PATIENT_ID));
+                map.put(patientId, patientName);
+            }
+        }
+        User user = new User(name, username, password, field, map, id);
         return user;
     }
 
@@ -145,6 +156,19 @@ public class StorageFacade implements StorageInterface {
             CRUD.update(Tables.NOTATIONS, id, map, null);
             return true;
         }
+    }
+
+    @Override
+    public boolean setAssignment(UUID userId, UUID patientId) {
+        String name = CRUD.readFromKey(Tables.USERS, patientId, null).get(Fields.UserFields.NAME);
+        Map<Enum, String> map = new HashMap<>();
+        map.put(Fields.AssignmentFields.PATIENT_ID, patientId.toString());
+        map.put(Fields.AssignmentFields.PATIENT_NAME, name);
+        map.put(Fields.AssignmentFields.USER_ID, userId.toString());
+        map.put(Fields.ID, UUID.randomUUID().toString());
+        System.out.println(patientId.toString() + " : " + userId.toString());
+        CRUD.create(Tables.ASSIGNMENTS, map, null);
+        return true;
     }
 
 }
