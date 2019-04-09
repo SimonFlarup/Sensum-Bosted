@@ -31,6 +31,8 @@ public class CRUDFacade implements CRUDInterface {
             return true;
         } catch (IllegalArgumentException ex) {
             return false;
+        } catch (NullPointerException ex) {
+            return false;
         }
     }
 
