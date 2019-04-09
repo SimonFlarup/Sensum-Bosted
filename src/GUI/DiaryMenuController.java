@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -22,13 +23,15 @@ import javafx.scene.input.MouseEvent;
 public class DiaryMenuController implements Initializable {
 
     @FXML
-    private ListView<?> diaryList;
-    @FXML
     private Button backButton;
     @FXML
     private Button editButton;
     @FXML
-    private Button newDiaryButton;
+    private ListView<?> notationList;
+    @FXML
+    private TextArea notationText;
+    @FXML
+    private Button newNotationButton;
 
     /**
      * Initializes the controller class.
@@ -40,20 +43,21 @@ public class DiaryMenuController implements Initializable {
         // TODO
     }    
 
-    @FXML
-    private void openDiary(MouseEvent event) {
-    }
 
     @FXML
     private void goBack(ActionEvent event) {
     }
 
     @FXML
-    private void editDiary(ActionEvent event) {
+    private void openNotation(MouseEvent event) {
     }
 
     @FXML
-    private void createNewDiary(ActionEvent event) {
+    private void editNotation(ActionEvent event) {
+    }
+
+    @FXML
+    private void createNewNotation(ActionEvent event) {
     }
     
 }

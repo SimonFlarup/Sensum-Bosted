@@ -14,67 +14,89 @@ import java.util.UUID;
  * @author KV
  */
 public interface SensumInterface {
-    
+
     /**
-     * 
-     * @return Map containing Enum as key along with the associated user description.
+     *
+     * @return String with the users name.
      */
-    public Map<Enum, String> getUserData();
-    
+    public String getUserName();
+
     /**
-     * 
-     * @return Map containing UUIDs of all patients along with the associated names.
+     *
+     * @return Map containing UUIDs of all patients along with the associated
+     * names.
      */
     public Map<UUID, String> getPatientsMap();
-    
+
     /**
-     * 
-     * @param patientId id of patient from which the data is acquired.
-     * @return Map with Enum as key along with the associated patient data.
+     *
+     * @param patientId
+     * @return
      */
-    public Map<Enum, String> getPatientsData(UUID patientId);
-    
+    public UUID initializePatient(UUID patientId);
+
     /**
-     * 
-     * @param patientId id of patient from which the diaries are acquired.
+     *
+     * @return String with the patients name.
+     */
+    public String getPatientName();
+
+    /**
+     *
+     * @return String with patients CPR.
+     */
+    public String getPatientCPR();
+
+    /**
+     *
+     * @return String with path to patient image.
+     */
+    public String getPatientImage();
+
+    /**
+     *
+     * @return String with the general information about the patient.
+     */
+    public String getPatientInfo();
+
+    /**
+     *
      * @return Map containing dates of all diaries along with the associated id.
      */
-    public Map<Date, UUID> getDiariesMap(UUID patientId);
-    
-     /**
-     * 
-     * @param diaryId id of the diary from which the entries are acquired.
+    public Map<Date, UUID> getNotationsMap();
+
+    /**
+     *
+     * @return id of the diary.
+     */
+    public UUID initializeDiary();
+
+    /**
+     *
+     * @param notationId id of the notation you want to acquire.
      * @return Map with Enum as key along with the entries for the diary.
      */
-    public Map<Enum, String> getDiaryEntries(UUID diaryId);
-    
+    public String getNotation(UUID notationId);
+
     /**
-     * 
+     *
      * @param diaryId id of diary to be locked.
      * @return true if the diary is locked successfully.
      */
-    public boolean lockDiary(UUID diaryId);
+    //public boolean lockDiary(UUID diaryId);
     
     /**
-     * 
+     *
      * @param diaryId id of the diary where data is saved.
      * @param data Map with enum as key and a String with the data to be saved.
      * @return true if the diary was saved successfully.
      */
-    public boolean saveDiary(UUID diaryId, Map<Enum, String> data);
-    
+    //public boolean saveDiary(UUID diaryId, Map<Enum, String> data);
+
     /**
-     * 
+     *
      * @param diaryId id of diary to be unlocked.
      * @return true if the diary is unlocked successfully.
      */
-    public boolean unlockDiary(UUID diaryId);
-    
-    /**
-     * 
-     * @param patientId id of patient the diary belongs to.
-     * @return id of the diary.
-     */
-    public UUID createDiary(UUID patientId);
-    
+    //public boolean unlockDiary(UUID diaryId);
 }
