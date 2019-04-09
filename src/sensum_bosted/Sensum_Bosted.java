@@ -5,16 +5,11 @@
  */
 package sensum_bosted;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 /**
  *
  * @author simon
  */
+
 public class Sensum_Bosted extends Application {
     
     @Override
