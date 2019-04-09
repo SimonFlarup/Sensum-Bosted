@@ -33,7 +33,7 @@ public interface SensumInterface {
      * @param patientId
      * @return
      */
-    public UUID initializePatient(UUID patientId);
+    public void initializePatient(UUID patientId);
 
     /**
      *
@@ -69,7 +69,7 @@ public interface SensumInterface {
      *
      * @return id of the diary.
      */
-    public UUID initializeDiary();
+    public void initializeDiary();
 
     /**
      *
