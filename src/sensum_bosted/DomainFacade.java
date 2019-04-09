@@ -40,13 +40,7 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public Map<UUID, String> getPatientsMap() {
-        Map<UUID, String> patientsMap = null;
-        
-        List<Patient> temp = user.getPatients();
-        for (Patient p : temp) {
-            patientsMap.put(p.getId(), p.getName());
-        }
-        return patientsMap;
+        return user.getPatients();
     }
 
     @Override

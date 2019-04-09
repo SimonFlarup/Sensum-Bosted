@@ -18,6 +18,7 @@ public class User extends Person{
     
     public User(String name, String username, String password, UserRoles field, Map<UUID, String> patients, UUID id) {
         super(name, username, password, field, id);
+        this.patients = patients;
     }
 
     public Map<UUID, String> getPatients() {
