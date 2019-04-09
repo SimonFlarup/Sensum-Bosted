@@ -26,6 +26,8 @@ public interface StorageInterface {
     public User getUser(UUID id);
     public boolean setUser(User data);
     
+    public boolean setAssignment(UUID userId, UUID patientId);
+    
     public Diary getDiary(UUID patientId);
     public boolean setNotation(UUID patientId, Notation data);
     
