@@ -53,7 +53,7 @@ public class TEST {
         map.put(p1.getId(), p1.getName());
         map.put(p2.getId(), p2.getName());
         User user = new User(name, username, password, field, map, id);
-        StorageInterface storage = new StorageFacade();
+        StorageInterface storage = StorageFacade.getInstance();
         storage.setUser(user);
         storage.setPatient(p1);
         storage.setPatient(p2);

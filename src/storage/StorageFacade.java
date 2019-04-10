@@ -26,7 +26,19 @@ import sensum_bosted.UserRoles;
  */
 public class StorageFacade implements StorageInterface {
 
-    CRUDInterface CRUD = new CRUDFacade();
+    private static StorageFacade instance;
+
+    private StorageFacade() {
+    }
+
+    public static StorageFacade getInstance() {
+        if (instance == null) {
+            instance = new StorageFacade();
+        }
+        return instance;
+    }
+
+    CRUDInterface CRUD = CRUDFacade.getInstance();
 
     @Override
     public Patient getPatient(UUID id) {
@@ -82,8 +94,8 @@ public class StorageFacade implements StorageInterface {
         UserRoles field = UserRoles.valueOf(userMap.get(Fields.UserFields.USERROLES));
         HashMap<Enum, String>[] assignments = CRUD.readAll(Tables.ASSIGNMENTS, null);
         Map<UUID, String> map = new HashMap<>();
-        for(HashMap<Enum, String> assignment : assignments){
-            if(assignment.get(Fields.AssignmentFields.USER_ID).equals(id.toString())){
+        for (HashMap<Enum, String> assignment : assignments) {
+            if (assignment.get(Fields.AssignmentFields.USER_ID).equals(id.toString())) {
                 String patientName = assignment.get(Fields.AssignmentFields.PATIENT_NAME);
                 UUID patientId = UUID.fromString(assignment.get(Fields.AssignmentFields.PATIENT_ID));
                 map.put(patientId, patientName);

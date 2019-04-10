@@ -19,15 +19,23 @@ import storage.StorageInterface;
  */
 public class DomainFacade implements SensumInterface {
 
+    private static DomainFacade instance;
+
+    private DomainFacade() {
+        user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
+    }
+
+    public static DomainFacade getInstance() {
+        if (instance == null) {
+            instance = new DomainFacade();
+        }
+        return instance;
+    }
+
     private User user;
     private Patient patient;
     private Diary diary;
-    private StorageInterface sf = new StorageFacade();
-
-    public DomainFacade() {
-        user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
-
-    }
+    private StorageInterface sf = StorageFacade.getInstance();
 
     public static void main(String[] args) {
 

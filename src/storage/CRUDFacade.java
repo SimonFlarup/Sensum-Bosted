@@ -25,6 +25,18 @@ import sensum_bosted.User;
  */
 public class CRUDFacade implements CRUDInterface {
 
+    private static CRUDFacade instance;
+
+    private CRUDFacade() {
+    }
+
+    public static CRUDFacade getInstance() {
+        if (instance == null) {
+            instance = new CRUDFacade();
+        }
+        return instance;
+    }
+
     private boolean isUUID(String s) {
         try {
             UUID.fromString(s); //Throws IllegalArgumentException if not a string representation of a UUID

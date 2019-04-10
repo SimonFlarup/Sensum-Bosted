@@ -49,7 +49,7 @@ public class MainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fc = new DomainFacade();
+        fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
         for (Map.Entry<UUID, String> entry : fc.getPatientsMap().entrySet()) {
             ListPerson lp = new ListPerson(entry.getKey(), entry.getValue());
