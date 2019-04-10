@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,7 +35,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private Label nameUser;
     @FXML
-    private ListView<String> patientList;
+    private ListView<ListPerson> patientList;
 
     private SensumInterface fc;
     private ObservableList patients = FXCollections.observableArrayList();
@@ -60,6 +59,8 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void selectPatient(MouseEvent event) {
+        int selectedPatientIndex = patientList.getSelectionModel().selectedIndexProperty().get();
+        fc.initializePatient(patientList.getItems().get(selectedPatientIndex).getId());
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/PatientMenu.fxml"));
             Scene scene = nameUser.getScene();

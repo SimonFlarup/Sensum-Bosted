@@ -25,4 +25,8 @@ public class ListPerson {
     public String toString() {
         return name;
     }
+
+    public UUID getId() {
+        return id;
+    }
 }

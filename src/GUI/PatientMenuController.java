@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import sensum_bosted.DomainFacade;
 
 /**
  * FXML Controller class
@@ -34,6 +35,8 @@ public class PatientMenuController implements Initializable {
     private Button diaryButton;
     @FXML
     private Button scheduleButton;
+    
+    private SensumInterface fc;
 
     /**
      * Initializes the controller class.
@@ -42,7 +45,10 @@ public class PatientMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        fc = DomainFacade.getInstance();
+        patientName.setText(fc.getPatientName());
+        patientCPR.setText(fc.getPatientCPR());
+        generalInfo.setText(fc.getPatientInfo());
     }    
 
 
