@@ -154,9 +154,13 @@ public class StorageFacade implements StorageInterface {
     @Override
     public boolean setNotation(UUID patientId, Notation data) {
         UUID id = data.getId();
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String sDate = dateFormat.format(data.getDate());
+        
         HashMap<Enum, String> map = new HashMap<>();
         map.put(Fields.NotationFields.CONTENT, data.getContent());
-        map.put(Fields.NotationFields.DATE, data.getDate().toString());
+        map.put(Fields.NotationFields.DATE, sDate);
         map.put(Fields.NotationFields.FIELD, data.getField().toString());
         map.put(Fields.NotationFields.PATIENTID, patientId.toString());
         map.put(Fields.ID, id.toString());
@@ -181,6 +185,14 @@ public class StorageFacade implements StorageInterface {
         System.out.println(patientId.toString() + " : " + userId.toString());
         CRUD.create(Tables.ASSIGNMENTS, map, null);
         return true;
+    }
+    
+    public void purgeAll(){
+        CRUDFacade CRUDInstance = (CRUDFacade) CRUD;
+        CRUDInstance.purgeAll(Tables.USERS, null);
+        CRUDInstance.purgeAll(Tables.ASSIGNMENTS, null);
+        CRUDInstance.purgeAll(Tables.PATIENTS, null);
+        CRUDInstance.purgeAll(Tables.NOTATIONS, null);
     }
 
 }

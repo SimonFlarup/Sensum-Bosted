@@ -11,9 +11,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import sensum_bosted.Notation;
 import sensum_bosted.Patient;
 import sensum_bosted.User;
 import sensum_bosted.UserRoles;
@@ -54,11 +57,41 @@ public class TEST {
         map.put(p2.getId(), p2.getName());
         User user = new User(name, username, password, field, map, id);
         StorageInterface storage = StorageFacade.getInstance();
+        
+        StorageFacade storageFacade = (StorageFacade) storage;
+        storageFacade.purgeAll();
+        
         storage.setUser(user);
         storage.setPatient(p1);
         storage.setPatient(p2);
         storage.setAssignment(id, p1.getId());
         storage.setAssignment(id, p2.getId());
+        
+        /*Date date = new Date();
+        System.out.println("Date.Tostring(): " + date.toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String sDate = dateFormat.format(date);
+        System.out.println("dateFormat.format(date): " + sDate);
+        date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+        System.out.println(date.toString());*/
+        //public Notation(String content, Date date, Notation.Field field, UUID id) {
+        String content = "Patienten opfører sig som forventet. Bla bla.\nMultiline test\n\nDone!";
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse("09/04/2019");
+        Notation.Field nField = Notation.Field.DISABLED;
+        id = UUID.randomUUID();
+        Notation notat1 = new Notation(content, date, nField, id);
+        
+        content = "Patienten opfører sig overhovedet ikke som forventet. Bla bla.\nMultiline test\n\nDone!";
+        date = new Date();
+        nField = Notation.Field.DISABLED;
+        id = UUID.randomUUID();
+        Notation notat2 = new Notation(content, date, nField, id);
+        id = UUID.randomUUID();
+        Notation notat3 = new Notation(content, date, nField, id);
+        
+        storage.setNotation(p1.getId(), notat1);
+        storage.setNotation(p1.getId(), notat2);
+        storage.setNotation(p2.getId(), notat3);
         /*Map<Enum, String> map;
         map = new HashMap<>();
         UUID id = UUID.randomUUID();

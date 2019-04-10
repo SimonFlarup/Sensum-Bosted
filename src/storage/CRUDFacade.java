@@ -131,4 +131,17 @@ public class CRUDFacade implements CRUDInterface {
         create(table, currentData, user);
     }
 
+    public void purgeAll(Tables table, User user) {
+        File[] files = new File(table.getPath()).listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".sbdf");
+            }
+        });
+
+        for (File file : files) {
+            file.delete();
+        }
+    }
+
 }

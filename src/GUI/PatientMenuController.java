@@ -61,7 +61,7 @@ public class PatientMenuController implements Initializable {
 
     @FXML
     private void goToDiary(ActionEvent event) {
-        //fc.initializeDiary();
+        fc.initializeDiary();
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
             Stage stage = new Stage();
