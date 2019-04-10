@@ -8,6 +8,7 @@ package GUI;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,13 +66,14 @@ public class PatientMenuController implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
+            stage.setTitle("New Window");
+            stage.setScene(new Scene(root, 650, 250));
             stage.show();
-            stage.setX(650);
-            stage.setY(250);
             
         } catch (IOException ex) {
-            System.out.println("Error");
+            System.out.println(ex.getMessage());
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", ex);
         }
     }
 

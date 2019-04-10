@@ -7,6 +7,7 @@ package sensum_bosted;
 
 import GUI.SensumInterface;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -79,7 +80,7 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public Map<Date, UUID> getNotationsMap() {
-        Map<Date, UUID> notationsMap = null;
+        Map<Date, UUID> notationsMap = new HashMap<>();
         List<Notation> temp = diary.getNotations();
         for (Notation n : temp) {
             notationsMap.put(n.getDate(), n.getId());

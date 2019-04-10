@@ -21,10 +21,11 @@ public class ListNotation {
         this.date = date;
         this.id = id;
     }
-//    @Override
-//    public String toString() {
-//        return date.toString();
-//    }
+
+    @Override
+    public String toString() {
+        return date.toString();
+    }
 
     public Date getDate() {
         return date;
