@@ -10,7 +10,6 @@
    <children>
       <ListView fx:id="notationList" layoutX="14.0" layoutY="41.0" onMouseClicked="#openNotation" prefHeight="310.0" prefWidth="200.0" />
       <Label layoutX="90.0" layoutY="14.0" text="Dagbog" />
-      <Button fx:id="backButton" layoutX="14.0" layoutY="359.0" mnemonicParsing="false" onAction="#goBack" text="Tilbage" />
       <TextArea fx:id="notationText" editable="false" layoutX="255.0" layoutY="41.0" prefHeight="310.0" prefWidth="324.0" wrapText="true" />
       <Label layoutX="391.0" layoutY="14.0" text="Notation" />
       <Button fx:id="editButton" layoutX="341.0" layoutY="359.0" mnemonicParsing="false" onAction="#editNotation" text="Redigér" />

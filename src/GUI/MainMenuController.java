@@ -56,7 +56,7 @@ public class MainMenuController implements Initializable {
             ListPerson lp = new ListPerson(entry.getKey(), entry.getValue());
             patients.add(lp);
         }
-        patientList.setItems(patients);
+        patientList.setItems(patients.sorted());
     }
 
     @FXML

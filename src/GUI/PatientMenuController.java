@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import sensum_bosted.DomainFacade;
 
 /**
@@ -62,15 +64,21 @@ public class PatientMenuController implements Initializable {
 
     @FXML
     private void goToDiary(ActionEvent event) {
+        diaryButton.setDisable(true);
         fc.initializeDiary();
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Sensum Bosted");
             stage.setScene(new Scene(root));
-            stage.setX(650);
-            stage.setY(250);
             stage.show();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    diaryButton.setDisable(false);
+                }             
+            });
+
             
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

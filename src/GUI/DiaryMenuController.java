@@ -34,8 +34,6 @@ import sensum_bosted.DomainFacade;
 public class DiaryMenuController implements Initializable {
 
     @FXML
-    private Button backButton;
-    @FXML
     private Button editButton;
     @FXML
     private ListView<ListNotation> notationList;
@@ -62,12 +60,6 @@ public class DiaryMenuController implements Initializable {
             notations.add(ln);
         }
         notationList.setItems(notations);
-    }
-
-    @FXML
-    private void goBack(ActionEvent event) {
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        stage.close();
     }
 
     @FXML
