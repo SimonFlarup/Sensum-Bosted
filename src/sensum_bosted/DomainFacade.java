@@ -36,6 +36,7 @@ public class DomainFacade implements SensumInterface {
     private User user;
     private Patient patient;
     private Diary diary;
+    private Notation notation;
     private StorageInterface sf = StorageFacade.getInstance();
 
     public static void main(String[] args) {
@@ -94,16 +95,19 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public String getNotation(UUID notationId) {
+    public void initializeNotation(UUID notationId) {
         List<Notation> temp = diary.getNotations();
-        String finalValue = "This entry does not exist.";
-        for (Notation not : temp) {
-
-            if (notationId == not.getId()) {
-                finalValue = not.toString();
+        for (Notation notat : temp) {
+            if (notationId == notat.getId()) {
+                this.notation = notat;
+                return;
             }
         }
-        return finalValue;
+    }
+
+    @Override
+    public String getNotation() {
+        return this.notation.getContent();
     }
 
 }

@@ -66,11 +66,14 @@ public class DiaryMenuController implements Initializable {
     private void openNotation(MouseEvent event) {
         int selectedNotationIndex = notationList.getSelectionModel().selectedIndexProperty().get();
         editButton.setDisable(false);
-        notationText.setText(fc.getNotation(notationList.getItems().get(selectedNotationIndex).getId()));
+        fc.initializeNotation(notationList.getItems().get(selectedNotationIndex).getId());
+        notationText.setText(fc.getNotation());
     }
 
     @FXML
     private void editNotation(ActionEvent event) {
+        int selectedNotationIndex = notationList.getSelectionModel().selectedIndexProperty().get();
+        fc.initializeNotation(notationList.getItems().get(selectedNotationIndex).getId());
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/EditDiaryMenu.fxml"));
             Scene scene = editButton.getScene();

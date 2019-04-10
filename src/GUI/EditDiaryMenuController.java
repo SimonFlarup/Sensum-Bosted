@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import sensum_bosted.DomainFacade;
 
 /**
  * FXML Controller class
@@ -34,6 +35,8 @@ public class EditDiaryMenuController implements Initializable {
     @FXML
     private Button cancelButton;
     
+    private SensumInterface fc;
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -41,7 +44,8 @@ public class EditDiaryMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        fc = DomainFacade.getInstance();
+        diaryText.setText(fc.getNotation());
     }    
 
     @FXML

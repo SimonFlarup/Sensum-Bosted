@@ -68,10 +68,15 @@ public interface SensumInterface {
 
     /**
      *
-     * @param notationId id of the notation you want to acquire.
      * @return Map with Enum as key along with the entries for the diary.
      */
-    public String getNotation(UUID notationId);
+    public String getNotation();
+    
+        /**
+     *
+     * @param notationId id of the notation you want to initialize.
+     */
+    public void initializeNotation(UUID notationId);
 
     /**
      *
