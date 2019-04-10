@@ -25,6 +25,7 @@ public class Sensum_Bosted extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setTitle("Sensum Bosted");
         stage.show();
     }
 

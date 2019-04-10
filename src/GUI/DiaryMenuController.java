@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Map;
@@ -14,7 +15,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -39,25 +43,25 @@ public class DiaryMenuController implements Initializable {
     private TextArea notationText;
     @FXML
     private Button newNotationButton;
-    
+
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
-        for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()){
+        for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
             ListNotation ln = new ListNotation(entry.getKey(), entry.getValue());
             notations.add(ln);
         }
         notationList.setItems(notations);
-    }    
-
+    }
 
     @FXML
     private void goBack(ActionEvent event) {
@@ -67,6 +71,8 @@ public class DiaryMenuController implements Initializable {
 
     @FXML
     private void openNotation(MouseEvent event) {
+        int selectedNotationIndex = notationList.getSelectionModel().selectedIndexProperty().get();
+        notationText.setText(fc.getNotation(notationList.getItems().get(selectedNotationIndex).getId()));
     }
 
     @FXML
@@ -76,5 +82,5 @@ public class DiaryMenuController implements Initializable {
     @FXML
     private void createNewNotation(ActionEvent event) {
     }
-    
+
 }
