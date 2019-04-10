@@ -67,7 +67,7 @@ public class PatientMenuController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Sensum Bosted");
-            stage.setScene(new Scene(root, 650, 450));
+            stage.setScene(new Scene(root));
             stage.setX(650);
             stage.setY(250);
             stage.show();
