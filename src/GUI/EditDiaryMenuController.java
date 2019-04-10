@@ -29,32 +29,33 @@ public class EditDiaryMenuController implements Initializable {
     @FXML
     private Label diaryID;
     @FXML
-    private TextArea diaryText;
-    @FXML
     private Button saveButton;
     @FXML
     private Button cancelButton;
-    
+    @FXML
+    private TextArea notationText;
+
     private SensumInterface fc;
-    
+
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
-        diaryText.setText(fc.getNotation());
-    }    
-
-    @FXML
-    private void saveDiary(ActionEvent event) {
+        notationText.setText(fc.getNotation());
     }
 
     @FXML
-    private void cancelDiaryEdit(ActionEvent event) {
-            try {
+    private void saveNotation(ActionEvent event) {
+    }
+
+    @FXML
+    private void cancelNotationEdit(ActionEvent event) {
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
             Scene scene = cancelButton.getScene();
             scene.setRoot(root);
@@ -62,5 +63,5 @@ public class EditDiaryMenuController implements Initializable {
             System.out.println("Error");
         }
     }
-    
+
 }

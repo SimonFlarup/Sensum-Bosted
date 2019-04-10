@@ -110,4 +110,14 @@ public class DomainFacade implements SensumInterface {
         return this.notation.getContent();
     }
 
+    @Override
+    public boolean saveNotation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean createNotation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

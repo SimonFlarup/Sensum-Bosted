@@ -30,7 +30,7 @@ public interface SensumInterface {
 
     /**
      *
-     * @param patientId
+     * @param patientId the UUID associated with the patient.
      */
     public void initializePatient(UUID patientId);
 
@@ -71,12 +71,25 @@ public interface SensumInterface {
      * @return Map with Enum as key along with the entries for the diary.
      */
     public String getNotation();
-    
-        /**
+
+    /**
      *
-     * @param notationId id of the notation you want to initialize.
+     * @param notationId the UUID associated with the notation you want to
+     * initialize.
      */
     public void initializeNotation(UUID notationId);
+
+    /**
+     *
+     * @return true if the diary was saved successfully.
+     */
+    public boolean saveNotation();
+    
+    /**
+     * 
+     * @return true if the notation is created.
+     */
+    public boolean createNotation();
 
     /**
      *
@@ -84,15 +97,6 @@ public interface SensumInterface {
      * @return true if the diary is locked successfully.
      */
     //public boolean lockDiary(UUID diaryId);
-    
-    /**
-     *
-     * @param diaryId id of the diary where data is saved.
-     * @param data Map with enum as key and a String with the data to be saved.
-     * @return true if the diary was saved successfully.
-     */
-    //public boolean saveDiary(UUID diaryId, Map<Enum, String> data);
-
     /**
      *
      * @param diaryId id of diary to be unlocked.

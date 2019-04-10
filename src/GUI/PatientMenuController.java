@@ -45,11 +45,12 @@ public class PatientMenuController implements Initializable {
     private Button scheduleButton;
     @FXML
     private Button goBackButton;
-    
+
     private SensumInterface fc;
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -59,8 +60,7 @@ public class PatientMenuController implements Initializable {
         patientName.setText(fc.getPatientName());
         patientCPR.setText(fc.getPatientCPR());
         generalInfo.setText(fc.getPatientInfo());
-    }    
-
+    }
 
     @FXML
     private void goToDiary(ActionEvent event) {
@@ -78,10 +78,9 @@ public class PatientMenuController implements Initializable {
                 @Override
                 public void handle(WindowEvent event) {
                     diaryButton.setDisable(false);
-                }             
+                }
             });
 
-            
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             Logger logger = Logger.getLogger(getClass().getName());
@@ -103,5 +102,5 @@ public class PatientMenuController implements Initializable {
             System.out.println("Error");
         }
     }
-    
+
 }
