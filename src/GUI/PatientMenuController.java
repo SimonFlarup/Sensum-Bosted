@@ -72,6 +72,8 @@ public class PatientMenuController implements Initializable {
             stage.setTitle("Sensum Bosted");
             stage.setScene(new Scene(root));
             stage.show();
+            stage.setX(650);
+            stage.setY(250);
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
