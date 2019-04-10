@@ -138,9 +138,10 @@ public class CRUDFacade implements CRUDInterface {
                 return name.endsWith(".sbdf");
             }
         });
-
-        for (File file : files) {
-            file.delete();
+        if (files != null) {
+            for (File file : files) {
+                file.delete();
+            }
         }
     }
 
