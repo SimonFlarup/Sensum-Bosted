@@ -29,7 +29,7 @@ public class EditDiaryMenuController implements Initializable {
     private Button saveButton;
     @FXML
     private Button cancelButton;
-
+    
     /**
      * Initializes the controller class.
      * @param url

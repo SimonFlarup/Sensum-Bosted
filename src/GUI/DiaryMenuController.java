@@ -6,7 +6,12 @@
 package GUI;
 
 import java.net.URL;
+import java.util.Date;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.UUID;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import sensum_bosted.DomainFacade;
 
 /**
  * FXML Controller class
@@ -27,11 +34,14 @@ public class DiaryMenuController implements Initializable {
     @FXML
     private Button editButton;
     @FXML
-    private ListView<?> notationList;
+    private ListView<ListNotation> notationList;
     @FXML
     private TextArea notationText;
     @FXML
     private Button newNotationButton;
+    
+    private SensumInterface fc;
+    private ObservableList notations = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
@@ -40,12 +50,19 @@ public class DiaryMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        fc = DomainFacade.getInstance();
+        for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()){
+            ListNotation ln = new ListNotation(entry.getKey(), entry.getValue());
+            notations.add(ln);
+        }
+        notationList.setItems(notations);
     }    
 
 
     @FXML
     private void goBack(ActionEvent event) {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

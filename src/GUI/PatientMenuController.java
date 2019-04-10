@@ -67,6 +67,8 @@ public class PatientMenuController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+            stage.setX(650);
+            stage.setY(250);
             
         } catch (IOException ex) {
             System.out.println("Error");

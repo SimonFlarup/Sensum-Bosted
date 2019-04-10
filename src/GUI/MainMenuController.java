@@ -10,19 +10,19 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import sensum_bosted.DomainFacade;
 
 /**
@@ -36,6 +36,8 @@ public class MainMenuController implements Initializable {
     private Label nameUser;
     @FXML
     private ListView<ListPerson> patientList;
+    @FXML
+    private Button exitButton;
 
     private SensumInterface fc;
     private ObservableList patients = FXCollections.observableArrayList();
@@ -66,8 +68,13 @@ public class MainMenuController implements Initializable {
             Scene scene = nameUser.getScene();
             scene.setRoot(root);
         } catch (IOException ex) {
-            System.out.println("Error");
+            System.out.println(ex.getMessage());
         }
+    }
+
+    @FXML
+    private void exitProgram(ActionEvent event) {
+        Platform.exit();
     }
 
 }
