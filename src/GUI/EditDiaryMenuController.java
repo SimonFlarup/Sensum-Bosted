@@ -7,6 +7,7 @@ package GUI;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +15,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import sensum_bosted.DomainFacade;
@@ -40,9 +43,6 @@ public class EditDiaryMenuController implements Initializable {
     private SensumInterface fc;
     private boolean saved = true;
 
-
-
-
     /**
      * Initializes the controller class.
      *
@@ -57,7 +57,7 @@ public class EditDiaryMenuController implements Initializable {
     }
 
     @FXML
-    private void saveNotation(ActionEvent event) {        
+    private void saveNotation(ActionEvent event) {
         saved = fc.saveNotation(notationText.getText());
         if (saved) {
             saveSuccessful.setText("Notation blev gemt.");
@@ -68,12 +68,19 @@ public class EditDiaryMenuController implements Initializable {
 
     @FXML
     private void cancelNotationEdit(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
-            Scene scene = cancelButton.getScene();
-            scene.setRoot(root);
-        } catch (IOException ex) {
-            System.out.println("Error");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Er du sikker på, at du vil forlade notations redigeringen?");
+        alert.setTitle("Advarsel");
+        alert.setHeaderText("");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
+                Scene scene = cancelButton.getScene();
+                scene.setRoot(root);
+            } catch (IOException ex) {
+                System.out.println("Error");
+            }
         }
     }
 
