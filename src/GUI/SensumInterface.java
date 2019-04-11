@@ -60,8 +60,9 @@ public interface SensumInterface {
     
     /**
      * 
-     * @param name of the patient.
-     * @param cpr of the patient.
+     * @param name String with name of the patient.
+     * @param cpr String with CPR of the patient.
+     * @param info String with general info about the patient.
      * @return true if the patient was created.
      */
     public boolean createPatient(String name, String cpr, String info);

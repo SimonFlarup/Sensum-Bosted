@@ -5,30 +5,28 @@
  */
 package GUI;
 
-import java.util.Date;
 import java.util.UUID;
 
 /**
  *
  * @author sebastian
  */
-public class ListNotation {
+public class ListViewInfo {
 
     private UUID id;
-    private Date date;
+    private String name;
 
-    public ListNotation(Date date, UUID id) {
-        this.date = date;
+    public ListViewInfo(UUID id, String name) {
         this.id = id;
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return date.toString();
+        return name;
     }
 
     public UUID getId() {
         return id;
     }
-
 }

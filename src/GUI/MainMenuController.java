@@ -35,7 +35,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private Label nameUser;
     @FXML
-    private ListView<ListPerson> patientList;
+    private ListView<ListViewInfo> patientList;
 
     private SensumInterface fc;
     private ObservableList patients = FXCollections.observableArrayList();
@@ -55,15 +55,15 @@ public class MainMenuController implements Initializable {
         fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
         for (Map.Entry<UUID, String> entry : fc.getPatientsMap().entrySet()) {
-            ListPerson lp = new ListPerson(entry.getKey(), entry.getValue());
-            patients.add(lp);
+            ListViewInfo lvf = new ListViewInfo(entry.getKey(), entry.getValue());
+            patients.add(lvf);
         }
         patientList.setItems(patients.sorted());
     }
 
     @FXML
     private void selectPatient(MouseEvent event) {
-        int selectedPatientIndex = patientList.getSelectionModel().selectedIndexProperty().get();
+        int selectedPatientIndex = patientList.getSelectionModel().getSelectedIndex();
         fc.initializePatient(patientList.getItems().get(selectedPatientIndex).getId());
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/PatientMenu.fxml"));

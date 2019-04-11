@@ -35,7 +35,7 @@ public class DiaryMenuController implements Initializable {
     @FXML
     private Button editButton;
     @FXML
-    private ListView<ListNotation> notationList;
+    private ListView<ListViewInfo> notationList;
     @FXML
     private TextArea notationText;
     @FXML
@@ -43,6 +43,7 @@ public class DiaryMenuController implements Initializable {
 
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
+    private UUID selectedNotationId;
 
     /**
      * Initializes the controller class.
@@ -55,24 +56,24 @@ public class DiaryMenuController implements Initializable {
         editButton.setDisable(true);
         fc = DomainFacade.getInstance();
         for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
-            ListNotation ln = new ListNotation(entry.getKey(), entry.getValue());
-            notations.add(ln);
+            ListViewInfo lvf = new ListViewInfo(entry.getValue(), entry.getKey().toString());
+            notations.add(lvf);
         }
         notationList.setItems(notations);
     }
 
     @FXML
     private void openNotation(MouseEvent event) {
-        int selectedNotationIndex = notationList.getSelectionModel().selectedIndexProperty().get();
-        editButton.setDisable(false);
-        fc.initializeNotation(notationList.getItems().get(selectedNotationIndex).getId());
+        int selectedNotationIndex = notationList.getSelectionModel().getSelectedIndex();
+        selectedNotationId = notationList.getItems().get(selectedNotationIndex).getId();
+        fc.initializeNotation(selectedNotationId);
         notationText.setText(fc.getNotation());
+        editButton.setDisable(false);
     }
 
     @FXML
     private void editNotation(ActionEvent event) {
-        int selectedNotationIndex = notationList.getSelectionModel().selectedIndexProperty().get();
-        fc.initializeNotation(notationList.getItems().get(selectedNotationIndex).getId());
+        fc.initializeNotation(selectedNotationId);
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/GUI/EditDiaryMenu.fxml"));
             Scene scene = editButton.getScene();
