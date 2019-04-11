@@ -37,6 +37,8 @@ public class EditDiaryMenuController implements Initializable {
     private Label notationID;
     @FXML
     private Button backButton;
+    @FXML
+    private Label saveSuccessful;
 
     private SensumInterface fc;
     private Alert alert;
@@ -58,13 +60,7 @@ public class EditDiaryMenuController implements Initializable {
     @FXML
     private void saveNotation(ActionEvent event) {
         if (fc.saveNotation(notationText.getText())) {
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
-                Scene scene = saveButton.getScene();
-                scene.setRoot(root);
-            } catch (IOException ex) {
-                System.out.println("Error");
-            }
+            saveSuccessful.setText("Ændringerne blev gemt.");
         } else {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Notation blev ikke gemt");

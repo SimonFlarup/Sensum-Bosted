@@ -12,5 +12,6 @@
       <TextArea fx:id="notationText" layoutX="25.0" layoutY="40.0" prefHeight="313.0" prefWidth="550.0" wrapText="true" />
       <Button fx:id="saveButton" layoutX="447.0" layoutY="358.0" mnemonicParsing="false" onAction="#saveNotation" text="Gem" />
       <Button fx:id="backButton" layoutX="511.0" layoutY="358.0" mnemonicParsing="false" onAction="#goBack" text="Tilbage" />
+      <Label fx:id="saveSuccessful" layoutX="25.0" layoutY="363.0" />
    </children>
 </AnchorPane>
