@@ -12,5 +12,6 @@
       <TextArea fx:id="notationText" layoutX="25.0" layoutY="40.0" prefHeight="313.0" prefWidth="550.0" wrapText="true" />
       <Button fx:id="saveButton" layoutX="521.0" layoutY="359.0" mnemonicParsing="false" onAction="#saveNotation" text="Gem" />
       <Button fx:id="cancelButton" layoutX="437.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelNotationEdit" text="Annuller" />
+      <Label fx:id="saveSuccessful" layoutX="25.0" layoutY="363.0" />
    </children>
 </AnchorPane>

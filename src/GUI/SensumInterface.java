@@ -68,22 +68,23 @@ public interface SensumInterface {
 
     /**
      *
-     * @return Map with Enum as key along with the entries for the diary.
-     */
-    public String getNotation();
-
-    /**
-     *
      * @param notationId the UUID associated with the notation you want to
      * initialize.
      */
     public void initializeNotation(UUID notationId);
-
+    
+        /**
+     *
+     * @return String with the content for the currently initialized notation.
+     */
+    public String getNotation();
+    
     /**
      *
-     * @return true if the diary was saved successfully.
+     * @param content String with the content to be saved.
+     * @return true if the notation was saved successfully.
      */
-    public boolean saveNotation();
+    public boolean saveNotation(String content);
     
     /**
      * 

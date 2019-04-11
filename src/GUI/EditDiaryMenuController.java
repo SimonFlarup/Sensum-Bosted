@@ -34,8 +34,15 @@ public class EditDiaryMenuController implements Initializable {
     private Button cancelButton;
     @FXML
     private TextArea notationText;
+    @FXML
+    private Label saveSuccessful;
 
     private SensumInterface fc;
+    private boolean saved = true;
+    private String saveInfo;
+
+
+
 
     /**
      * Initializes the controller class.
@@ -50,7 +57,15 @@ public class EditDiaryMenuController implements Initializable {
     }
 
     @FXML
-    private void saveNotation(ActionEvent event) {
+    private void saveNotation(ActionEvent event) {        
+        //saved = fc.saveNotation(notationText.getText());
+        if (saved) {
+            saveInfo = "Notation blev gemt (eller gjorde den)";
+            saveSuccessful.setText(saveInfo);
+        } else {
+            saveInfo = "Notation blev ikke gemt";
+            saveSuccessful.setText(saveInfo);
+        }
     }
 
     @FXML

@@ -109,9 +109,9 @@ public class DomainFacade implements SensumInterface {
     public String getNotation() {
         return this.notation.getContent();
     }
-
+    
     @Override
-    public boolean saveNotation() {
+    public boolean saveNotation(String content) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
