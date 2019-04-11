@@ -34,13 +34,12 @@ public class EditDiaryMenuController implements Initializable {
     @FXML
     private TextArea notationText;
     @FXML
-    private Label saveSuccessful;
-    @FXML
     private Label notationID;
     @FXML
     private Button backButton;
 
     private SensumInterface fc;
+    private Alert alert;
 
     /**
      * Initializes the controller class.
@@ -57,16 +56,25 @@ public class EditDiaryMenuController implements Initializable {
 
     @FXML
     private void saveNotation(ActionEvent event) {
-        if (fc.saveNotation(notationText.getText())) {
-            saveSuccessful.setText("Notation blev gemt.");
-        } else {
-            saveSuccessful.setText("Notation blev ikke gemt");
+        if (!fc.saveNotation(notationText.getText())) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Notation blev ikke gemt");
+            alert.setTitle("Advarsel");
+            alert.setHeaderText("");
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
+            Scene scene = saveButton.getScene();
+            scene.setRoot(root);
+        } catch (IOException ex) {
+            System.out.println("Error");
         }
     }
 
     @FXML
     private void goBack(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Har du husket at gemme!?");
         alert.setTitle("Advarsel");
         alert.setHeaderText("");
