@@ -112,7 +112,8 @@ public class DomainFacade implements SensumInterface {
     
     @Override
     public boolean saveNotation(String content) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        notation.setContent(content);
+        return sf.setNotation(patient.getId(), notation);
     }
 
     @Override

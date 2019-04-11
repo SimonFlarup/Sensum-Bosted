@@ -57,7 +57,7 @@ public class EditDiaryMenuController implements Initializable {
 
     @FXML
     private void saveNotation(ActionEvent event) {        
-        //saved = fc.saveNotation(notationText.getText());
+        saved = fc.saveNotation(notationText.getText());
         if (saved) {
             saveSuccessful.setText("Notation blev gemt (eller gjorde den)");
         } else {
