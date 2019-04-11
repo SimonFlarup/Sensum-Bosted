@@ -78,6 +78,11 @@ public class DomainFacade implements SensumInterface {
     public String getPatientInfo() {
         return patient.getInfo();
     }
+    
+    @Override
+    public boolean createPatient(String name, String cpr, String info) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public Map<Date, UUID> getNotationsMap() {

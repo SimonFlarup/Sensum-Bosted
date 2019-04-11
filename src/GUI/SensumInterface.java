@@ -57,6 +57,14 @@ public interface SensumInterface {
      * @return String with the general information about the patient.
      */
     public String getPatientInfo();
+    
+    /**
+     * 
+     * @param name of the patient.
+     * @param cpr of the patient.
+     * @return true if the patient was created.
+     */
+    public boolean createPatient(String name, String cpr, String info);
 
     /**
      *
@@ -81,7 +89,7 @@ public interface SensumInterface {
     
     /**
      * 
-     * @return the date assoicated with the notation.
+     * @return the date associated with the notation.
      */
     public Date getNotationDate();
     
