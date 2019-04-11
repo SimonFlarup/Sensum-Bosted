@@ -36,8 +36,6 @@ public class MainMenuController implements Initializable {
     private Label nameUser;
     @FXML
     private ListView<ListPerson> patientList;
-    @FXML
-    private Button exitButton;
 
     private SensumInterface fc;
     private ObservableList patients = FXCollections.observableArrayList();
@@ -70,11 +68,6 @@ public class MainMenuController implements Initializable {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-    }
-
-    @FXML
-    private void exitProgram(ActionEvent event) {
-        Platform.exit();
     }
 
 }
