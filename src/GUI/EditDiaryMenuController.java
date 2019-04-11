@@ -27,8 +27,6 @@ import sensum_bosted.DomainFacade;
 public class EditDiaryMenuController implements Initializable {
 
     @FXML
-    private Label diaryID;
-    @FXML
     private Button saveButton;
     @FXML
     private Button cancelButton;
@@ -36,6 +34,8 @@ public class EditDiaryMenuController implements Initializable {
     private TextArea notationText;
     @FXML
     private Label saveSuccessful;
+    @FXML
+    private Label notationID;
 
     private SensumInterface fc;
     private boolean saved = true;
@@ -53,13 +53,14 @@ public class EditDiaryMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
         notationText.setText(fc.getNotation());
+        notationID.setText(fc.getNotationDate().toString());
     }
 
     @FXML
     private void saveNotation(ActionEvent event) {        
         saved = fc.saveNotation(notationText.getText());
         if (saved) {
-            saveSuccessful.setText("Notation blev gemt (eller gjorde den)");
+            saveSuccessful.setText("Notation blev gemt.");
         } else {
             saveSuccessful.setText("Notation blev ikke gemt");
         }

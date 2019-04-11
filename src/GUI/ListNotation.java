@@ -27,10 +27,6 @@ public class ListNotation {
         return date.toString();
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public UUID getId() {
         return id;
     }

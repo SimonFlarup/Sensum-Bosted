@@ -73,11 +73,17 @@ public interface SensumInterface {
      */
     public void initializeNotation(UUID notationId);
     
-        /**
+    /**
      *
      * @return String with the content for the currently initialized notation.
      */
     public String getNotation();
+    
+    /**
+     * 
+     * @return the date assoicated with the notation.
+     */
+    public Date getNotationDate();
     
     /**
      *
