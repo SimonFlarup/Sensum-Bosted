@@ -39,7 +39,6 @@ public class EditDiaryMenuController implements Initializable {
 
     private SensumInterface fc;
     private boolean saved = true;
-    private String saveInfo;
 
 
 
@@ -60,11 +59,9 @@ public class EditDiaryMenuController implements Initializable {
     private void saveNotation(ActionEvent event) {        
         //saved = fc.saveNotation(notationText.getText());
         if (saved) {
-            saveInfo = "Notation blev gemt (eller gjorde den)";
-            saveSuccessful.setText(saveInfo);
+            saveSuccessful.setText("Notation blev gemt (eller gjorde den)");
         } else {
-            saveInfo = "Notation blev ikke gemt";
-            saveSuccessful.setText(saveInfo);
+            saveSuccessful.setText("Notation blev ikke gemt");
         }
     }
 
