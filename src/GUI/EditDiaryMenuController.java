@@ -56,26 +56,27 @@ public class EditDiaryMenuController implements Initializable {
 
     @FXML
     private void saveNotation(ActionEvent event) {
-        if (!fc.saveNotation(notationText.getText())) {
+        if (fc.saveNotation(notationText.getText())) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
+                Scene scene = saveButton.getScene();
+                scene.setRoot(root);
+            } catch (IOException ex) {
+                System.out.println("Error");
+            }
+        } else {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Notation blev ikke gemt");
             alert.setTitle("Advarsel");
             alert.setHeaderText("");
             Optional<ButtonType> result = alert.showAndWait();
         }
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
-            Scene scene = saveButton.getScene();
-            scene.setRoot(root);
-        } catch (IOException ex) {
-            System.out.println("Error");
-        }
     }
 
     @FXML
     private void goBack(ActionEvent event) {
         alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Har du husket at gemme!?");
+        alert.setContentText("Vil du forlade dette vindue? Alt data, der ikke er gemt bliver mistet.");
         alert.setTitle("Advarsel");
         alert.setHeaderText("");
         Optional<ButtonType> result = alert.showAndWait();
