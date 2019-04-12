@@ -87,11 +87,11 @@ public class DiaryMenuController implements Initializable {
 
     @FXML
     private void createNewNotation(ActionEvent event) {
-       // if (fc.createNotation()) {
+        if (fc.createNotation()) {
             selectedNotationId = notationList.getItems().get(0).getId();
             editButton.setDisable(false);
             editButton.fire();
-       // }
+        }
 
     }
 

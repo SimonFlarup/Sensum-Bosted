@@ -72,7 +72,7 @@ public class EditDiaryMenuController implements Initializable {
 
     @FXML
     private void goBack(ActionEvent event) {
-        goBack = true;       
+        goBack = true;
         if (!fc.getNotation().equals(notationText.getText())) {
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Vil du forlade dette vindue? Alt data, der ikke er gemt bliver mistet.");
@@ -80,7 +80,7 @@ public class EditDiaryMenuController implements Initializable {
             alert.setHeaderText("");
             Optional<ButtonType> result = alert.showAndWait();
             goBack = result.get().equals(ButtonType.OK);
-        }      
+        }
         if (goBack) {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));

@@ -20,7 +20,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import sensum_bosted.DomainFacade;
 
 /**
@@ -60,7 +59,7 @@ public class CreatePatientMenuController implements Initializable {
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Fejl");
         alert.setHeaderText("");
-      
+
         if (nameField.getText().isEmpty()) {
             alert.setContentText("Intet navn angivet.");
             alert.show();

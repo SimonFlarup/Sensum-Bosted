@@ -92,6 +92,7 @@ public class PatientMenuController implements Initializable {
 
     @FXML
     private void goToSchedule(ActionEvent event) {
+        // Future implementation.
     }
 
     @FXML
