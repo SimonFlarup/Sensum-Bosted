@@ -18,31 +18,30 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import sensum_bosted.DomainFacade;
 
 /**
  * FXML Controller class
  *
- * @author sebastian
+ * @author KV
  */
-public class EditDiaryMenuController implements Initializable {
+public class CreatePatientMenuController implements Initializable {
 
     @FXML
-    private Button saveButton;
+    private TextField nameField;
     @FXML
-    private TextArea notationText;
+    private TextArea infoArea;
     @FXML
-    private Label notationID;
+    private TextField cprField;
     @FXML
     private Button backButton;
     @FXML
-    private Label saveSuccessful;
+    private Button saveButton;
 
     private SensumInterface fc;
     private Alert alert;
-    private boolean goBack;
 
     /**
      * Initializes the controller class.
@@ -53,37 +52,39 @@ public class EditDiaryMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
-        notationText.setText(fc.getNotation());
-        notationID.setText(fc.getNotationDate().toString());
     }
 
     @FXML
-    private void saveNotation(ActionEvent event) {
-        if (fc.saveNotation(notationText.getText())) {
-            saveSuccessful.setText("Ændringerne blev gemt.");
+    private void savePatient(ActionEvent event) {
+        if (fc.createPatient(nameField.getText(), cprField.getText(), infoArea.getText())) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
+                Scene scene = saveButton.getScene();
+                scene.setRoot(root);
+            } catch (IOException ex) {
+                System.out.println("Error");
+            }
         } else {
             alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Notation blev ikke gemt");
+            alert.setContentText("Patient blev ikke gemt");
             alert.setTitle("Fejl");
             alert.setHeaderText("");
             alert.show();
         }
+
     }
 
     @FXML
     private void goBack(ActionEvent event) {
-        goBack = true;       
-        if (!fc.getNotation().equals(notationText.getText())) {
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Vil du forlade dette vindue? Alt data, der ikke er gemt bliver mistet.");
-            alert.setTitle("Advarsel");
-            alert.setHeaderText("");
-            Optional<ButtonType> result = alert.showAndWait();
-            goBack = result.get().equals(ButtonType.OK);
-        }      
-        if (goBack) {
+        alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Ingen patient oprettet. Gå tilbage?");
+        alert.setTitle("Advarsel");
+        alert.setHeaderText("");
+        Optional<ButtonType> result = alert.showAndWait();
+        
+        if (result.get().equals(ButtonType.OK)) {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/GUI/DiaryMenu.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
                 Scene scene = saveButton.getScene();
                 scene.setRoot(root);
             } catch (IOException ex) {

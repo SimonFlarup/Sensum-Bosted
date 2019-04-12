@@ -36,13 +36,13 @@ public class MainMenuController implements Initializable {
     private Label nameUser;
     @FXML
     private ListView<ListViewInfo> patientList;
-
-    private SensumInterface fc;
-    private ObservableList patients = FXCollections.observableArrayList();
     @FXML
     private Button helpButton;
     @FXML
     private Button createPatientButton;
+
+    private SensumInterface fc;
+    private ObservableList patients = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
@@ -86,6 +86,13 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void createPatient(ActionEvent event) {
+        try {
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/CreatePatientMenu.fxml"));
+                Scene scene = nameUser.getScene();
+                scene.setRoot(root);
+            } catch (IOException ex) {
+                System.out.println("Error");
+            }
     }
 
 }
