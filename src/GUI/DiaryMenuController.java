@@ -60,7 +60,6 @@ public class DiaryMenuController implements Initializable {
             notations.add(lvf);
         }
         notationList.setItems(notations);
-        notationList.getSelectionModel().select(0);
 
     }
 
