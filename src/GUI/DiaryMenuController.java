@@ -55,7 +55,12 @@ public class DiaryMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         editButton.setDisable(true);
         fc = DomainFacade.getInstance();
-        loadListView();
+        for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
+            ListViewInfo lvf = new ListViewInfo(entry.getValue(), entry.getKey().toString());
+            notations.add(lvf);
+        }
+        notationList.setItems(notations);
+
     }
 
     @FXML
@@ -81,16 +86,11 @@ public class DiaryMenuController implements Initializable {
 
     @FXML
     private void createNewNotation(ActionEvent event) {
-        fc.createNotation();
-        loadListView();
-    }
-    
-    private void loadListView() {
-        for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
-            ListViewInfo lvf = new ListViewInfo(entry.getValue(), entry.getKey().toString());
-            notations.add(lvf);
+        if (fc.createNotation()) {
+            selectedNotationId = notationList.getItems().get(0).getId();
+            editButton.fire();
         }
-        notationList.setItems(notations);
+
     }
 
 }
