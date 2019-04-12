@@ -57,21 +57,19 @@ public class CreatePatientMenuController implements Initializable {
 
     @FXML
     private void savePatient(ActionEvent event) {
-        if (fc.createPatient(nameField.getText(), cprField.getText(), infoArea.getText())) {
-            if (cprField.getText().contains("-") && cprField.getText().length() == 11) {
-                try {
-                    Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
-                    Scene scene = saveButton.getScene();
-                    scene.setRoot(root);
-                } catch (IOException ex) {
-                    System.out.println("Error");
-                }
-            } else {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Ugyldigt CPR nummer.");
-                alert.setTitle("Fejl");
-                alert.setHeaderText("");
-                alert.show();
+        if (!cprField.getText().contains("-") && cprField.getText().length() != 11) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Ugyldigt CPR nummer.");
+            alert.setTitle("Fejl");
+            alert.setHeaderText("");
+            alert.show();
+        } else if (fc.createPatient(nameField.getText(), cprField.getText(), infoArea.getText())) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
+                Scene scene = saveButton.getScene();
+                scene.setRoot(root);
+            } catch (IOException ex) {
+                System.out.println("Error");
             }
         } else {
             alert = new Alert(Alert.AlertType.ERROR);
