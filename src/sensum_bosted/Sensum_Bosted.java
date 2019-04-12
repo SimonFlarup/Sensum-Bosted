@@ -6,10 +6,13 @@
 package sensum_bosted;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -27,6 +30,12 @@ public class Sensum_Bosted extends Application {
         stage.setScene(scene);
         stage.setTitle("Sensum Bosted");
         stage.show();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+            }
+        });
     }
 
     /**

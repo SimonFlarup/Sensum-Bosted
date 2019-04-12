@@ -61,6 +61,7 @@ public class PatientMenuController implements Initializable {
         patientCPR.setText(fc.getPatientCPR());
         generalInfo.setText(fc.getPatientInfo());
         scheduleButton.setDisable(true);
+        
     }
 
     @FXML

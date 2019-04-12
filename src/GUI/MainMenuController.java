@@ -87,12 +87,12 @@ public class MainMenuController implements Initializable {
     @FXML
     private void createPatient(ActionEvent event) {
         try {
-                Parent root = FXMLLoader.load(getClass().getResource("/GUI/CreatePatientMenu.fxml"));
-                Scene scene = nameUser.getScene();
-                scene.setRoot(root);
-            } catch (IOException ex) {
-                System.out.println("Error");
-            }
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/CreatePatientMenu.fxml"));
+            Scene scene = nameUser.getScene();
+            scene.setRoot(root);
+        } catch (IOException ex) {
+            System.out.println("Error");
+        }
     }
 
 }
