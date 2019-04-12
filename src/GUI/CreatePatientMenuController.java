@@ -57,29 +57,18 @@ public class CreatePatientMenuController implements Initializable {
 
     @FXML
     private void savePatient(ActionEvent event) {
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Fejl");
+        alert.setHeaderText("");
+      
         if (nameField.getText().isEmpty()) {
-            alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Intet navn angivet.");
-            alert.setTitle("Fejl");
-            alert.setHeaderText("");
             alert.show();
-        } else if (cprField.getText().isEmpty()) {
-            alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Intet CPR nummer angivet.");
-            alert.setTitle("Fejl");
-            alert.setHeaderText("");
-            alert.show();
-        } else if (!cprField.getText().contains("-") || cprField.getText().length() != 11) {
-            alert = new Alert(Alert.AlertType.ERROR);
+        } else if (!cprField.getText().contains("-") || cprField.getText().length() != 11 || cprField.getText().isEmpty()) {
             alert.setContentText("Ugyldigt CPR nummer.");
-            alert.setTitle("Fejl");
-            alert.setHeaderText("");
             alert.show();
         } else if (infoArea.getText().isEmpty()) {
-            alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Ingen info om patient angivet.");
-            alert.setTitle("Fejl");
-            alert.setHeaderText("");
             alert.show();
         } else if (fc.createPatient(nameField.getText(), cprField.getText(), infoArea.getText())) {
             try {
@@ -90,10 +79,7 @@ public class CreatePatientMenuController implements Initializable {
                 System.out.println("Error");
             }
         } else {
-            alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Patient blev ikke gemt");
-            alert.setTitle("Fejl");
-            alert.setHeaderText("");
             alert.show();
         }
 
