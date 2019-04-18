@@ -30,8 +30,7 @@ public interface SensumInterface {
 
     /**
      *
-     * @param patientId
-     * @return
+     * @param patientId the UUID associated with the patient.
      */
     public void initializePatient(UUID patientId);
 
@@ -58,6 +57,15 @@ public interface SensumInterface {
      * @return String with the general information about the patient.
      */
     public String getPatientInfo();
+    
+    /**
+     * 
+     * @param name String with name of the patient.
+     * @param cpr String with CPR of the patient.
+     * @param info String with general info about the patient.
+     * @return true if the patient was created.
+     */
+    public boolean createPatient(String name, String cpr, String info);
 
     /**
      *
@@ -65,18 +73,39 @@ public interface SensumInterface {
      */
     public Map<Date, UUID> getNotationsMap();
 
-    /**
-     *
-     * @return id of the diary.
-     */
     public void initializeDiary();
 
     /**
      *
-     * @param notationId id of the notation you want to acquire.
-     * @return Map with Enum as key along with the entries for the diary.
+     * @param notationId the UUID associated with the notation you want to
+     * initialize.
      */
-    public String getNotation(UUID notationId);
+    public void initializeNotation(UUID notationId);
+    
+    /**
+     *
+     * @return String with the content for the currently initialized notation.
+     */
+    public String getNotation();
+    
+    /**
+     * 
+     * @return the date associated with the notation.
+     */
+    public Date getNotationDate();
+    
+    /**
+     *
+     * @param content String with the content to be saved.
+     * @return true if the notation was saved successfully.
+     */
+    public boolean saveNotation(String content);
+    
+    /**
+     * 
+     * @return true if the notation is created.
+     */
+    public boolean createNotation();
 
     /**
      *
@@ -84,15 +113,6 @@ public interface SensumInterface {
      * @return true if the diary is locked successfully.
      */
     //public boolean lockDiary(UUID diaryId);
-    
-    /**
-     *
-     * @param diaryId id of the diary where data is saved.
-     * @param data Map with enum as key and a String with the data to be saved.
-     * @return true if the diary was saved successfully.
-     */
-    //public boolean saveDiary(UUID diaryId, Map<Enum, String> data);
-
     /**
      *
      * @param diaryId id of diary to be unlocked.

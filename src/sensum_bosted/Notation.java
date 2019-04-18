@@ -60,4 +60,8 @@ public class Notation {
         return id;
     }
     
+    public void setContent(String content) {
+        this.content = content;
+    }
+    
 }

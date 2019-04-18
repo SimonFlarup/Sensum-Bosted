@@ -25,6 +25,18 @@ import sensum_bosted.User;
  */
 public class CRUDFacade implements CRUDInterface {
 
+    private static CRUDFacade instance;
+
+    private CRUDFacade() {
+    }
+
+    public static CRUDFacade getInstance() {
+        if (instance == null) {
+            instance = new CRUDFacade();
+        }
+        return instance;
+    }
+
     private boolean isUUID(String s) {
         try {
             UUID.fromString(s); //Throws IllegalArgumentException if not a string representation of a UUID
@@ -117,6 +129,20 @@ public class CRUDFacade implements CRUDInterface {
             return;
         }
         create(table, currentData, user);
+    }
+
+    public void purgeAll(Tables table, User user) {
+        File[] files = new File(table.getPath()).listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".sbdf");
+            }
+        });
+        if (files != null) {
+            for (File file : files) {
+                file.delete();
+            }
+        }
     }
 
 }

@@ -26,7 +26,19 @@ import sensum_bosted.UserRoles;
  */
 public class StorageFacade implements StorageInterface {
 
-    CRUDInterface CRUD = new CRUDFacade();
+    private static StorageFacade instance;
+
+    private StorageFacade() {
+    }
+
+    public static StorageFacade getInstance() {
+        if (instance == null) {
+            instance = new StorageFacade();
+        }
+        return instance;
+    }
+
+    CRUDInterface CRUD = CRUDFacade.getInstance();
 
     @Override
     public Patient getPatient(UUID id) {
@@ -82,8 +94,8 @@ public class StorageFacade implements StorageInterface {
         UserRoles field = UserRoles.valueOf(userMap.get(Fields.UserFields.USERROLES));
         HashMap<Enum, String>[] assignments = CRUD.readAll(Tables.ASSIGNMENTS, null);
         Map<UUID, String> map = new HashMap<>();
-        for(HashMap<Enum, String> assignment : assignments){
-            if(assignment.get(Fields.AssignmentFields.USER_ID).equals(id.toString())){
+        for (HashMap<Enum, String> assignment : assignments) {
+            if (assignment.get(Fields.AssignmentFields.USER_ID).equals(id.toString())) {
                 String patientName = assignment.get(Fields.AssignmentFields.PATIENT_NAME);
                 UUID patientId = UUID.fromString(assignment.get(Fields.AssignmentFields.PATIENT_ID));
                 map.put(patientId, patientName);
@@ -142,9 +154,13 @@ public class StorageFacade implements StorageInterface {
     @Override
     public boolean setNotation(UUID patientId, Notation data) {
         UUID id = data.getId();
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String sDate = dateFormat.format(data.getDate());
+        
         HashMap<Enum, String> map = new HashMap<>();
         map.put(Fields.NotationFields.CONTENT, data.getContent());
-        map.put(Fields.NotationFields.DATE, data.getDate().toString());
+        map.put(Fields.NotationFields.DATE, sDate);
         map.put(Fields.NotationFields.FIELD, data.getField().toString());
         map.put(Fields.NotationFields.PATIENTID, patientId.toString());
         map.put(Fields.ID, id.toString());
@@ -169,6 +185,14 @@ public class StorageFacade implements StorageInterface {
         System.out.println(patientId.toString() + " : " + userId.toString());
         CRUD.create(Tables.ASSIGNMENTS, map, null);
         return true;
+    }
+    
+    public void purgeAll(){
+        CRUDFacade CRUDInstance = (CRUDFacade) CRUD;
+        CRUDInstance.purgeAll(Tables.USERS, null);
+        CRUDInstance.purgeAll(Tables.ASSIGNMENTS, null);
+        CRUDInstance.purgeAll(Tables.PATIENTS, null);
+        CRUDInstance.purgeAll(Tables.NOTATIONS, null);
     }
 
 }

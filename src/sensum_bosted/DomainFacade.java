@@ -7,6 +7,7 @@ package sensum_bosted;
 
 import GUI.SensumInterface;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -19,15 +20,24 @@ import storage.StorageInterface;
  */
 public class DomainFacade implements SensumInterface {
 
+    private static DomainFacade instance;
+
+    private DomainFacade() {
+        user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
+    }
+
+    public static DomainFacade getInstance() {
+        if (instance == null) {
+            instance = new DomainFacade();
+        }
+        return instance;
+    }
+
     private User user;
     private Patient patient;
     private Diary diary;
-    private StorageInterface sf = new StorageFacade();
-
-    public DomainFacade() {
-        user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
-
-    }
+    private Notation notation;
+    private StorageInterface sf = StorageFacade.getInstance();
 
     public static void main(String[] args) {
 
@@ -68,10 +78,15 @@ public class DomainFacade implements SensumInterface {
     public String getPatientInfo() {
         return patient.getInfo();
     }
+    
+    @Override
+    public boolean createPatient(String name, String cpr, String info) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public Map<Date, UUID> getNotationsMap() {
-        Map<Date, UUID> notationsMap = null;
+        Map<Date, UUID> notationsMap = new HashMap<>();
         List<Notation> temp = diary.getNotations();
         for (Notation n : temp) {
             notationsMap.put(n.getDate(), n.getId());
@@ -85,16 +100,35 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public String getNotation(UUID notationId) {
+    public void initializeNotation(UUID notationId) {
         List<Notation> temp = diary.getNotations();
-        String finalValue = "This entry does not exist.";
-        for (Notation not : temp) {
-
-            if (notationId == not.getId()) {
-                finalValue = not.toString();
+        for (Notation notat : temp) {
+            if (notationId == notat.getId()) {
+                this.notation = notat;
+                return;
             }
         }
-        return finalValue;
+    }
+
+    @Override
+    public String getNotation() {
+        return this.notation.getContent();
+    }
+
+    @Override
+    public boolean saveNotation(String content) {
+        notation.setContent(content);
+        return sf.setNotation(patient.getId(), notation);
+    }
+
+    @Override
+    public boolean createNotation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Date getNotationDate() {
+        return this.notation.getDate();
     }
 
 }
