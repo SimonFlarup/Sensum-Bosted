@@ -82,7 +82,7 @@ public class TEST {
         Notation notat1 = new Notation(content, date, nField, id);
         
         content = "Patienten opfører sig overhovedet ikke som forventet. Bla bla.\nMultiline test\n\nDone!";
-        date = new Date();
+        date = new SimpleDateFormat("dd/MM/yyyy").parse("10/04/2019");
         nField = Notation.Field.DISABLED;
         id = UUID.randomUUID();
         Notation notat2 = new Notation(content, date, nField, id);

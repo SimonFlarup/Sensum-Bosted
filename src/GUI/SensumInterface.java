@@ -105,7 +105,7 @@ public interface SensumInterface {
      * 
      * @return true if the notation is created.
      */
-    public boolean createNotation();
+    public UUID createNotation();
 
     /**
      *

@@ -78,10 +78,14 @@ public class DomainFacade implements SensumInterface {
     public String getPatientInfo() {
         return patient.getInfo();
     }
-    
+
     @Override
     public boolean createPatient(String name, String cpr, String info) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //public Patient(String name, String username, String password, UserRoles field, String cpr, String info, UUID id) {
+        this.patient = new Patient(name, name + "_user", "test1234", UserRoles.PATIENT, cpr, info, UUID.randomUUID());
+        sf.setPatient(this.patient);
+        sf.setAssignment(this.user.getId(), this.patient.getId());
+        return true;
     }
 
     @Override
@@ -122,8 +126,15 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public boolean createNotation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public UUID createNotation() {
+
+        if (this.patient.getField() == UserRoles.PATIENT) {
+            this.notation = new Notation("", new Date(), Notation.Field.DISABLED, UUID.randomUUID());
+        } else {
+            this.notation = new Notation("", new Date(), Notation.Field.DRUG, UUID.randomUUID());
+        }
+        sf.setNotation(this.patient.getId(), this.notation);
+        return this.notation.getId();
     }
 
     @Override
