@@ -85,6 +85,7 @@ public class DomainFacade implements SensumInterface {
         this.patient = new Patient(name, name + "_user", "test1234", UserRoles.PATIENT, cpr, info, UUID.randomUUID());
         sf.setPatient(this.patient);
         sf.setAssignment(this.user.getId(), this.patient.getId());
+        this.user = sf.getUser(this.user.getId());
         return true;
     }
 
@@ -107,7 +108,7 @@ public class DomainFacade implements SensumInterface {
     public void initializeNotation(UUID notationId) {
         List<Notation> temp = diary.getNotations();
         for (Notation notat : temp) {
-            if (notationId == notat.getId()) {
+            if (notationId.toString().equals(notat.getId().toString())) {
                 this.notation = notat;
                 return;
             }
@@ -116,6 +117,7 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public String getNotation() {
+        System.out.println(this.notation.getContent());
         return this.notation.getContent();
     }
 
@@ -127,13 +129,16 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public UUID createNotation() {
+        
+        UUID patientId = this.patient.getId();
 
         if (this.patient.getField() == UserRoles.PATIENT) {
             this.notation = new Notation("", new Date(), Notation.Field.DISABLED, UUID.randomUUID());
         } else {
             this.notation = new Notation("", new Date(), Notation.Field.DRUG, UUID.randomUUID());
         }
-        sf.setNotation(this.patient.getId(), this.notation);
+        sf.setNotation(patientId, this.notation);
+        initializeDiary();
         return this.notation.getId();
     }
 
