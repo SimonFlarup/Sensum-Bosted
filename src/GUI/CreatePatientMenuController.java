@@ -63,7 +63,7 @@ public class CreatePatientMenuController implements Initializable {
         if (nameField.getText().isEmpty()) {
             alert.setContentText("Intet navn angivet.");
             alert.show();
-        } else if (!cprField.getText().contains("-") || cprField.getText().length() != 11 || cprField.getText().isEmpty()) {
+        } else if (cprField.getText().length() != 11 || !cprField.getText().substring(6, 7).contains("-")) {
             alert.setContentText("Ugyldigt CPR nummer.");
             alert.show();
         } else if (infoArea.getText().isEmpty()) {
