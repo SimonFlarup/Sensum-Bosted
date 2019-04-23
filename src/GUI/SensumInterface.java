@@ -109,14 +109,15 @@ public interface SensumInterface {
 
     /**
      *
-     * @param diaryId id of diary to be locked.
-     * @return true if the diary is locked successfully.
+     * @param notationId id of notation to be locked.
+     * @return true if the notation is locked successfully.
      */
-    //public boolean lockDiary(UUID diaryId);
+    //public boolean lockNotation();
+    
     /**
      *
-     * @param diaryId id of diary to be unlocked.
-     * @return true if the diary is unlocked successfully.
+     * @param notationId id of notation to be unlocked.
+     * @return true if the notation is unlocked successfully.
      */
-    //public boolean unlockDiary(UUID diaryId);
+    //public boolean unlockNotation();
 }
