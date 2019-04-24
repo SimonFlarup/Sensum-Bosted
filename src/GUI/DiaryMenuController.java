@@ -44,6 +44,7 @@ public class DiaryMenuController implements Initializable {
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
     private UUID selectedNotationId;
+    
 
     /**
      * Initializes the controller class.
@@ -55,11 +56,13 @@ public class DiaryMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         editButton.setDisable(true);
         fc = DomainFacade.getInstance();
+        ListViewInfo lvi;
         for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
-            ListViewInfo lvf = new ListViewInfo(entry.getValue(), entry.getKey().toString());
-            notations.add(lvf);
+        lvi = new ListViewInfo(entry.getValue(), entry.getKey());
+            notations.add(lvi);
         }
-        notationList.setItems(notations);
+        notationList.setItems(notations.sorted(ListViewInfo.BY_DATE));
+        
 
     }
 
