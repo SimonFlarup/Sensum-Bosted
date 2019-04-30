@@ -7,6 +7,7 @@ package GUI;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -54,7 +55,8 @@ public class EditDiaryMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
         notationText.setText(fc.getNotation());
-        notationID.setText(fc.getNotationDate().toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        notationID.setText(sdf.format(fc.getNotationDate()));
     }
 
     @FXML

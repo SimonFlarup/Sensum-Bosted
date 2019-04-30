@@ -7,6 +7,7 @@ package GUI;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -44,7 +45,7 @@ public class DiaryMenuController implements Initializable {
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
     private UUID selectedNotationId;
-    
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Initializes the controller class.
@@ -58,11 +59,10 @@ public class DiaryMenuController implements Initializable {
         fc = DomainFacade.getInstance();
         ListViewInfo lvi;
         for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
-        lvi = new ListViewInfo(entry.getValue(), entry.getKey());
+            lvi = new ListViewInfo(entry.getValue(), entry.getKey());
             notations.add(lvi);
         }
         notationList.setItems(notations.sorted(ListViewInfo.BY_DATE));
-        
 
     }
 
@@ -89,9 +89,22 @@ public class DiaryMenuController implements Initializable {
 
     @FXML
     private void createNewNotation(ActionEvent event) {
+        editButton.setDisable(false);
+
+        if (notations.isEmpty()) {
             selectedNotationId = fc.createNotation();
-            editButton.setDisable(false);
             editButton.fire();
+        }
+
+        Date notationDate = notationList.getItems().get(0).getDate();
+        boolean isToday = sdf.format(notationDate).equals(sdf.format(new Date()));
+        if (isToday) {
+            selectedNotationId = notationList.getItems().get(0).getId();
+            editButton.fire();
+        } else {
+            selectedNotationId = fc.createNotation();
+            editButton.fire();
+        }
     }
 
 }
