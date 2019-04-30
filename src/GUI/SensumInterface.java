@@ -15,48 +15,64 @@ import java.util.UUID;
  */
 public interface SensumInterface {
 
+//    /**
+//     *
+//     * @param userName String with user name.
+//     * @param password String with password.
+//     * @return true if correct.
+//     */
+//    boolean login(String userName, String password);
+    
+//    /**
+//     *
+//     * @param userName String with user name.
+//     * @param password String with password.
+//     * @return true if the user was created.
+//     */
+//    boolean createUser(String userName, String password);
+    
     /**
      *
      * @return String with the users name.
      */
-    public String getUserName();
+    String getUserName();
 
     /**
      *
      * @return Map containing UUIDs of all patients along with the associated
      * names.
      */
-    public Map<UUID, String> getPatientsMap();
+    Map<UUID, String> getPatientsMap();
 
     /**
      *
      * @param patientId the UUID associated with the patient.
      */
-    public void initializePatient(UUID patientId);
+    void initializePatient(UUID patientId);
 
     /**
      *
      * @return String with the patients name.
      */
-    public String getPatientName();
+    String getPatientName();
 
     /**
      *
      * @return String with patients CPR.
      */
-    public String getPatientCPR();
+    String getPatientCPR();
 
     /**
      *
      * @return String with path to patient image.
      */
-    public String getPatientImage();
+    String getPatientImage();
 
     /**
      *
      * @return String with the general information about the patient.
      */
-    public String getPatientInfo();
+    String getPatientInfo();
     
     /**
      * 
@@ -65,59 +81,59 @@ public interface SensumInterface {
      * @param info String with general info about the patient.
      * @return true if the patient was created.
      */
-    public boolean createPatient(String name, String cpr, String info);
+    boolean createPatient(String name, String cpr, String info);
 
     /**
      *
      * @return Map containing dates of all diaries along with the associated id.
      */
-    public Map<Date, UUID> getNotationsMap();
+    Map<Date, UUID> getNotationsMap();
 
-    public void initializeDiary();
+    void initializeDiary();
 
     /**
      *
      * @param notationId the UUID associated with the notation you want to
      * initialize.
      */
-    public void initializeNotation(UUID notationId);
+    void initializeNotation(UUID notationId);
     
     /**
      *
      * @return String with the content for the currently initialized notation.
      */
-    public String getNotation();
+    String getNotation();
     
     /**
      * 
      * @return the date associated with the notation.
      */
-    public Date getNotationDate();
+    Date getNotationDate();
     
     /**
      *
      * @param content String with the content to be saved.
      * @return true if the notation was saved successfully.
      */
-    public boolean saveNotation(String content);
+    boolean saveNotation(String content);
     
     /**
      * 
      * @return true if the notation is created.
      */
-    public UUID createNotation();
+    UUID createNotation();
 
     /**
      *
      * @param notationId id of notation to be locked.
      * @return true if the notation is locked successfully.
      */
-    //public boolean lockNotation();
+    //boolean lockNotation();
     
     /**
      *
      * @param notationId id of notation to be unlocked.
      * @return true if the notation is unlocked successfully.
      */
-    //public boolean unlockNotation();
+    //boolean unlockNotation();
 }
