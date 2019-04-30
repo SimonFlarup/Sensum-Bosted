@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static java.util.Objects.hash;
 import java.util.UUID;
 import storage.StorageFacade;
 import storage.StorageInterface;
@@ -40,7 +41,12 @@ public class DomainFacade implements SensumInterface {
     private StorageInterface sf = StorageFacade.getInstance();
 
     public static void main(String[] args) {
-
+        PasswordHashing hashing = new PasswordHashing();
+        String password = hashing.hash("VOP");
+        System.out.println(password);
+        byte[] salt = PasswordHashing.extractSalt(password);
+        hashing = new PasswordHashing(salt);
+        System.out.println(hashing.compare("VOP", password));
     }
 
     @Override
@@ -78,7 +84,7 @@ public class DomainFacade implements SensumInterface {
     public String getPatientInfo() {
         return patient.getInfo();
     }
-    
+
     @Override
     public boolean createPatient(String name, String cpr, String info) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

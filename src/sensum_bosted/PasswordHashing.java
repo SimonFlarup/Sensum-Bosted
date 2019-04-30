@@ -9,15 +9,15 @@ package sensum_bosted;
  *
  * @author jakob
  */
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class PasswordHashing {
-    
-    private static final String delimiter = "%02x";
-    private String password = "";
+
+    private static final String delimiter = "::";
     private byte[] salt;
 
     MessageDigest md;
@@ -44,13 +44,10 @@ public class PasswordHashing {
 
             // Generate the salted hash
             byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
+            String sb = Base64.encode(hashedPassword);
+            String sbSalt = Base64.encode(salt);
 
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashedPassword) {
-                sb.append(String.format(delimiter, b));
-            }
-
-            System.out.println(sb);
+            sb = (sb + "::" + sbSalt);
 
             password = sb.toString();
             return password;
@@ -58,17 +55,17 @@ public class PasswordHashing {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return password;
+        return null;
     }
-    
+
     public boolean compare(String password, String hash) {
         return hash.equals(hash(password));
     }
-    
-    public static byte[] extractSalt(String hash) {      
-        
+
+    public static byte[] extractSalt(String hash) {
+
         String[] temp = hash.split(delimiter);
-        return temp[1].getBytes(); 
-        
+        return Base64.decode(temp[1]);
+
     }
 }
