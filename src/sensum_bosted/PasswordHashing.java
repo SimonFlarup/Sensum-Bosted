@@ -17,8 +17,8 @@ import java.security.SecureRandom;
 public class PasswordHashing {
     
     private static final String delimiter = "%02x";
-    String password = "";
-    byte[] salt;
+    private String password = "";
+    private byte[] salt;
 
     MessageDigest md;
 
