@@ -31,7 +31,7 @@ public class PasswordHashing {
     public String hash(String password) {
         try {
             // Select the message digest for the hash computation -> SHA-256
-            md = MessageDigest.getInstance("SHA-256");
+            md = MessageDigest.getInstance("MD5");
 
             // Generate the random salt
             SecureRandom random = new SecureRandom();
