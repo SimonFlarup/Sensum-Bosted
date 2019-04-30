@@ -47,6 +47,8 @@ public class MainMenuController implements Initializable {
     private Button createPatientButton;
     @FXML
     private Button logoutButton;
+    @FXML
+    private Button createUserButton;
 
     private SensumInterface fc;
     private ObservableList patients = FXCollections.observableArrayList();
@@ -60,6 +62,7 @@ public class MainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        createUserButton.setVisible(false);
         fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
         for (Map.Entry<UUID, String> entry : fc.getPatientsMap().entrySet()) {
@@ -84,7 +87,7 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void showHelp(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Klik på en patiens navn for at tilgå dennes "
                 + "profil samt muligheder for at tilgå dagbog og planlægning for den pågældende patient.");
         alert.setTitle("Hjælp");
@@ -123,6 +126,10 @@ public class MainMenuController implements Initializable {
                 Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    @FXML
+    private void createUser(ActionEvent event) {
     }
 
 }
