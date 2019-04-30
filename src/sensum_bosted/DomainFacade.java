@@ -117,7 +117,6 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public String getNotation() {
-        System.out.println(this.notation.getContent());
         return this.notation.getContent();
     }
 
