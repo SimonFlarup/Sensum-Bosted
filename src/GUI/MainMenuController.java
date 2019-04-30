@@ -74,14 +74,17 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void selectPatient(MouseEvent event) {
-        int selectedPatientIndex = patientList.getSelectionModel().getSelectedIndex();
-        fc.initializePatient(patientList.getItems().get(selectedPatientIndex).getId());
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/GUI/PatientMenu.fxml"));
-            Scene scene = nameUser.getScene();
-            scene.setRoot(root);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            int selectedPatientIndex = patientList.getSelectionModel().getSelectedIndex();
+            fc.initializePatient(patientList.getItems().get(selectedPatientIndex).getId());
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/PatientMenu.fxml"));
+                Scene scene = nameUser.getScene();
+                scene.setRoot(root);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        } catch (ArrayIndexOutOfBoundsException ex) {
         }
     }
 
