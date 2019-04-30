@@ -25,6 +25,12 @@ public interface SensumInterface {
     
 //    /**
 //     *
+//     * @return true if the user is logged out.
+//     */
+//    boolean logout();
+    
+//    /**
+//     *
 //     * @param userName String with user name.
 //     * @param password String with password.
 //     * @return true if the user was created.
