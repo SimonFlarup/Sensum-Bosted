@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static java.util.Objects.hash;
 import java.util.UUID;
 import storage.StorageFacade;
 import storage.StorageInterface;
@@ -40,7 +41,12 @@ public class DomainFacade implements SensumInterface {
     private StorageInterface sf = StorageFacade.getInstance();
 
     public static void main(String[] args) {
-
+        PasswordHashing hashing = new PasswordHashing();
+        String password = hashing.hash("VOP");
+        System.out.println(password);
+        byte[] salt = PasswordHashing.extractSalt(password);
+        hashing = new PasswordHashing(salt);
+        System.out.println(hashing.compare("VOP", password));
     }
 
     @Override
