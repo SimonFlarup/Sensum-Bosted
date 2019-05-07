@@ -54,6 +54,7 @@ public class PasswordHashing {
         } catch (NoSuchAlgorithmException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            System.out.println("No such algorithm exception");
         }
         return null;
     }
