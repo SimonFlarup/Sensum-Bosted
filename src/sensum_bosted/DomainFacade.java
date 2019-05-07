@@ -151,14 +151,24 @@ public class DomainFacade implements SensumInterface {
         return this.notation.getDate();
     }
 
+    /**
+     *
+     * @param userName String with user name.
+     * @param password String with password.
+     * @return true if correct.
+     */
     @Override
     public boolean login(String userName, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
+    /**
+     *
+     * @return true if the user is logged out.
+     */
     @Override
     public boolean logout() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
 }
