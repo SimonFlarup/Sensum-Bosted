@@ -42,6 +42,10 @@ public class ListViewInfo {
         return id;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
     private static class SortByDate implements Comparator<ListViewInfo> {
 
         @Override

@@ -23,7 +23,7 @@ public class Sensum_Bosted extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/LogInMenu.fxml"));
         
         Scene scene = new Scene(root);
         
