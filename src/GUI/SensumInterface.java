@@ -15,19 +15,19 @@ import java.util.UUID;
  */
 public interface SensumInterface {
 
-//    /**
-//     *
-//     * @param userName String with user name.
-//     * @param password String with password.
-//     * @return true if correct.
-//     */
-//    boolean login(String userName, String password);
+    /**
+     *
+     * @param userName String with user name.
+     * @param password String with password.
+     * @return true if correct.
+     */
+    boolean login(String userName, String password);
     
-//    /**
-//     *
-//     * @return true if the user is logged out.
-//     */
-//    boolean logout();
+    /**
+     *
+     * @return true if the user is logged out.
+     */
+    boolean logout();
     
 //    /**
 //     *
