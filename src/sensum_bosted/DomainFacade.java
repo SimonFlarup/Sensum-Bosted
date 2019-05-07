@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import static java.util.Objects.hash;
 import java.util.UUID;
 import storage.StorageFacade;
 import storage.StorageInterface;
@@ -150,6 +149,16 @@ public class DomainFacade implements SensumInterface {
     @Override
     public Date getNotationDate() {
         return this.notation.getDate();
+    }
+
+    @Override
+    public boolean login(String userName, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean logout() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
