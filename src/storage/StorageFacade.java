@@ -115,13 +115,13 @@ public class StorageFacade implements StorageInterface {
         map.put(Fields.UserFields.USERROLES, data.getField().toString());
         map.put(Fields.ID, id.toString());
 
-        if (CRUD.readFromKey(Tables.USERS, id, null) == null) {
+        //if (CRUD.readFromKey(Tables.USERS, id, null) == null) {
             CRUD.create(Tables.USERS, map, null);
             return true;
-        } else {
-            CRUD.update(Tables.USERS, id, map, null);
-            return true;
-        }
+        //} else {
+         //   CRUD.update(Tables.USERS, id, map, null);
+           // return true;
+        //}
     }
 
     @Override

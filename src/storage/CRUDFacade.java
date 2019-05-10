@@ -55,21 +55,36 @@ public class CRUDFacade implements CRUDInterface {
         }
     }
 
+    private String quoteValues(String string){
+        return "'" + string + "'";
+    }
+    
     @Override
     public void create(Tables table, Map<Enum, String> data, User user) {
         if (!isUUID(data.get(Fields.ID))) {
             System.out.println("Invalid UUID");
             return;
         }
-        createDir(table);
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(table.getPath() + data.get(Fields.ID) + ".sbdf"))) {
-            out.writeObject(data);
-            out.flush();
-        } catch (FileNotFoundException ex) {
-            System.out.println("File not found");
-        } catch (IOException ex) {
-            System.out.println("IOException");
+        String values = "";
+        switch (table) {
+            case ASSIGNMENTS:
+                values = ("" + quoteValues(data.get(Fields.AssignmentFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.AssignmentFields.USER_ID)));
+                break;
+            case NOTATIONS:
+                values = ("" + quoteValues(data.get(Fields.NotationFields.DATE)) + "," + quoteValues(data.get(Fields.NotationFields.CONTENT)) + "," + quoteValues(data.get(Fields.NotationFields.FIELD)) + "," + quoteValues(data.get(Fields.NotationFields.PATIENTID)));
+                break;
+            case PATIENTS:
+                values = ("" + quoteValues(data.get(Fields.PatientFields.CPR)) + "," + quoteValues(data.get(Fields.PatientFields.GENERAL_INFO)));
+                break;
+            case USERS:
+                values = ("" + quoteValues(data.get(Fields.UserFields.USERNAME)) + ", " + quoteValues(data.get(Fields.UserFields.PASSWORD)) + ", " + quoteValues(data.get(Fields.UserFields.NAME)) + ", " + quoteValues(data.get(Fields.UserFields.USERROLES))+ "");
+                break;
+            default:
+                break;
         }
+        
+        CRUD.getInstance().create(table.getPath(), values);
+        
     }
 
     @Override

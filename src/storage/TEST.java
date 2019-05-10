@@ -59,14 +59,14 @@ public class TEST {
         StorageInterface storage = StorageFacade.getInstance();
         
         StorageFacade storageFacade = (StorageFacade) storage;
-        storageFacade.purgeAll();
+        //storageFacade.purgeAll();
         
         storage.setUser(user);
-        storage.setPatient(p1);
-        storage.setPatient(p2);
-        storage.setAssignment(id, p1.getId());
-        storage.setAssignment(id, p2.getId());
-        
+        //storage.setPatient(p1);
+        //storage.setPatient(p2);
+        //storage.setAssignment(id, p1.getId());
+        //storage.setAssignment(id, p2.getId());
+        return;
         /*Date date = new Date();
         System.out.println("Date.Tostring(): " + date.toString());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -75,7 +75,7 @@ public class TEST {
         date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
         System.out.println(date.toString());*/
         //public Notation(String content, Date date, Notation.Field field, UUID id) {
-        String content = "Patienten opfører sig som forventet. Bla bla.\nMultiline test\n\nDone!";
+        /*String content = "Patienten opfører sig som forventet. Bla bla.\nMultiline test\n\nDone!";
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse("09/04/2019");
         Notation.Field nField = Notation.Field.DISABLED;
         id = UUID.randomUUID();

@@ -10,7 +10,7 @@ package storage;
  * @author Simon Holland Flarup
  */
 public enum Tables {
-    USERS(".//src//data//User//"),
+    USERS("User"),
     PATIENTS(".//src//data//Patients//"),
     NOTATIONS(".//src//data//Notations//"),
     ASSIGNMENTS(".//src//data//Assignment//");
