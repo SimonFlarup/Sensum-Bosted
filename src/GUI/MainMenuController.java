@@ -62,7 +62,6 @@ public class MainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        createUserButton.setVisible(false);
         fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
         for (Map.Entry<UUID, String> entry : fc.getPatientsMap().entrySet()) {
@@ -133,6 +132,16 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void createUser(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/CreateUserMenu.fxml"));
+            Scene scene = nameUser.getScene();
+            Stage currentStage = (Stage) createUserButton.getScene().getWindow();
+            currentStage.setHeight(260);
+            currentStage.setWidth(525);
+            scene.setRoot(root);
+        } catch (IOException ex) {
+            System.out.println("Error" + ex.getMessage());
+        }
     }
 
 }
