@@ -30,12 +30,6 @@ public class Sensum_Bosted extends Application {
         stage.setScene(scene);
         stage.setTitle("Sensum Bosted");
         stage.show();
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                Platform.exit();
-            }
-        });
     }
 
     /**
