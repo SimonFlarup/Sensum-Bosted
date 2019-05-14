@@ -31,7 +31,7 @@ import sensum_bosted.DomainFacade;
 public class NotationHistoryWindowController implements Initializable {
 
     @FXML
-    private ListView<?> notationHistoryList;
+    private ListView<ListViewInfo> notationHistoryList;
     @FXML
     private Label userLabel;
     @FXML
