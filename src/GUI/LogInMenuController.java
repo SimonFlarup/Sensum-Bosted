@@ -29,7 +29,7 @@ import javafx.stage.WindowEvent;
  * @author sebastian
  */
 public class LogInMenuController implements Initializable {
-
+    
     @FXML
     private TextField userName;
     @FXML
@@ -47,7 +47,7 @@ public class LogInMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-
+    
     @FXML
     private void login(ActionEvent event) {
         try {
@@ -57,7 +57,7 @@ public class LogInMenuController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Sensum Bosted");
             stage.setScene(new Scene(root));
-            stage.setResizable(false);
+            stage.setResizable(false);            
             stage.show();
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
@@ -69,5 +69,5 @@ public class LogInMenuController implements Initializable {
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
 }
