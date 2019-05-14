@@ -128,6 +128,13 @@ public interface SensumInterface {
      * @return true if the notation is created.
      */
     UUID createNotation();
+    
+    /**
+     *
+     * @return map containing Date and String array with user who made the 
+     * notation/edit on [0] and notation content on [1].
+     */
+    Map<Date, String[]> notationLog();
 
     /**
      *
