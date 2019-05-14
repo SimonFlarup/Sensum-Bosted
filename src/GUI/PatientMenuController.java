@@ -66,6 +66,7 @@ public class PatientMenuController implements Initializable {
 
     @FXML
     private void goToDiary(ActionEvent event) {
+        goBackButton.setDisable(true);
         diaryButton.setDisable(true);
         fc.initializeDiary();
         try {
@@ -80,6 +81,7 @@ public class PatientMenuController implements Initializable {
                 @Override
                 public void handle(WindowEvent event) {
                     diaryButton.setDisable(false);
+                    goBackButton.setDisable(true);
                 }
             });
 
