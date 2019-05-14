@@ -8,6 +8,8 @@ package GUI;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import sensum_bosted.DomainFacade;
 
 /**
  * FXML Controller class
@@ -35,6 +38,8 @@ public class NotationHistoryWindowController implements Initializable {
     private TextArea notationField;
     @FXML
     private Button backButton;
+    private SensumInterface fc;
+    private ObservableList notations = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
@@ -44,7 +49,7 @@ public class NotationHistoryWindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        fc = DomainFacade.getInstance();
     }
 
     @FXML
