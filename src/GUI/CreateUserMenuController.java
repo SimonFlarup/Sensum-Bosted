@@ -21,6 +21,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import sensum_bosted.DomainFacade;
 
 /**
  * FXML Controller class
@@ -45,6 +46,8 @@ public class CreateUserMenuController implements Initializable {
     private Button backButton;
     @FXML
     private Button createUserButton;
+    
+    private SensumInterface fc;
 
     /**
      * Initializes the controller class.
@@ -54,7 +57,7 @@ public class CreateUserMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        fc = DomainFacade.getInstance();
     }
 
     @FXML
