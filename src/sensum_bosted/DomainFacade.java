@@ -21,9 +21,11 @@ import storage.StorageInterface;
 public class DomainFacade implements SensumInterface {
 
     private static DomainFacade instance;
+    private String userName = "dfc0a570-df86-42ba-920a-fd13619edef5";
 
     DomainFacade() {
         user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
+        this.userName = userName;
     }
 
     public static DomainFacade getInstance() {
@@ -38,6 +40,7 @@ public class DomainFacade implements SensumInterface {
     private Diary diary;
     private Notation notation;
     private StorageInterface sf = StorageFacade.getInstance();
+    
 
     public static void main(String[] args) {
         PasswordHashing hashing = new PasswordHashing();
@@ -160,18 +163,20 @@ public class DomainFacade implements SensumInterface {
      */
     @Override
     public boolean login(String userName, String password) {
-        User user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
-        
-        
+        user = sf.getUser(UUID.fromString(userName)); //PLACEHOLDER
+
         System.out.println(user.getPassword());
         PasswordHashing pw = new PasswordHashing(PasswordHashing.extractSalt(user.getPassword()));
         String pwH = pw.hash(password);
         if (pwH.equals(user.getPassword())) {
             System.out.println(pwH);
             return true;
+        } else {
+            user = null;
+            pwH = null;
+            return false;
+            
         }
-
-        return false;
     }
 
     /**
