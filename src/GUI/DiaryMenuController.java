@@ -46,6 +46,8 @@ public class DiaryMenuController implements Initializable {
     private ObservableList notations = FXCollections.observableArrayList();
     private UUID selectedNotationId;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    @FXML
+    private Button historyButton;
 
     /**
      * Initializes the controller class.
@@ -56,6 +58,7 @@ public class DiaryMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         editButton.setDisable(true);
+        historyButton.setDisable(true);
         fc = DomainFacade.getInstance();
         ListViewInfo lvi;
         for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
@@ -69,11 +72,12 @@ public class DiaryMenuController implements Initializable {
     @FXML
     private void openNotation(MouseEvent event) {
         try {
-        int selectedNotationIndex = notationList.getSelectionModel().getSelectedIndex();
-        selectedNotationId = notationList.getItems().get(selectedNotationIndex).getId();
-        fc.initializeNotation(selectedNotationId);
-        notationText.setText(fc.getNotation());
-        editButton.setDisable(false);
+            int selectedNotationIndex = notationList.getSelectionModel().getSelectedIndex();
+            selectedNotationId = notationList.getItems().get(selectedNotationIndex).getId();
+            fc.initializeNotation(selectedNotationId);
+            notationText.setText(fc.getNotation());
+            editButton.setDisable(false);
+            historyButton.setDisable(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
         }
     }
@@ -107,6 +111,18 @@ public class DiaryMenuController implements Initializable {
         } else {
             selectedNotationId = fc.createNotation();
             editButton.fire();
+        }
+    }
+
+    @FXML
+    private void openHistory(ActionEvent event) {
+        fc.initializeNotation(selectedNotationId);
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/NotationHistoryWindow.fxml"));
+            Scene scene = editButton.getScene();
+            scene.setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }

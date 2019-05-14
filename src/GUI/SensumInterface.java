@@ -134,7 +134,7 @@ public interface SensumInterface {
      * @return map containing Date and String array with user who made the 
      * notation/edit on [0] and notation content on [1].
      */
-    Map<Date, String[]> notationLog();
+    //Map<Date, String[]> notationLog();
 
     /**
      *
