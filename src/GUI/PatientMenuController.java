@@ -74,6 +74,7 @@ public class PatientMenuController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Sensum Bosted");
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.show();
             stage.setX(650);
             stage.setY(250);

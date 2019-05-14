@@ -57,6 +57,7 @@ public class LogInMenuController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Sensum Bosted");
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.show();
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
