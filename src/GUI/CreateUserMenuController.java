@@ -101,7 +101,7 @@ public class CreateUserMenuController implements Initializable {
         //            }
         //} 
         else {
-            alert.setContentText("Patient blev ikke gemt");
+            alert.setContentText("Bruger blev ikke oprettet.");
             alert.show();
         }
     }
