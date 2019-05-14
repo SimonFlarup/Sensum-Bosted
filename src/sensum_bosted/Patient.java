@@ -16,8 +16,8 @@ public class Patient extends Person {
     private String cpr;
     private String info;
 
-    public Patient(String name, String username, String password, UserRoles field, String cpr, String info, UUID id) {
-        super(name, username, password, field, id);
+    public Patient(String name, String password, UserRoles field, String cpr, String info) {
+        super(name, cpr, password, field);
         this.cpr = cpr;
         this.info = info;
     }

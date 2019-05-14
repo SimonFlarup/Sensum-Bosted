@@ -43,7 +43,7 @@ public class DiaryMenuController implements Initializable {
 
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
-    private UUID selectedNotationId;
+    private Date selectedNotationId;
     
 
     /**
@@ -57,8 +57,8 @@ public class DiaryMenuController implements Initializable {
         editButton.setDisable(true);
         fc = DomainFacade.getInstance();
         ListViewInfo lvi;
-        for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
-        lvi = new ListViewInfo(entry.getValue(), entry.getKey());
+        for (Date d : fc.getNotationsList()) {
+        lvi = new ListViewInfo(d);
             notations.add(lvi);
         }
         notationList.setItems(notations.sorted(ListViewInfo.BY_DATE));
@@ -69,7 +69,7 @@ public class DiaryMenuController implements Initializable {
     @FXML
     private void openNotation(MouseEvent event) {
         int selectedNotationIndex = notationList.getSelectionModel().getSelectedIndex();
-        selectedNotationId = notationList.getItems().get(selectedNotationIndex).getId();
+        selectedNotationId = notationList.getItems().get(selectedNotationIndex).getDate();
         fc.initializeNotation(selectedNotationId);
         notationText.setText(fc.getNotation());
         editButton.setDisable(false);

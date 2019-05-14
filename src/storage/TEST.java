@@ -28,7 +28,7 @@ import sensum_bosted.UserRoles;
 public class TEST {
 
     public static void main(String[] args) throws Exception {
-        //public Patient(String name, String username, String password, UserRoles field, String cpr, String info, UUID id) {
+        /*public Patient(String name, String username, String password, UserRoles field, String cpr, String info, UUID id) {
         String name = "Jonas";
         String username = "jona";
         String password = "xxx";
@@ -45,7 +45,6 @@ public class TEST {
         field = UserRoles.PATIENT_BOTH;
         id = UUID.randomUUID();
         Patient p2 = new Patient(name, username, password, field, cpr, info, id);
-        
         //public User(String name, String username, String password, UserRoles field, Map<UUID, String> patients, UUID id) {
         name = "Erik";
         username = "erso";
@@ -57,10 +56,8 @@ public class TEST {
         map.put(p2.getId(), p2.getName());
         User user = new User(name, username, password, field, map, id);
         StorageInterface storage = StorageFacade.getInstance();
-        
         StorageFacade storageFacade = (StorageFacade) storage;
         //storageFacade.purgeAll();
-        
         storage.setUser(user);
         //storage.setPatient(p1);
         //storage.setPatient(p2);
@@ -80,7 +77,6 @@ public class TEST {
         Notation.Field nField = Notation.Field.DISABLED;
         id = UUID.randomUUID();
         Notation notat1 = new Notation(content, date, nField, id);
-        
         content = "Patienten opfører sig overhovedet ikke som forventet. Bla bla.\nMultiline test\n\nDone!";
         date = new SimpleDateFormat("dd/MM/yyyy").parse("10/04/2019");
         nField = Notation.Field.DISABLED;
@@ -88,7 +84,6 @@ public class TEST {
         Notation notat2 = new Notation(content, date, nField, id);
         id = UUID.randomUUID();
         Notation notat3 = new Notation(content, date, nField, id);
-        
         storage.setNotation(p1.getId(), notat1);
         storage.setNotation(p1.getId(), notat2);
         storage.setNotation(p2.getId(), notat3);
@@ -105,7 +100,6 @@ public class TEST {
         map.put(Fields.PatientFields.NAME, "Ida-Marie123");
         map.put(Fields.PatientFields.FIELDS, "DISABLED");
         CRUD.update(Tables.PATIENTS, id, map, null);
-        
         map = new HashMap<>();
         UUID id2 = UUID.randomUUID();
         map.put(Fields.PatientFields.NAME, "Luckas");
@@ -113,18 +107,16 @@ public class TEST {
         map.put(Fields.ID, id2.toString());
         map.put(Fields.PatientFields.FIELDS, "DISABLED");
         CRUD.create(Tables.PATIENTS, map, null);
-
         map = CRUD.readFromKey(Tables.PATIENTS, id, null);
-
         for (Map.Entry<Enum, String> entry : map.entrySet()) {
-            System.out.println("Key = " + entry.getKey().toString() + ", Value = " + entry.getValue());
+        System.out.println("Key = " + entry.getKey().toString() + ", Value = " + entry.getValue());
         }
-
         HashMap<Enum, String>[] array = CRUD.readAll(Tables.PATIENTS, null);
         for (HashMap<Enum, String> singleMap : array) {
-            for (Map.Entry<Enum, String> entry : singleMap.entrySet()) {
-                System.out.println("Key = " + entry.getKey().toString() + ", Value = " + entry.getValue());
-            }
+        for (Map.Entry<Enum, String> entry : singleMap.entrySet()) {
+        System.out.println("Key = " + entry.getKey().toString() + ", Value = " + entry.getValue());
+        }
         }*/
+        java.sql.Date date = new java.sql.Date(new Date("12/12/19").getTime());
     }
 }

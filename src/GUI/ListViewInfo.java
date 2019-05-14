@@ -8,7 +8,6 @@ package GUI;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  *
@@ -16,19 +15,18 @@ import java.util.UUID;
  */
 public class ListViewInfo {
 
-    private UUID id;
+    private String id;
     private String name;
     private Date date;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     public static final Comparator<ListViewInfo> BY_DATE = new SortByDate();
 
-    public ListViewInfo(UUID id, String name) {
+    public ListViewInfo(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public ListViewInfo(UUID id, Date date) {
-        this.id = id;
+    public ListViewInfo(Date date) {
         this.name = sdf.format(date);
         this.date = date;
     }
@@ -38,8 +36,12 @@ public class ListViewInfo {
         return name;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     private static class SortByDate implements Comparator<ListViewInfo> {

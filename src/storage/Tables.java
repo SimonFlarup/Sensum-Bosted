@@ -11,13 +11,13 @@ package storage;
  */
 public enum Tables {
     USERS("User"),
-    PATIENTS(".//src//data//Patients//"),
-    NOTATIONS(".//src//data//Notations//"),
-    ASSIGNMENTS(".//src//data//Assignment//");
+    PATIENTS("Patient"),
+    NOTATIONS("Notation"),
+    ASSIGNMENTS("Assignment");
 
     private String path;
 
-    public String getPath() {
+    public String getTableName() {
         return this.path;
     }
 

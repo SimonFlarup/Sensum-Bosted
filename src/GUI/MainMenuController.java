@@ -54,7 +54,7 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
-        for (Map.Entry<UUID, String> entry : fc.getPatientsMap().entrySet()) {
+        for (Map.Entry<String, String> entry : fc.getPatientsMap().entrySet()) {
             ListViewInfo lvf = new ListViewInfo(entry.getKey(), entry.getValue());
             patients.add(lvf);
         }

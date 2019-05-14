@@ -18,14 +18,12 @@ public abstract class Person {
     private String username;
     private String password;
     private UserRoles field;
-    private UUID id;
 
-    public Person(String name, String username, String password, UserRoles field, UUID id) {
+    public Person(String name, String username, String password, UserRoles field) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.field = field;
-        this.id = id;
     }
 
     public String getName() {
@@ -42,9 +40,5 @@ public abstract class Person {
 
     public UserRoles getField() {
         return field;
-    }
-    
-    public UUID getId() {
-        return id;
     }
 }

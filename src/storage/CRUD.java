@@ -7,9 +7,11 @@ package storage;
 
 import GUI.ListViewInfo;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import static storage.Tables.*;
 
 /**
  *
@@ -78,6 +80,7 @@ public class CRUD {
 //            }
 //            rs.close();
             st.close();
+            db.close();
         } catch (java.sql.SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -105,36 +108,63 @@ public class CRUD {
 //    }
 //}
     //NEXT TO DO
-    public HashMap<Enum, String> where(String table, String condition) {
-        System.out.println("Creating");
-        HashMap<Enum, String> result = new HashMap<>();
+    public HashMap<Enum, String>[] read(String table, String condition) {
+        System.out.println("Whereing: " + table + " | " + condition);
+        ArrayList<HashMap<Enum, String>> result = new ArrayList<>();
         try {
             Connection db = DriverManager.getConnection(url, username, password);
             Statement st = db.createStatement();
-
-            ResultSet rs = st.executeQuery("SELECT * FROM \"User\"");
+            ResultSet rs;
+            if (condition == null) {
+                rs = st.executeQuery("SELECT * FROM \"" + table + "\"");
+            } else {
+                rs = st.executeQuery("SELECT * FROM \"" + table + "\" WHERE " + condition);
+            }
             ResultSetMetaData rsmd = rs.getMetaData();
             for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                 System.out.println(rsmd.getColumnName(i));
             }
             while (rs.next()) {
+                System.out.println("Creating row - 2");
+                HashMap<Enum, String> row = new HashMap<>();
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    result.put(Fields.UserFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));
+                    if (table.equals(ASSIGNMENTS.getTableName())) {
+                        row.put(Fields.AssignmentFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));
+                    } else if (table.equals(NOTATIONS.getTableName())) {
+                        row.put(Fields.NotationFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));
+                    } else if (table.equals(PATIENTS.getTableName())) {
+                        row.put(Fields.PatientFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));
+                    } else if (table.equals(USERS.getTableName())) {
+                        row.put(Fields.UserFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));
+                    }
                 }
+                result.add(row);
             }
             rs.close();
             st.close();
+            db.close();
         } catch (java.sql.SQLException e) {
             System.out.println(e.getMessage());
         }
-        /*    
-    //Create (C)
-    public void create(Tables table, Map<Enum, String> data, User user);
-    //Read (R)
-    public HashMap<Enum, String> readFromKey(Tables table, UUID primaryKey, User user);
-    public HashMap<Enum, String>[] readAll(Tables table, User user);
-    //Update (U)
-    public void update(Tables table, UUID primaryKey, Map<Enum, String> data, User user); */
 
+        if (result.isEmpty()) {
+            return null;
+        }
+
+        return result.toArray(
+                new HashMap[result.size()]);
+    }
+
+    public void update(String table, String values, String condition) {
+        System.out.println("Updating");
+        try {
+            Connection db = DriverManager.getConnection(url, username, password);
+            Statement st = db.createStatement();
+            st.executeUpdate("UPDATE \"" + table + "\" SET " + values + " WHERE " + condition); // change values to patient data
+            st.close();
+            db.close();
+        } catch (java.sql.SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -6,6 +6,7 @@
 package GUI;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -26,13 +27,13 @@ public interface SensumInterface {
      * @return Map containing UUIDs of all patients along with the associated
      * names.
      */
-    public Map<UUID, String> getPatientsMap();
+    public Map<String, String> getPatientsMap();
 
     /**
      *
-     * @param patientId the UUID associated with the patient.
+     * @param cpr the cpr associated with the patient.
      */
-    public void initializePatient(UUID patientId);
+    public void initializePatient(String cpr);
 
     /**
      *
@@ -71,16 +72,16 @@ public interface SensumInterface {
      *
      * @return Map containing dates of all diaries along with the associated id.
      */
-    public Map<Date, UUID> getNotationsMap();
+    public List<Date> getNotationsList();
 
     public void initializeDiary();
 
     /**
      *
-     * @param notationId the UUID associated with the notation you want to
+     * @param date the date associated with the notation you want to
      * initialize.
      */
-    public void initializeNotation(UUID notationId);
+    public void initializeNotation(Date date);
     
     /**
      *
@@ -105,7 +106,7 @@ public interface SensumInterface {
      * 
      * @return true if the notation is created.
      */
-    public UUID createNotation();
+    public Date createNotation();
 
     /**
      *

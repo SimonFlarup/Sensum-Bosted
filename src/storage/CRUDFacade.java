@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -37,127 +38,132 @@ public class CRUDFacade implements CRUDInterface {
         return instance;
     }
 
-    private boolean isUUID(String s) {
-        try {
-            UUID.fromString(s); //Throws IllegalArgumentException if not a string representation of a UUID
-            return true;
-        } catch (IllegalArgumentException ex) {
-            return false;
-        } catch (NullPointerException ex) {
-            return false;
-        }
-    }
-
-    private void createDir(Tables table) {
-        File dir = new File(table.getPath());
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-    }
-
-    private String quoteValues(String string){
+    private String quoteValues(String string) {
         return "'" + string + "'";
     }
-    
+
+    private String doubleQuoteValues(String string) {
+        return "\"" + string + "\"";
+    }
+
+    private String conditionFromKeys(Tables table, String[] primaryKey) {
+        String condition = "";
+        switch (table) {
+            case ASSIGNMENTS:
+                if (primaryKey.length == 2) {
+                    condition = (doubleQuoteValues(Fields.AssignmentFields.USER_ID.toString().toLowerCase())
+                            + " = " + quoteValues(primaryKey[0])
+                            + " AND "
+                            + doubleQuoteValues(Fields.AssignmentFields.PATIENT_ID.toString().toLowerCase())
+                            + " = "
+                            + quoteValues(primaryKey[1]));
+                } else {
+                    condition = (doubleQuoteValues(Fields.AssignmentFields.USER_ID.toString().toLowerCase())
+                            + " = " + quoteValues(primaryKey[0]));
+                }
+                break;
+            case NOTATIONS:
+                if (primaryKey.length == 2) {
+                    condition = (doubleQuoteValues(Fields.NotationFields.DATE.toString().toLowerCase())
+                            + " = " + quoteValues(primaryKey[0])
+                            + " AND "
+                            + doubleQuoteValues(Fields.NotationFields.PATIENT_ID.toString().toLowerCase())
+                            + " = "
+                            + quoteValues(primaryKey[1]));
+                } else {
+                    condition = (doubleQuoteValues(Fields.NotationFields.PATIENT_ID.toString().toLowerCase())
+                            + " = " + quoteValues(primaryKey[0]));
+                }
+
+                break;
+            case PATIENTS:
+                condition = (doubleQuoteValues(Fields.PatientFields.CPR.toString().toLowerCase())
+                        + " = " + quoteValues(primaryKey[0]));
+                break;
+            case USERS:
+                condition = (doubleQuoteValues(Fields.UserFields.USERNAME.toString().toLowerCase())
+                        + " = " + quoteValues(primaryKey[0]));
+                break;
+            default:
+                break;
+        }
+        return condition;
+    }
+
     @Override
     public void create(Tables table, Map<Enum, String> data, User user) {
-        if (!isUUID(data.get(Fields.ID))) {
-            System.out.println("Invalid UUID");
-            return;
-        }
         String values = "";
         switch (table) {
             case ASSIGNMENTS:
                 values = ("" + quoteValues(data.get(Fields.AssignmentFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.AssignmentFields.USER_ID)));
                 break;
             case NOTATIONS:
-                values = ("" + quoteValues(data.get(Fields.NotationFields.DATE)) + "," + quoteValues(data.get(Fields.NotationFields.CONTENT)) + "," + quoteValues(data.get(Fields.NotationFields.FIELD)) + "," + quoteValues(data.get(Fields.NotationFields.PATIENTID)));
+                values = ("'" + new java.sql.Date(new Date(data.get(Fields.NotationFields.DATE)).getTime()) + "'," + quoteValues(data.get(Fields.NotationFields.CONTENT)) + "," + quoteValues(data.get(Fields.NotationFields.FIELD)) + "," + quoteValues(data.get(Fields.NotationFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.NotationFields.LAST_USER)) + "," + quoteValues(data.get(Fields.NotationFields.TIME_STAMP)));
                 break;
             case PATIENTS:
-                values = ("" + quoteValues(data.get(Fields.PatientFields.CPR)) + "," + quoteValues(data.get(Fields.PatientFields.GENERAL_INFO)));
+                values = ("" + quoteValues(data.get(Fields.PatientFields.CPR)) + "," + quoteValues(data.get(Fields.PatientFields.INFO)));
                 break;
             case USERS:
-                values = ("" + quoteValues(data.get(Fields.UserFields.USERNAME)) + ", " + quoteValues(data.get(Fields.UserFields.PASSWORD)) + ", " + quoteValues(data.get(Fields.UserFields.NAME)) + ", " + quoteValues(data.get(Fields.UserFields.USERROLES))+ "");
+                values = ("" + quoteValues(data.get(Fields.UserFields.USERNAME)) + ", " + quoteValues(data.get(Fields.UserFields.PASSWORD)) + ", " + quoteValues(data.get(Fields.UserFields.NAME)) + ", " + quoteValues(data.get(Fields.UserFields.USERROLES)) + "");
                 break;
             default:
                 break;
         }
-        
-        CRUD.getInstance().create(table.getPath(), values);
-        
+
+        CRUD.getInstance().create(table.getTableName(), values);
+
     }
 
     @Override
-    public HashMap<Enum, String> readFromKey(Tables table, UUID primaryKey, User user) { //UUID is, in filebased storage, the file name (Primary key)
-        HashMap<Enum, String> map;
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(table.getPath() + primaryKey + ".sbdf"))) {
-            map = (HashMap) in.readObject();
-            return map;
-        } catch (FileNotFoundException ex) {
-            System.out.println("File not found");
-        } catch (IOException ex) {
-            System.out.println("IOException");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("ClassCastExpection");
-        }
-        return null;
+    public HashMap<Enum, String>[] readFromKey(Tables table, String[] primaryKey, User user) {
+        HashMap<Enum, String>[] map;
+        String condition = this.conditionFromKeys(table, primaryKey);
+
+        map = CRUD.getInstance().read(table.getTableName(), condition);
+        return map;
     }
 
-    public HashMap<Enum, String>[] readAll(Tables table, User user) {
-        ArrayList<HashMap<Enum, String>> returnArray = new ArrayList<>();
-        HashMap<Enum, String> map;
-
-        File[] files = new File(table.getPath()).listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".sbdf");
-            }
-        });
-
-        for (File file : files) {
-            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
-                map = (HashMap) in.readObject();
-                returnArray.add(map);
-                System.out.println("Read file: " + file.getName());
-            } catch (FileNotFoundException ex) {
-                System.out.println("File not found");
-            } catch (IOException ex) {
-                System.out.println("IOException");
-            } catch (ClassNotFoundException ex) {
-                System.out.println("ClassCastExpection");
-            }
+    private String valueCreation(String values, Enum field, String data) {
+        if (!values.isEmpty()) {
+            values += ", ";
         }
-        if (returnArray.isEmpty()) {
-            return null;
-        }
-        return returnArray.toArray(new HashMap[returnArray.size()]);
+        values += quoteValues(field.toString()) + " = " + data;
+        return values;
     }
 
     @Override
-    public void update(Tables table, UUID primaryKey, Map<Enum, String> data, User user) {
-        HashMap<Enum, String> currentData = readFromKey(table, primaryKey, user);
+    public void update(Tables table, String[] primaryKey, Map<Enum, String> data, User user) {
+        HashMap<Enum, String> currentData = readFromKey(table, primaryKey, user)[0];
         currentData.putAll(data);
-        if (primaryKey != null) {
-            currentData.put(Fields.ID, primaryKey.toString());
-        } else if (!isUUID(data.get(Fields.ID))) {
-            System.out.println("Invalid UUID");
-            return;
-        }
-        create(table, currentData, user);
-    }
 
-    public void purgeAll(Tables table, User user) {
-        File[] files = new File(table.getPath()).listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".sbdf");
-            }
-        });
-        if (files != null) {
-            for (File file : files) {
-                file.delete();
-            }
-        }
-    }
+        String condition = this.conditionFromKeys(table, primaryKey);
 
+        String values = "";
+        switch (table) {
+            case ASSIGNMENTS:
+                for (Enum field : Fields.AssignmentFields.values()) {
+                    values = valueCreation(values, field, currentData.get(field));
+                }
+                break;
+            case NOTATIONS:
+                for (Enum field : Fields.NotationFields.values()) {
+                    values = valueCreation(values, field, currentData.get(field));
+                }
+                break;
+            case PATIENTS:
+                for (Enum field : Fields.PatientFields.values()) {
+                    values = valueCreation(values, field, currentData.get(field));
+                }
+                break;
+            case USERS:
+                for (Enum field : Fields.UserFields.values()) {
+                    values = valueCreation(values, field, currentData.get(field));
+                }
+                break;
+            default:
+                break;
+        }
+
+        CRUD.getInstance().update(table.getTableName(), values, condition);
+    }
 }

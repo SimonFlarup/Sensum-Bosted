@@ -6,6 +6,7 @@
 package sensum_bosted;
 
 import GUI.SensumInterface;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,7 @@ public class DomainFacade implements SensumInterface {
     private static DomainFacade instance;
 
     private DomainFacade() {
-        user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
+        user = sf.getUser("erik");
     }
 
     public static DomainFacade getInstance() {
@@ -49,13 +50,17 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public Map<UUID, String> getPatientsMap() {
-        return user.getPatients();
+    public Map<String, String> getPatientsMap() {
+        Map<String, String> patientMap = new HashMap<>();
+        for (String s : user.getPatients()){
+            patientMap.put(s, sf.getPatient(s).getName());
+        }
+        return patientMap;
     }
 
     @Override
-    public void initializePatient(UUID patientId) {
-        patient = sf.getPatient(patientId);
+    public void initializePatient(String cpr) {
+        patient = sf.getPatient(cpr);
     }
 
     @Override
@@ -81,34 +86,33 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public boolean createPatient(String name, String cpr, String info) {
-        //public Patient(String name, String username, String password, UserRoles field, String cpr, String info, UUID id) {
-        this.patient = new Patient(name, name + "_user", "test1234", UserRoles.PATIENT, cpr, info, UUID.randomUUID());
+        this.patient = new Patient(name, "test1234", UserRoles.PATIENT, cpr, info);
         sf.setPatient(this.patient);
-        sf.setAssignment(this.user.getId(), this.patient.getId());
-        this.user = sf.getUser(this.user.getId());
+        sf.setAssignment(this.user, this.patient);
+        this.user = sf.getUser(this.user.getUsername());
         return true;
     }
 
     @Override
-    public Map<Date, UUID> getNotationsMap() {
-        Map<Date, UUID> notationsMap = new HashMap<>();
+    public List<Date> getNotationsList() {
+        List<Date> notationsList = new ArrayList<>();
         List<Notation> temp = diary.getNotations();
         for (Notation n : temp) {
-            notationsMap.put(n.getDate(), n.getId());
+            notationsList.add(n.getDate());
         }
-        return notationsMap;
+        return notationsList;
     }
 
     @Override
     public void initializeDiary() {
-        diary = sf.getDiary(patient.getId());
+        diary = sf.getDiary(patient);
     }
 
     @Override
-    public void initializeNotation(UUID notationId) {
+    public void initializeNotation(Date date) {
         List<Notation> temp = diary.getNotations();
         for (Notation notat : temp) {
-            if (notationId.toString().equals(notat.getId().toString())) {
+            if (notat.getDate() == date) {
                 this.notation = notat;
                 return;
             }
@@ -122,23 +126,20 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public boolean saveNotation(String content) {
-        notation.setContent(content);
-        return sf.setNotation(patient.getId(), notation);
+        notation.setContent(content, user.getUsername());
+        return sf.setNotation(patient, notation);
     }
 
     @Override
-    public UUID createNotation() {
-        
-        UUID patientId = this.patient.getId();
-
+    public Date createNotation() {
         if (this.patient.getField() == UserRoles.PATIENT) {
-            this.notation = new Notation("", new Date(), Notation.Field.DISABLED, UUID.randomUUID());
+            this.notation = new Notation("", new Date(), Notation.Field.DISABLED, user.getUsername());
         } else {
-            this.notation = new Notation("", new Date(), Notation.Field.DRUG, UUID.randomUUID());
+            this.notation = new Notation("", new Date(), Notation.Field.DRUG, user.getUsername());
         }
-        sf.setNotation(patientId, this.notation);
+        sf.setNotation(patient, this.notation);
         initializeDiary();
-        return this.notation.getId();
+        return this.notation.getDate();
     }
 
     @Override

@@ -16,16 +16,22 @@ public class Notation {
     private String content;
     private Date date;
     private Field field;
-    private UUID id;
+    private String lastUser;
+    private java.sql.Date timestamp;
     //Date
     //Field <- Område
 
-    public Notation(String content, Date date, Notation.Field field, UUID id) {
+    public Notation(String content, Date date, Notation.Field field, String lastUser) {
+        this(content, date, field, lastUser, new java.sql.Date(new Date().getTime()));
+    } 
+    
+    public Notation(String content, Date date, Notation.Field field, String lastUser, java.sql.Date timestamp) {
         this.content = content;
         this.date = date;
         this.field = field;
-        this.id = id;
-    } 
+        this.lastUser = lastUser;
+        this.timestamp = timestamp;
+    }
     
     public static enum Field {
         DISABLED,
@@ -52,16 +58,11 @@ public class Notation {
     public Field getField() {
         return field;
     }
-
-    /**
-     * @return the id
-     */
-    public UUID getId() {
-        return id;
-    }
     
-    public void setContent(String content) {
+    public void setContent(String content, String lastUser) {
         this.content = content;
+        this.lastUser = lastUser;
+        new java.sql.Date(new Date().getTime());
     }
     
 }
