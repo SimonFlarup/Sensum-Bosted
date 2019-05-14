@@ -22,7 +22,7 @@ public class DomainFacade implements SensumInterface {
 
     private static DomainFacade instance;
 
-    private DomainFacade() {
+    DomainFacade() {
         user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
     }
 
@@ -133,7 +133,7 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public UUID createNotation() {
-        
+
         UUID patientId = this.patient.getId();
 
         if (this.patient.getField() == UserRoles.PATIENT) {
@@ -152,6 +152,7 @@ public class DomainFacade implements SensumInterface {
     }
 
     /**
+     * sf.getUser(lol)
      *
      * @param userName String with user name.
      * @param password String with password.
@@ -159,7 +160,18 @@ public class DomainFacade implements SensumInterface {
      */
     @Override
     public boolean login(String userName, String password) {
+        User user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
         
+        
+        System.out.println(user.getPassword());
+        PasswordHashing pw = new PasswordHashing(PasswordHashing.extractSalt(user.getPassword()));
+        String pwH = pw.hash(password);
+        if (pwH.equals(user.getPassword())) {
+            System.out.println(pwH);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -168,7 +180,7 @@ public class DomainFacade implements SensumInterface {
      */
     @Override
     public boolean logout() {
-        
+        return true;
     }
 
 }

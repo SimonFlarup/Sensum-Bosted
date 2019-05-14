@@ -5,16 +5,9 @@
  */
 package storage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import sensum_bosted.Notation;
 import sensum_bosted.Patient;
@@ -49,7 +42,7 @@ public class TEST {
         //public User(String name, String username, String password, UserRoles field, Map<UUID, String> patients, UUID id) {
         name = "Erik";
         username = "erso";
-        password = "xxx";
+        password = "10SmcB5kCYqcntZuDeBp1A==::HCtkxHMne2hPvAezVZGIsQ==";
         field = UserRoles.CARETAKER_BOTH;
         HashMap<UUID, String> map = new HashMap<>();
         id = UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5");
