@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -46,8 +47,9 @@ public class CreateUserMenuController implements Initializable {
     private Button backButton;
     @FXML
     private Button createUserButton;
-    
+
     private SensumInterface fc;
+    private Alert alert;
 
     /**
      * Initializes the controller class.
@@ -76,6 +78,32 @@ public class CreateUserMenuController implements Initializable {
 
     @FXML
     private void createUser(ActionEvent event) {
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Fejl");
+        alert.setHeaderText("");
+
+        if (nameField.getText().isEmpty()) {
+            alert.setContentText("Intet navn angivet.");
+            alert.show();
+        } else if (userNameField.getText().isEmpty()) {
+            alert.setContentText("Intet username angivet.");
+            alert.show();
+        } else if (passwordField.getText().isEmpty()) {
+            alert.setContentText("Intet password angivet.");
+            alert.show();
+        } //        else if (fc.createUser(userNameField.getText(), passwordField.getText())) {
+        //            try {
+        //                Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
+        //                Scene scene = createUserButton.getScene();
+        //                scene.setRoot(root);
+        //            } catch (IOException ex) {
+        //                System.out.println("Error");
+        //            }
+        //} 
+        else {
+            alert.setContentText("Patient blev ikke gemt");
+            alert.show();
+        }
     }
 
 }
