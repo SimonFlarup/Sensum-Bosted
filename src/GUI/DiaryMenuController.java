@@ -7,10 +7,8 @@ package GUI;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
-import java.util.Map;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.UUID;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,7 +41,7 @@ public class DiaryMenuController implements Initializable {
 
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
-    private Date selectedNotationId;
+    private LocalDate selectedNotationId;
     
 
     /**
@@ -57,7 +55,7 @@ public class DiaryMenuController implements Initializable {
         editButton.setDisable(true);
         fc = DomainFacade.getInstance();
         ListViewInfo lvi;
-        for (Date d : fc.getNotationsList()) {
+        for (LocalDate d : fc.getNotationsList()) {
         lvi = new ListViewInfo(d);
             notations.add(lvi);
         }

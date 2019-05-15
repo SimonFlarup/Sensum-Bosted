@@ -7,6 +7,8 @@ package storage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -126,17 +128,10 @@ public class StorageFacade implements StorageInterface {
                 if (patient.getCpr().equals(map.get(Fields.NotationFields.PATIENT_ID))) {
                     String content = map.get(Fields.NotationFields.CONTENT);
                     String sDate = map.get(Fields.NotationFields.DATE);
-                    Date date;
-                    //try {
-                        date = new Date(sDate);
-                        //date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
-                    //} catch (ParseException ex) {
-                    //    System.out.println("Parse expection while parsing to date - SF");
-                    //    return null;
-                    //}
+                    LocalDate date = LocalDate.parse(sDate);
                     Notation.Field field = Notation.Field.valueOf(map.get(Fields.NotationFields.FIELD));
                     String user = map.get(Fields.NotationFields.LAST_USER);
-                    java.sql.Date timestamp = new java.sql.Date(new Date(map.get(Fields.NotationFields.TIME_STAMP)).getTime());
+                    LocalDateTime timestamp = LocalDateTime.parse(map.get(Fields.NotationFields.TIME_STAMP));
                     Notation notation = new Notation(content, date, field, user, timestamp);
                     notations.add(notation);
                 }
@@ -151,22 +146,23 @@ public class StorageFacade implements StorageInterface {
 
     @Override
     public boolean setNotation(Patient patient, Notation data) {
-        java.sql.Date date = new java.sql.Date(data.getDate().getTime());
 
         //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         //String sDate = dateFormat.format(data.getDate());
 
         HashMap<Enum, String> map = new HashMap<>();
         map.put(Fields.NotationFields.CONTENT, data.getContent());
-        map.put(Fields.NotationFields.DATE, date.toString());
+        map.put(Fields.NotationFields.DATE, data.getDate().toString());
         map.put(Fields.NotationFields.FIELD, data.getField().toString());
         map.put(Fields.NotationFields.PATIENT_ID, patient.getCpr());
+        map.put(Fields.NotationFields.LAST_USER, data.getLastUser());
+        map.put(Fields.NotationFields.TIME_STAMP, data.getTimestamp().toString());
 
-        if (CRUD.readFromKey(Tables.NOTATIONS, new String[]{date.toString()}, null) == null) {
+        if (CRUD.readFromKey(Tables.NOTATIONS, new String[]{data.getDate().toString(), patient.getCpr()}, null) == null) {
             CRUD.create(Tables.NOTATIONS, map, null);
             return true;
         } else {
-            CRUD.update(Tables.NOTATIONS, new String[]{date.toString()}, map, null);
+            CRUD.update(Tables.NOTATIONS, new String[]{data.getDate().toString(), patient.getCpr()}, map, null);
             return true;
         }
     }

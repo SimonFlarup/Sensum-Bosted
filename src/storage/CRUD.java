@@ -156,7 +156,7 @@ public class CRUD {
     }
 
     public void update(String table, String values, String condition) {
-        System.out.println("Updating");
+        System.out.println("Updating: " + table + " | " + condition + " | " + values);
         try {
             Connection db = DriverManager.getConnection(url, username, password);
             Statement st = db.createStatement();

@@ -5,19 +5,9 @@
  */
 package storage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import sensum_bosted.User;
 
 /**
@@ -98,7 +88,7 @@ public class CRUDFacade implements CRUDInterface {
                 values = ("" + quoteValues(data.get(Fields.AssignmentFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.AssignmentFields.USER_ID)));
                 break;
             case NOTATIONS:
-                values = ("'" + new java.sql.Date(new Date(data.get(Fields.NotationFields.DATE)).getTime()) + "'," + quoteValues(data.get(Fields.NotationFields.CONTENT)) + "," + quoteValues(data.get(Fields.NotationFields.FIELD)) + "," + quoteValues(data.get(Fields.NotationFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.NotationFields.LAST_USER)) + "," + quoteValues(data.get(Fields.NotationFields.TIME_STAMP)));
+                values = ("'" + data.get(Fields.NotationFields.DATE) + "'," + quoteValues(data.get(Fields.NotationFields.CONTENT)) + "," + quoteValues(data.get(Fields.NotationFields.FIELD)) + "," + quoteValues(data.get(Fields.NotationFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.NotationFields.LAST_USER)) + "," + quoteValues(data.get(Fields.NotationFields.TIME_STAMP)));
                 break;
             case PATIENTS:
                 values = ("" + quoteValues(data.get(Fields.PatientFields.CPR)) + "," + quoteValues(data.get(Fields.PatientFields.INFO)));
@@ -127,7 +117,7 @@ public class CRUDFacade implements CRUDInterface {
         if (!values.isEmpty()) {
             values += ", ";
         }
-        values += quoteValues(field.toString()) + " = " + data;
+        values += doubleQuoteValues(field.toString().toLowerCase()) + " = " + quoteValues(data);
         return values;
     }
 

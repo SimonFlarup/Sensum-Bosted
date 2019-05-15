@@ -5,10 +5,9 @@
  */
 package GUI;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  *
@@ -72,7 +71,7 @@ public interface SensumInterface {
      *
      * @return Map containing dates of all diaries along with the associated id.
      */
-    public List<Date> getNotationsList();
+    public List<LocalDate> getNotationsList();
 
     public void initializeDiary();
 
@@ -81,7 +80,7 @@ public interface SensumInterface {
      * @param date the date associated with the notation you want to
      * initialize.
      */
-    public void initializeNotation(Date date);
+    public void initializeNotation(LocalDate date);
     
     /**
      *
@@ -93,7 +92,7 @@ public interface SensumInterface {
      * 
      * @return the date associated with the notation.
      */
-    public Date getNotationDate();
+    public LocalDate getNotationDate();
     
     /**
      *
@@ -106,7 +105,7 @@ public interface SensumInterface {
      * 
      * @return true if the notation is created.
      */
-    public Date createNotation();
+    public LocalDate createNotation();
 
     /**
      *

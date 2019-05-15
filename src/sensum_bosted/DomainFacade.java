@@ -6,6 +6,7 @@
 package sensum_bosted;
 
 import GUI.SensumInterface;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -94,8 +95,8 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public List<Date> getNotationsList() {
-        List<Date> notationsList = new ArrayList<>();
+    public List<LocalDate> getNotationsList() {
+        List<LocalDate> notationsList = new ArrayList<>();
         List<Notation> temp = diary.getNotations();
         for (Notation n : temp) {
             notationsList.add(n.getDate());
@@ -109,7 +110,7 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public void initializeNotation(Date date) {
+    public void initializeNotation(LocalDate date) {
         List<Notation> temp = diary.getNotations();
         for (Notation notat : temp) {
             if (notat.getDate() == date) {
@@ -131,11 +132,11 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public Date createNotation() {
+    public LocalDate createNotation() {
         if (this.patient.getField() == UserRoles.PATIENT) {
-            this.notation = new Notation("", new Date(), Notation.Field.DISABLED, user.getUsername());
+            this.notation = new Notation("", LocalDate.now(), Notation.Field.DISABLED, user.getUsername());
         } else {
-            this.notation = new Notation("", new Date(), Notation.Field.DRUG, user.getUsername());
+            this.notation = new Notation("", LocalDate.now(), Notation.Field.DRUG, user.getUsername());
         }
         sf.setNotation(patient, this.notation);
         initializeDiary();
@@ -143,7 +144,7 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public Date getNotationDate() {
+    public LocalDate getNotationDate() {
         return this.notation.getDate();
     }
 
