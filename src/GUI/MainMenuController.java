@@ -65,7 +65,7 @@ public class MainMenuController implements Initializable {
         createUserButton.setVisible(false);
         fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
-        for (Map.Entry<UUID, String> entry : fc.getPatientsMap().entrySet()) {
+        for (Map.Entry<String, String> entry : fc.getPatientsMap().entrySet()) {
             ListViewInfo lvf = new ListViewInfo(entry.getKey(), entry.getValue());
             patients.add(lvf);
         }

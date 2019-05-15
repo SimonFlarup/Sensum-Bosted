@@ -13,23 +13,14 @@ import java.util.List;
  * @author Ryge
  */
 public class Diary {
-    private Date date;
     private List<Notation> notations;
 
     public Diary(List<Notation> notations) {
         this.notations = notations;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public List<Notation> getNotations() {
         return notations;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public void setNotations(List<Notation> notations) {

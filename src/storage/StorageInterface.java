@@ -5,7 +5,7 @@
  */
 package storage;
 
-import java.util.UUID;
+import java.util.Date;
 import sensum_bosted.Diary;
 import sensum_bosted.Notation;
 import sensum_bosted.Patient;
@@ -20,16 +20,18 @@ public interface StorageInterface {
     //getUser | Set
     //getDiary | Set
     //getNotation | Set
-    public Patient getPatient(UUID id);
+    public Patient getPatient(String cpr);
     public boolean setPatient(Patient data);
     
-    public User getUser(UUID id);
+    public User getUser(String userName);
     public boolean setUser(User data);
     
-    public boolean setAssignment(UUID userId, UUID patientId);
+    public boolean setAssignment(User user, Patient patient);
     
-    public Diary getDiary(UUID patientId);
-    public boolean setNotation(UUID patientId, Notation data);
+    public Diary getDiary(Patient patient);
+    public boolean setNotation(Patient patient, Notation data);
+    
+    public Diary getDiaryHistory(Patient patient, Date date);
     
     //public Notation getNotation(UUID id);
     //public boolean setNotation(UUID id, Notation data);
