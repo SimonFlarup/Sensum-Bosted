@@ -82,7 +82,7 @@ public class PatientMenuController implements Initializable {
                 @Override
                 public void handle(WindowEvent event) {
                     diaryButton.setDisable(false);
-                    goBackButton.setDisable(true);
+                    goBackButton.setDisable(false);
                 }
             });
 

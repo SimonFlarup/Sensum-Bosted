@@ -29,7 +29,7 @@ import sensum_bosted.DomainFacade;
  * @author sebastian
  */
 public class DiaryMenuController implements Initializable {
-    
+
     @FXML
     private Button editButton;
     @FXML
@@ -40,7 +40,7 @@ public class DiaryMenuController implements Initializable {
     private Button newNotationButton;
     @FXML
     private Button historyButton;
-    
+
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
     private LocalDate selectedNotationId;
@@ -58,13 +58,13 @@ public class DiaryMenuController implements Initializable {
         fc = DomainFacade.getInstance();
         ListViewInfo lvi;
         for (LocalDate d : fc.getNotationsList()) {
-        lvi = new ListViewInfo(d);
+            lvi = new ListViewInfo(d);
             notations.add(lvi);
         }
         notationList.setItems(notations.sorted(ListViewInfo.BY_DATE));
-        
+
     }
-    
+
     @FXML
     private void openNotation(MouseEvent event) {
         try {
@@ -78,7 +78,7 @@ public class DiaryMenuController implements Initializable {
             sensum_bosted.PrintHandler.println(ex.getMessage(), true);
         }
     }
-    
+
     @FXML
     private void editNotation(ActionEvent event) {
         fc.initializeNotation(selectedNotationId);
@@ -91,11 +91,11 @@ public class DiaryMenuController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+
     @FXML
     private void createNewNotation(ActionEvent event) {
         editButton.setDisable(false);
-        
+
         if (!notations.isEmpty()) {
             LocalDate notationDate = notationList.getItems().get(0).getDate();
             boolean isToday = notationDate == LocalDate.now();
@@ -111,7 +111,7 @@ public class DiaryMenuController implements Initializable {
             editButton.fire();
         }
     }
-    
+
     @FXML
     private void openHistory(ActionEvent event) {
         fc.initializeNotation(selectedNotationId);

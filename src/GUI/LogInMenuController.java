@@ -76,6 +76,7 @@ public class LogInMenuController implements Initializable {
             }
         } else {
             message.setText("Invalid credentials!");
+            password.setText("");
         }
     }
 
