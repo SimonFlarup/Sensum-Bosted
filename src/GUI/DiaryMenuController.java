@@ -7,11 +7,8 @@ package GUI;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.UUID;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,8 +43,7 @@ public class DiaryMenuController implements Initializable {
     
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
-    private UUID selectedNotationId;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private LocalDate selectedNotationId;
 
     /**
      * Initializes the controller class.
@@ -61,8 +57,8 @@ public class DiaryMenuController implements Initializable {
         historyButton.setDisable(true);
         fc = DomainFacade.getInstance();
         ListViewInfo lvi;
-        for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
-            lvi = new ListViewInfo(entry.getValue(), entry.getKey());
+        for (LocalDate d : fc.getNotationsList()) {
+        lvi = new ListViewInfo(d);
             notations.add(lvi);
         }
         notationList.setItems(notations.sorted(ListViewInfo.BY_DATE));
@@ -79,6 +75,7 @@ public class DiaryMenuController implements Initializable {
             editButton.setDisable(false);
             historyButton.setDisable(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
+            sensum_bosted.PrintHandler.println(ex.getMessage(), true);
         }
     }
     
@@ -90,7 +87,8 @@ public class DiaryMenuController implements Initializable {
             Scene scene = editButton.getScene();
             scene.setRoot(root);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            sensum_bosted.PrintHandler.println("Error loading EditDiary | " + ex.getMessage() + " | ", true);
+            ex.printStackTrace();
         }
     }
     
@@ -99,17 +97,17 @@ public class DiaryMenuController implements Initializable {
         editButton.setDisable(false);
         
         if (!notations.isEmpty()) {
-            Date notationDate = notationList.getItems().get(0).getDate();
-            boolean isToday = sdf.format(notationDate).equals(sdf.format(new Date()));
+            LocalDate notationDate = notationList.getItems().get(0).getDate();
+            boolean isToday = notationDate == LocalDate.now();
             if (isToday) {
-                selectedNotationId = notationList.getItems().get(0).getId();
+                selectedNotationId = notationDate;
                 editButton.fire();
             } else {
-                selectedNotationId = fc.createNotation();
+                selectedNotationId = fc.createNotation(LocalDate.now());
                 editButton.fire();
             }
         } else {
-            selectedNotationId = fc.createNotation();
+            selectedNotationId = fc.createNotation(LocalDate.now());
             editButton.fire();
         }
     }

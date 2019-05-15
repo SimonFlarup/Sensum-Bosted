@@ -5,8 +5,8 @@
  */
 package sensum_bosted;
 
-import java.util.Date;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -14,18 +14,24 @@ import java.util.UUID;
  */
 public class Notation {
     private String content;
-    private Date date;
+    private LocalDate date;
     private Field field;
-    private UUID id;
+    private String lastUser;
+    private LocalDateTime timestamp;
     //Date
     //Field <- Område
 
-    public Notation(String content, Date date, Notation.Field field, UUID id) {
+    public Notation(String content, LocalDate date, Notation.Field field, String lastUser) {
+        this(content, date, field, lastUser, LocalDateTime.now());
+    } 
+    
+    public Notation(String content, LocalDate date, Notation.Field field, String lastUser, LocalDateTime timestamp) {
         this.content = content;
         this.date = date;
         this.field = field;
-        this.id = id;
-    } 
+        this.lastUser = lastUser;
+        this.timestamp = timestamp;
+    }
     
     public static enum Field {
         DISABLED,
@@ -42,7 +48,7 @@ public class Notation {
     /**
      * @return the date
      */
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -52,16 +58,19 @@ public class Notation {
     public Field getField() {
         return field;
     }
-
-    /**
-     * @return the id
-     */
-    public UUID getId() {
-        return id;
-    }
     
-    public void setContent(String content) {
+    public void setContent(String content, String lastUser) {
         this.content = content;
+        this.lastUser = lastUser;
+        LocalDate.now();
+    }
+
+    public String getLastUser() {
+        return lastUser;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
     
 }

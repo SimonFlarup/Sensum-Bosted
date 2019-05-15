@@ -5,9 +5,9 @@
  */
 package GUI;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  *
@@ -21,21 +21,21 @@ public interface SensumInterface {
      * @param password String with password.
      * @return true if correct.
      */
-    //boolean login(String userName, String password);
+    boolean login(String userName, String password);
     
     /**
      *
      * @return true if the user is logged out.
      */
-    //boolean logout();
+    boolean logout();
     
-    /**
-     *
-     * @param userName String with user name.
-     * @param password String with password.
-     * @return true if the user was created.
-     */
-    //boolean createUser(String userName, String password);
+//    /**
+//     *
+//     * @param userName String with user name.
+//     * @param password String with password.
+//     * @return true if the user was created.
+//     */
+//    boolean createUser(String userName, String password);
     
     /**
      *
@@ -48,13 +48,13 @@ public interface SensumInterface {
      * @return Map containing UUIDs of all patients along with the associated
      * names.
      */
-    Map<UUID, String> getPatientsMap();
+    public Map<String, String> getPatientsMap();
 
     /**
      *
-     * @param patientId the UUID associated with the patient.
+     * @param cpr the cpr associated with the patient.
      */
-    void initializePatient(UUID patientId);
+    public void initializePatient(String cpr);
 
     /**
      *
@@ -93,16 +93,17 @@ public interface SensumInterface {
      *
      * @return Map containing dates of all diaries along with the associated id.
      */
-    Map<Date, UUID> getNotationsMap();
+    public List<LocalDate> getNotationsList();
 
     void initializeDiary();
 
     /**
      *
-     * @param notationId the UUID associated with the notation you want to
+     * @param date the date associated with the notation you want to
      * initialize.
+     * @return 
      */
-    void initializeNotation(UUID notationId);
+    public boolean initializeNotation(LocalDate date);
     
     /**
      *
@@ -114,7 +115,7 @@ public interface SensumInterface {
      * 
      * @return the date associated with the notation.
      */
-    Date getNotationDate();
+    public LocalDate getNotationDate();
     
     /**
      *
@@ -125,17 +126,10 @@ public interface SensumInterface {
     
     /**
      * 
+     * @param date
      * @return true if the notation is created.
      */
-    UUID createNotation();
-    
-    /**
-     *
-     * @return map containing Date and String array with user who made the 
-     * notation/edit on [0] and notation content on [1].
-     */
-    //Map<Date, String[]> notationLog();
-
+    public LocalDate createNotation(LocalDate date);
     /**
      *
      * @param notationId id of notation to be locked.

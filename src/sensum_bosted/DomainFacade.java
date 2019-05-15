@@ -6,12 +6,11 @@
 package sensum_bosted;
 
 import GUI.SensumInterface;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import static java.util.Objects.hash;
-import java.util.UUID;
 import storage.StorageFacade;
 import storage.StorageInterface;
 
@@ -24,7 +23,6 @@ public class DomainFacade implements SensumInterface {
     private static DomainFacade instance;
 
     private DomainFacade() {
-        user = sf.getUser(UUID.fromString("dfc0a570-df86-42ba-920a-fd13619edef5"));
     }
 
     public static DomainFacade getInstance() {
@@ -43,10 +41,10 @@ public class DomainFacade implements SensumInterface {
     public static void main(String[] args) {
         PasswordHashing hashing = new PasswordHashing();
         String password = hashing.hash("VOP");
-        System.out.println(password);
+        sensum_bosted.PrintHandler.println(password);
         byte[] salt = PasswordHashing.extractSalt(password);
         hashing = new PasswordHashing(salt);
-        System.out.println(hashing.compare("VOP", password));
+        sensum_bosted.PrintHandler.println(hashing.compare("VOP", password));
     }
 
     @Override
@@ -55,13 +53,17 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public Map<UUID, String> getPatientsMap() {
-        return user.getPatients();
+    public Map<String, String> getPatientsMap() {
+        Map<String, String> patientMap = new HashMap<>();
+        for (String s : user.getPatients()) {
+            patientMap.put(s, sf.getPatient(s).getName());
+        }
+        return patientMap;
     }
 
     @Override
-    public void initializePatient(UUID patientId) {
-        patient = sf.getPatient(patientId);
+    public void initializePatient(String cpr) {
+        patient = sf.getPatient(cpr);
     }
 
     @Override
@@ -87,38 +89,38 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public boolean createPatient(String name, String cpr, String info) {
-        //public Patient(String name, String username, String password, UserRoles field, String cpr, String info, UUID id) {
-        this.patient = new Patient(name, name + "_user", "test1234", UserRoles.PATIENT, cpr, info, UUID.randomUUID());
+        this.patient = new Patient(name, "test1234", UserRoles.PATIENT, cpr, info);
         sf.setPatient(this.patient);
-        sf.setAssignment(this.user.getId(), this.patient.getId());
-        this.user = sf.getUser(this.user.getId());
+        sf.setAssignment(this.user, this.patient);
+        this.user = sf.getUser(this.user.getUsername());
         return true;
     }
 
     @Override
-    public Map<Date, UUID> getNotationsMap() {
-        Map<Date, UUID> notationsMap = new HashMap<>();
+    public List<LocalDate> getNotationsList() {
+        List<LocalDate> notationsList = new ArrayList<>();
         List<Notation> temp = diary.getNotations();
         for (Notation n : temp) {
-            notationsMap.put(n.getDate(), n.getId());
+            notationsList.add(n.getDate());
         }
-        return notationsMap;
+        return notationsList;
     }
 
     @Override
     public void initializeDiary() {
-        diary = sf.getDiary(patient.getId());
+        diary = sf.getDiary(patient);
     }
 
     @Override
-    public void initializeNotation(UUID notationId) {
+    public boolean initializeNotation(LocalDate date) {
         List<Notation> temp = diary.getNotations();
         for (Notation notat : temp) {
-            if (notationId.toString().equals(notat.getId().toString())) {
+            if (notat.getDate().equals(date)) {
                 this.notation = notat;
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     @Override
@@ -128,28 +130,69 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public boolean saveNotation(String content) {
-        notation.setContent(content);
-        return sf.setNotation(patient.getId(), notation);
+        notation.setContent(content, user.getUsername());
+        return sf.setNotation(patient, notation);
     }
 
     @Override
-    public UUID createNotation() {
-        
-        UUID patientId = this.patient.getId();
-
-        if (this.patient.getField() == UserRoles.PATIENT) {
-            this.notation = new Notation("", new Date(), Notation.Field.DISABLED, UUID.randomUUID());
-        } else {
-            this.notation = new Notation("", new Date(), Notation.Field.DRUG, UUID.randomUUID());
-        }
-        sf.setNotation(patientId, this.notation);
+    public LocalDate createNotation(LocalDate date) {
         initializeDiary();
-        return this.notation.getId();
+        if (!(initializeNotation(LocalDate.now()))) {
+            System.out.println((initializeNotation(LocalDate.now())));
+            if (this.patient.getField() == UserRoles.PATIENT) {
+                this.notation = new Notation("", date, Notation.Field.DISABLED, user.getUsername());
+            } else {
+                this.notation = new Notation("", date, Notation.Field.DRUG, user.getUsername());
+            }
+            sf.setNotation(patient, this.notation);
+            initializeDiary();
+
+        }
+        return this.notation.getDate();
     }
 
     @Override
-    public Date getNotationDate() {
+    public LocalDate getNotationDate() {
         return this.notation.getDate();
+    }
+
+    /**
+     * @param userName String with user name.
+     * @param password String with password.
+     * @return true if correct.
+     */
+    @Override
+    public boolean login(String userName, String password) {
+        if (userName.length() < 1 | password.length() < 1) {
+            return false;
+        }
+        user = sf.getUser(userName);
+        if (user == null) {
+            return false;
+        }
+
+        sensum_bosted.PrintHandler.println(user.getPassword());
+
+        PasswordHashing pw = new PasswordHashing(PasswordHashing.extractSalt(user.getPassword()));
+        String pwH = pw.hash(password);
+        if (pwH.equals(user.getPassword())) {
+            sensum_bosted.PrintHandler.println(pwH);
+            return true;
+        } else {
+            user = null;
+            return false;
+
+        }
+    }
+
+    /**
+     *
+     * @return true if the user is logged out.
+     */
+    @Override
+    public boolean logout() {
+        user = null;
+        return true;
     }
 
 }

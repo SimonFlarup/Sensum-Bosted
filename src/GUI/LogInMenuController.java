@@ -19,8 +19,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sensum_bosted.DomainFacade;
 import javafx.stage.WindowEvent;
 
 /**
@@ -36,6 +38,8 @@ public class LogInMenuController implements Initializable {
     private TextField password;
     @FXML
     private Button loginButton;
+    @FXML
+    private Label message;
 
     /**
      * Initializes the controller class.
@@ -47,27 +51,32 @@ public class LogInMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
+
     @FXML
     private void login(ActionEvent event) {
-        try {
-            Stage currentStage = (Stage) loginButton.getScene().getWindow();
-            currentStage.close();
-            Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Sensum Bosted");
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);            
-            stage.show();
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    Platform.exit();
-                }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        SensumInterface df = DomainFacade.getInstance();
+        if (df.login(userName.getText(), password.getText())) {
+            try {
+                Stage currentStage = (Stage) loginButton.getScene().getWindow();
+                currentStage.close();
+                Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Sensum Bosted");
+                stage.setScene(new Scene(root));
+                stage.setResizable(false);
+                stage.show();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                	@Override
+                	public void handle(WindowEvent event) {
+                    	Platform.exit();
+                	}
+            	});
+            } catch (IOException ex) {
+                Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            message.setText("Invalid credentials!");
         }
     }
-    
+
 }
