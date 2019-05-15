@@ -69,7 +69,7 @@ public class DiaryMenuController implements Initializable {
     private void openNotation(MouseEvent event) {
         try {
             int selectedNotationIndex = notationList.getSelectionModel().getSelectedIndex();
-            selectedNotationId = notationList.getItems().get(selectedNotationIndex).getId();
+            selectedNotationId = notationList.getItems().get(selectedNotationIndex).getDate();
             fc.initializeNotation(selectedNotationId);
             notationText.setText(fc.getNotation());
             editButton.setDisable(false);
