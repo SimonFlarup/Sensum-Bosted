@@ -16,12 +16,14 @@ public enum Fields {
         DATE,
         CONTENT,
         FIELD,
-        PATIENTID;
+        PATIENT_ID,
+        TIME_STAMP,
+        LAST_USER;
     }
 
     public enum PatientFields {
         CPR,
-        GENERAL_INFO;
+        INFO;
     }
 
     public enum UserFields {

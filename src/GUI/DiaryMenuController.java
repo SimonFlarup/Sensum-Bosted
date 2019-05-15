@@ -7,11 +7,8 @@ package GUI;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.UUID;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,8 +41,7 @@ public class DiaryMenuController implements Initializable {
 
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
-    private UUID selectedNotationId;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private LocalDate selectedNotationId;
 
     /**
      * Initializes the controller class.
@@ -58,8 +54,8 @@ public class DiaryMenuController implements Initializable {
         editButton.setDisable(true);
         fc = DomainFacade.getInstance();
         ListViewInfo lvi;
-        for (Map.Entry<Date, UUID> entry : fc.getNotationsMap().entrySet()) {
-            lvi = new ListViewInfo(entry.getValue(), entry.getKey());
+        for (LocalDate d : fc.getNotationsList()) {
+        lvi = new ListViewInfo(d);
             notations.add(lvi);
         }
         notationList.setItems(notations.sorted(ListViewInfo.BY_DATE));
@@ -70,7 +66,7 @@ public class DiaryMenuController implements Initializable {
     private void openNotation(MouseEvent event) {
         try {
         int selectedNotationIndex = notationList.getSelectionModel().getSelectedIndex();
-        selectedNotationId = notationList.getItems().get(selectedNotationIndex).getId();
+        selectedNotationId = notationList.getItems().get(selectedNotationIndex).getDate();
         fc.initializeNotation(selectedNotationId);
         notationText.setText(fc.getNotation());
         editButton.setDisable(false);
