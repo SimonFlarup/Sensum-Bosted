@@ -42,7 +42,6 @@ public class DiaryMenuController implements Initializable {
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
     private LocalDate selectedNotationId;
-    
 
     /**
      * Initializes the controller class.
@@ -60,17 +59,19 @@ public class DiaryMenuController implements Initializable {
             notations.add(lvi);
         }
         notationList.setItems(notations.sorted(ListViewInfo.BY_DATE));
-        
 
     }
 
     @FXML
     private void openNotation(MouseEvent event) {
+        try {
         int selectedNotationIndex = notationList.getSelectionModel().getSelectedIndex();
         selectedNotationId = notationList.getItems().get(selectedNotationIndex).getDate();
         fc.initializeNotation(selectedNotationId);
         notationText.setText(fc.getNotation());
         editButton.setDisable(false);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+        }
     }
 
     @FXML
@@ -87,9 +88,21 @@ public class DiaryMenuController implements Initializable {
 
     @FXML
     private void createNewNotation(ActionEvent event) {
-            selectedNotationId = fc.createNotation();
-            editButton.setDisable(false);
-            editButton.fire();
-    }
+        editButton.setDisable(false);
 
+        if (!notations.isEmpty()) {
+            Date notationDate = notationList.getItems().get(0).getDate();
+            boolean isToday = sdf.format(notationDate).equals(sdf.format(new Date()));
+            if (isToday) {
+                selectedNotationId = notationList.getItems().get(0).getId();
+                editButton.fire();
+            } else {
+                selectedNotationId = fc.createNotation();
+                editButton.fire();
+            }
+        } else {
+            selectedNotationId = fc.createNotation();
+            editButton.fire();
+        }
+    }
 }

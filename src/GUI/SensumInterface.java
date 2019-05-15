@@ -15,11 +15,33 @@ import java.util.Map;
  */
 public interface SensumInterface {
 
+//    /**
+//     *
+//     * @param userName String with user name.
+//     * @param password String with password.
+//     * @return true if correct.
+//     */
+//    boolean login(String userName, String password);
+    
+//    /**
+//     *
+//     * @return true if the user is logged out.
+//     */
+//    boolean logout();
+    
+//    /**
+//     *
+//     * @param userName String with user name.
+//     * @param password String with password.
+//     * @return true if the user was created.
+//     */
+//    boolean createUser(String userName, String password);
+    
     /**
      *
      * @return String with the users name.
      */
-    public String getUserName();
+    String getUserName();
 
     /**
      *
@@ -38,25 +60,25 @@ public interface SensumInterface {
      *
      * @return String with the patients name.
      */
-    public String getPatientName();
+    String getPatientName();
 
     /**
      *
      * @return String with patients CPR.
      */
-    public String getPatientCPR();
+    String getPatientCPR();
 
     /**
      *
      * @return String with path to patient image.
      */
-    public String getPatientImage();
+    String getPatientImage();
 
     /**
      *
      * @return String with the general information about the patient.
      */
-    public String getPatientInfo();
+    String getPatientInfo();
     
     /**
      * 
@@ -65,7 +87,7 @@ public interface SensumInterface {
      * @param info String with general info about the patient.
      * @return true if the patient was created.
      */
-    public boolean createPatient(String name, String cpr, String info);
+    boolean createPatient(String name, String cpr, String info);
 
     /**
      *
@@ -73,7 +95,7 @@ public interface SensumInterface {
      */
     public List<LocalDate> getNotationsList();
 
-    public void initializeDiary();
+    void initializeDiary();
 
     /**
      *
@@ -86,7 +108,7 @@ public interface SensumInterface {
      *
      * @return String with the content for the currently initialized notation.
      */
-    public String getNotation();
+    String getNotation();
     
     /**
      * 
@@ -99,25 +121,24 @@ public interface SensumInterface {
      * @param content String with the content to be saved.
      * @return true if the notation was saved successfully.
      */
-    public boolean saveNotation(String content);
+    boolean saveNotation(String content);
     
     /**
      * 
      * @return true if the notation is created.
      */
     public LocalDate createNotation();
-
     /**
      *
      * @param notationId id of notation to be locked.
      * @return true if the notation is locked successfully.
      */
-    //public boolean lockNotation();
+    //boolean lockNotation();
     
     /**
      *
      * @param notationId id of notation to be unlocked.
      * @return true if the notation is unlocked successfully.
      */
-    //public boolean unlockNotation();
+    //boolean unlockNotation();
 }
