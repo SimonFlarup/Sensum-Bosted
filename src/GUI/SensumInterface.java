@@ -101,8 +101,9 @@ public interface SensumInterface {
      *
      * @param date the date associated with the notation you want to
      * initialize.
+     * @return 
      */
-    public void initializeNotation(LocalDate date);
+    public boolean initializeNotation(LocalDate date);
     
     /**
      *
@@ -125,9 +126,10 @@ public interface SensumInterface {
     
     /**
      * 
+     * @param date
      * @return true if the notation is created.
      */
-    public LocalDate createNotation();
+    public LocalDate createNotation(LocalDate date);
     /**
      *
      * @param notationId id of notation to be locked.

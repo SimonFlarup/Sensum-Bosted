@@ -55,8 +55,7 @@ public class EditDiaryMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
         notationText.setText(fc.getNotation());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        notationID.setText(sdf.format(fc.getNotationDate()));
+        notationID.setText(fc.getNotationDate().toString());
     }
 
     @FXML
@@ -89,7 +88,7 @@ public class EditDiaryMenuController implements Initializable {
                 Scene scene = saveButton.getScene();
                 scene.setRoot(root);
             } catch (IOException ex) {
-                System.out.println("Error");
+                sensum_bosted.PrintHandler.println(ex.getMessage(), true);
             }
         }
     }

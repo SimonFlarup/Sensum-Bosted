@@ -64,7 +64,6 @@ public class PasswordHashing {
     }
 
     public static byte[] extractSalt(String hash) {
-
         String[] temp = hash.split(delimiter);
         return Base64.decode(temp[1]);
 

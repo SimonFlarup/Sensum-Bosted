@@ -71,6 +71,7 @@ public class DiaryMenuController implements Initializable {
         notationText.setText(fc.getNotation());
         editButton.setDisable(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
+            sensum_bosted.PrintHandler.println(ex.getMessage(), true);
         }
     }
 
@@ -82,7 +83,8 @@ public class DiaryMenuController implements Initializable {
             Scene scene = editButton.getScene();
             scene.setRoot(root);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            sensum_bosted.PrintHandler.println("Error loading EditDiary | " + ex.getMessage() + " | ", true);
+            ex.printStackTrace();
         }
     }
 
@@ -91,17 +93,17 @@ public class DiaryMenuController implements Initializable {
         editButton.setDisable(false);
 
         if (!notations.isEmpty()) {
-            Date notationDate = notationList.getItems().get(0).getDate();
-            boolean isToday = sdf.format(notationDate).equals(sdf.format(new Date()));
+            LocalDate notationDate = notationList.getItems().get(0).getDate();
+            boolean isToday = notationDate == LocalDate.now();
             if (isToday) {
-                selectedNotationId = notationList.getItems().get(0).getId();
+                selectedNotationId = notationDate;
                 editButton.fire();
             } else {
-                selectedNotationId = fc.createNotation();
+                selectedNotationId = fc.createNotation(LocalDate.now());
                 editButton.fire();
             }
         } else {
-            selectedNotationId = fc.createNotation();
+            selectedNotationId = fc.createNotation(LocalDate.now());
             editButton.fire();
         }
     }

@@ -58,12 +58,12 @@ public class TEST {
         //storage.setAssignment(id, p2.getId());
         return;
         /*Date date = new Date();
-        System.out.println("Date.Tostring(): " + date.toString());
+        sensum_bosted.PrintHandler.println("Date.Tostring(): " + date.toString());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String sDate = dateFormat.format(date);
-        System.out.println("dateFormat.format(date): " + sDate);
+        sensum_bosted.PrintHandler.println("dateFormat.format(date): " + sDate);
         date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
-        System.out.println(date.toString());*/
+        sensum_bosted.PrintHandler.println(date.toString());*/
         //public Notation(String content, Date date, Notation.Field field, UUID id) {
         /*String content = "Patienten opfører sig som forventet. Bla bla.\nMultiline test\n\nDone!";
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse("09/04/2019");
@@ -102,12 +102,12 @@ public class TEST {
         CRUD.create(Tables.PATIENTS, map, null);
         map = CRUD.readFromKey(Tables.PATIENTS, id, null);
         for (Map.Entry<Enum, String> entry : map.entrySet()) {
-        System.out.println("Key = " + entry.getKey().toString() + ", Value = " + entry.getValue());
+        sensum_bosted.PrintHandler.println("Key = " + entry.getKey().toString() + ", Value = " + entry.getValue());
         }
         HashMap<Enum, String>[] array = CRUD.readAll(Tables.PATIENTS, null);
         for (HashMap<Enum, String> singleMap : array) {
         for (Map.Entry<Enum, String> entry : singleMap.entrySet()) {
-        System.out.println("Key = " + entry.getKey().toString() + ", Value = " + entry.getValue());
+        sensum_bosted.PrintHandler.println("Key = " + entry.getKey().toString() + ", Value = " + entry.getValue());
         }
         }*/
         java.sql.Date date = new java.sql.Date(new Date("12/12/19").getTime());

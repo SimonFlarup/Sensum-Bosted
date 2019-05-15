@@ -14,7 +14,7 @@ public class DomainTest {
     public static void main(String[] args) {
         
         DomainFacade df = DomainFacade.getInstance();
-        System.out.println(df.login("erso", "zzz"));
+        sensum_bosted.PrintHandler.println(df.login("erso", "zzz"));
         
         
         

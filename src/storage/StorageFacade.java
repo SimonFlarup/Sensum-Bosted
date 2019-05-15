@@ -84,7 +84,13 @@ public class StorageFacade implements StorageInterface {
     @Override
     public User getUser(String username) {
         //    public User(String name, String username, String password, UserRoles field) {
-        HashMap<Enum, String> userMap = CRUD.readFromKey(Tables.USERS, new String[]{username}, null)[0];
+        HashMap<Enum, String> userMap;
+        try{
+        userMap = CRUD.readFromKey(Tables.USERS, new String[]{username}, null)[0];
+        }catch (NullPointerException ex) {
+            sensum_bosted.PrintHandler.println(ex.toString(), true);
+            return null;
+        }
         String name = userMap.get(Fields.UserFields.NAME);
         username = userMap.get(Fields.UserFields.USERNAME);
         String password = userMap.get(Fields.UserFields.PASSWORD);
@@ -172,7 +178,7 @@ public class StorageFacade implements StorageInterface {
         Map<Enum, String> map = new HashMap<>();
         map.put(Fields.AssignmentFields.PATIENT_ID, patient.getCpr());
         map.put(Fields.AssignmentFields.USER_ID, user.getUsername());
-        System.out.println(patient.getCpr() + " : " + user.getUsername());
+        sensum_bosted.PrintHandler.println(patient.getCpr() + " : " + user.getUsername());
         CRUD.create(Tables.ASSIGNMENTS, map, null);
         return true;
     }
