@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -38,7 +39,11 @@ public class CreateUserMenuController implements Initializable {
     @FXML
     private TextField passwordField;
     @FXML
+    private PasswordField repeatPasswordField;
+    @FXML
     private RadioButton handiRadio;
+    @FXML
+    private RadioButton bothRadio;
     @FXML
     private ToggleGroup fieldGroup;
     @FXML
@@ -90,6 +95,14 @@ public class CreateUserMenuController implements Initializable {
             alert.show();
         } else if (passwordField.getText().isEmpty()) {
             alert.setContentText("Intet password angivet.");
+            alert.show();
+        } else if (!repeatPasswordField.getText().contains(passwordField.getText()) || repeatPasswordField.getText().isEmpty()) {
+            alert.setContentText("kodeordet i 'password' og 'gentag password' stemmer ikke overens.");
+            alert.show();
+            passwordField.setText("");
+            repeatPasswordField.setText("");
+        } else if (!handiRadio.isSelected() && !drugRadio.isSelected() && !bothRadio.isSelected()) {
+            alert.setContentText("Intet område angivet.");
             alert.show();
         } //        else if (fc.createUser(userNameField.getText(), passwordField.getText())) {
         //            try {
