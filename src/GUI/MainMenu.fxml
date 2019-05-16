@@ -14,8 +14,8 @@
       <Label layoutX="410.0" layoutY="31.0" text="Patienter" />
       <Button fx:id="logoutButton" layoutX="36.0" layoutY="354.0" mnemonicParsing="false" onAction="#logout" text="Log ud" />
       <Button fx:id="helpButton" layoutX="116.0" layoutY="354.0" mnemonicParsing="false" onAction="#showHelp" text="Hjælp" />
-      <Button fx:id="createUserButton" layoutX="185.0" layoutY="354.0" mnemonicParsing="false" onAction="#createUser" text="Opret bruger" />
-      <Button fx:id="createPatientButton" layoutX="300.0" layoutY="354.0" mnemonicParsing="false" onAction="#createPatient" text="Opret patient" />
+      <Button fx:id="createUserButton" layoutX="300.0" layoutY="354.0" mnemonicParsing="false" onAction="#createUser" text="Opret bruger" />
+      <Button fx:id="createPatientButton" layoutX="488.0" layoutY="354.0" mnemonicParsing="false" onAction="#createPatient" text="Opret patient" />
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="150.0" layoutX="78.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

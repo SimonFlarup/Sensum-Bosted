@@ -36,7 +36,7 @@ public interface SensumInterface {
 //     * @param password String with password.
 //     * @return true if the user was created.
 //     */
-//    boolean createUser(String userName, String password);
+//    boolean createUser(String userName, String password, String name);
     
     /**
      *
