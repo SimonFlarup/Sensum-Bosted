@@ -10,6 +10,10 @@
 <AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.LogInMenuController">
    <children>
       <TextField fx:id="userName" layoutX="97.0" layoutY="76.0" prefHeight="25.0" prefWidth="149.0" />
+      <PasswordField fx:id="password" layoutX="97.0" layoutY="141.0" prefHeight="27.0" prefWidth="149.0">
+         <font>
+            <Font size="8.0" />
+         </font></PasswordField>
       <Label layoutX="97.0" layoutY="55.0" text="Brugernavn" />
       <Label layoutX="97.0" layoutY="121.0" text="Kodeord" />
       <Button fx:id="loginButton" layoutX="143.0" layoutY="204.0" mnemonicParsing="false" onAction="#login" text="Log ind" />
@@ -18,10 +22,6 @@
             <Font name="Helvetica Bold" size="14.0" />
          </font>
       </Label>
-      <PasswordField fx:id="password" layoutX="97.0" layoutY="141.0" prefHeight="27.0" prefWidth="149.0">
-         <font>
-            <Font size="8.0" />
-         </font></PasswordField>
       <Label fx:id="message" layoutX="96.0" layoutY="176.0" prefHeight="20.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
