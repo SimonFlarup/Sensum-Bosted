@@ -7,6 +7,7 @@ package sensum_bosted;
 
 import GUI.SensumInterface;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -193,6 +194,21 @@ public class DomainFacade implements SensumInterface {
     public boolean logout() {
         user = null;
         return true;
+    }
+
+    @Override
+    public boolean isPrivileged() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean createUser(String userName, String password, String field, String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Map<LocalDateTime, String[]> getNotationHistory() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

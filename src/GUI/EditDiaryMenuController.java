@@ -8,6 +8,7 @@ package GUI;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -45,6 +46,7 @@ public class EditDiaryMenuController implements Initializable {
     private SensumInterface fc;
     private Alert alert;
     private boolean goBack;
+    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 
     /**
      * Initializes the controller class.
@@ -56,7 +58,7 @@ public class EditDiaryMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
         notationText.setText(fc.getNotation());
-        notationID.setText(fc.getNotationDate().toString());
+        notationID.setText(fc.getNotationDate().format(dateFormat));
     }
 
     @FXML

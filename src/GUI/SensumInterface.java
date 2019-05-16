@@ -30,13 +30,19 @@ public interface SensumInterface {
      */
     boolean logout();
     
-//    /**
-//     *
-//     * @param userName String with user name.
-//     * @param password String with password.
-//     * @return true if the user was created.
-//     */
-//    boolean createUser(String userName, String password, String name);
+    /**
+     *
+     * @return true if the user is privileged.
+     */
+    boolean isPrivileged();
+    
+    /**
+     *
+     * @param userName String with user name.
+     * @param password String with password.
+     * @return true if the user was created.
+     */
+    boolean createUser(String userName, String password, String field, String name);
     
     /**
      *
@@ -132,11 +138,11 @@ public interface SensumInterface {
      */
     public LocalDate createNotation(LocalDate date);
     
-//    /**
-//     *
-//     * @return a Map containing the timestamps of all versions of the notation along with a String[] that has username on index 0 and content on index 1.
-//     */
-//    public Map<LocalDateTime,String[]> getNotationHistory();
+    /**
+     *
+     * @return a Map containing the timestamps of all versions of the notation along with a String[] that has username on index 0 and content on index 1.
+     */
+    public Map<LocalDateTime,String[]> getNotationHistory();
     
     /**
      *

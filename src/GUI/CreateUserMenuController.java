@@ -83,6 +83,7 @@ public class CreateUserMenuController implements Initializable {
 
     @FXML
     private void createUser(ActionEvent event) {
+        String field = "";
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Fejl");
         alert.setHeaderText("");
@@ -104,18 +105,27 @@ public class CreateUserMenuController implements Initializable {
         } else if (!handiRadio.isSelected() && !drugRadio.isSelected() && !bothRadio.isSelected()) {
             alert.setContentText("Intet område angivet.");
             alert.show();
-        } //        else if (fc.createUser(userNameField.getText(), passwordField.getText())) {
-        //            try {
-        //                Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
-        //                Scene scene = createUserButton.getScene();
-        //                scene.setRoot(root);
-        //            } catch (IOException ex) {
-        //                System.out.println("Error");
-        //            }
-        //} 
-        else {
-            alert.setContentText("Bruger blev ikke oprettet.");
-            alert.show();
+        } else {
+            if (handiRadio.isSelected()) {
+                field = "CARETAKER";
+            } else if (drugRadio.isSelected()) {
+                field = "CARETAKER_DRUG";
+            } else {
+                field = "CARETAKER_BOTH";
+            }
+
+            if (fc.createUser(userNameField.getText(), passwordField.getText(), field, nameField.getText())) {
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
+                    Scene scene = createUserButton.getScene();
+                    scene.setRoot(root);
+                } catch (IOException ex) {
+                    System.out.println("Error");
+                }
+            } else {
+                alert.setContentText("Bruger blev ikke oprettet.");
+                alert.show();
+            }
         }
     }
 

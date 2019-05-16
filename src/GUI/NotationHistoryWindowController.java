@@ -31,7 +31,7 @@ import sensum_bosted.DomainFacade;
  * @author sebastian
  */
 public class NotationHistoryWindowController implements Initializable {
-    
+
     @FXML
     private ListView<ListViewInfo> notationHistoryList;
     @FXML
@@ -52,20 +52,20 @@ public class NotationHistoryWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
-//        for (Map.Entry<LocalDateTime, String[]> entry : fc.getNotationHistory().entrySet()) {
-//            ListViewInfo lvf = new ListViewInfo(entry.getKey(), entry.getValue());
-//            notations.add(lvf);
-//        }
+        for (Map.Entry<LocalDateTime, String[]> entry : fc.getNotationHistory().entrySet()) {
+            ListViewInfo lvf = new ListViewInfo(entry.getKey(), entry.getValue());
+            notations.add(lvf);
+        }
         notationHistoryList.setItems(notations.sorted(ListViewInfo.BY_TIME));
     }
-    
+
     @FXML
     private void selectNotation(MouseEvent event) {
         int selectedNotationIndex = notationHistoryList.getSelectionModel().getSelectedIndex();
         userLabel.setText(notationHistoryList.getItems().get(selectedNotationIndex).getUsername());
         notationField.setText(notationHistoryList.getItems().get(selectedNotationIndex).getContent());
     }
-    
+
     @FXML
     private void goBack(ActionEvent event) {
         try {
@@ -76,5 +76,5 @@ public class NotationHistoryWindowController implements Initializable {
             System.out.println(ex.getMessage());
         }
     }
-    
+
 }
