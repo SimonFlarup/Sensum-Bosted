@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -26,6 +27,7 @@ public class Sensum_Bosted extends Application {
         
         stage.setScene(scene);
         stage.setTitle("Sensum Bosted");
+        stage.getIcons().add(new Image("/images/house.png"));
         stage.setResizable(false);
         stage.show();
     }

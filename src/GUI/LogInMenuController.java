@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import sensum_bosted.DomainFacade;
 import javafx.stage.WindowEvent;
@@ -62,6 +63,7 @@ public class LogInMenuController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Sensum Bosted");
+                stage.getIcons().add(new Image("/images/house.png"));
                 stage.setScene(new Scene(root));
                 stage.setResizable(false);
                 stage.show();

@@ -26,6 +26,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sensum_bosted.DomainFacade;
@@ -49,6 +51,8 @@ public class MainMenuController implements Initializable {
     private Button logoutButton;
     @FXML
     private Button createUserButton;
+    @FXML
+    private ImageView imageView;
 
     private SensumInterface fc;
     private ObservableList patients = FXCollections.observableArrayList();
@@ -64,6 +68,7 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
+        imageView.setImage(new Image("/images/house.png"));
         for (Map.Entry<String, String> entry : fc.getPatientsMap().entrySet()) {
             ListViewInfo lvf = new ListViewInfo(entry.getKey(), entry.getValue());
             patients.add(lvf);
@@ -122,6 +127,7 @@ public class MainMenuController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/GUI/LogInMenu.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Sensum Bosted");
+                stage.getIcons().add(new Image("/images/house.png"));
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {
