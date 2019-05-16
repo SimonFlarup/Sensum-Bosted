@@ -7,13 +7,11 @@ package sensum_bosted;
 
 import GUI.SensumInterface;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import static java.util.Objects.hash;
-import java.util.UUID;
 import storage.StorageFacade;
 import storage.StorageInterface;
 
@@ -26,7 +24,6 @@ public class DomainFacade implements SensumInterface {
     private static DomainFacade instance;
 
     private DomainFacade() {
-        user = sf.getUser("erik");
     }
 
     public static DomainFacade getInstance() {
@@ -45,10 +42,10 @@ public class DomainFacade implements SensumInterface {
     public static void main(String[] args) {
         PasswordHashing hashing = new PasswordHashing();
         String password = hashing.hash("VOP");
-        System.out.println(password);
+        sensum_bosted.PrintHandler.println(password);
         byte[] salt = PasswordHashing.extractSalt(password);
         hashing = new PasswordHashing(salt);
-        System.out.println(hashing.compare("VOP", password));
+        sensum_bosted.PrintHandler.println(hashing.compare("VOP", password));
     }
 
     @Override
@@ -59,7 +56,7 @@ public class DomainFacade implements SensumInterface {
     @Override
     public Map<String, String> getPatientsMap() {
         Map<String, String> patientMap = new HashMap<>();
-        for (String s : user.getPatients()){
+        for (String s : user.getPatients()) {
             patientMap.put(s, sf.getPatient(s).getName());
         }
         return patientMap;
@@ -116,14 +113,15 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public void initializeNotation(LocalDate date) {
+    public boolean initializeNotation(LocalDate date) {
         List<Notation> temp = diary.getNotations();
         for (Notation notat : temp) {
-            if (notat.getDate() == date) {
+            if (notat.getDate().equals(date)) {
                 this.notation = notat;
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     @Override
@@ -138,20 +136,79 @@ public class DomainFacade implements SensumInterface {
     }
 
     @Override
-    public LocalDate createNotation() {
-        if (this.patient.getField() == UserRoles.PATIENT) {
-            this.notation = new Notation("", LocalDate.now(), Notation.Field.DISABLED, user.getUsername());
-        } else {
-            this.notation = new Notation("", LocalDate.now(), Notation.Field.DRUG, user.getUsername());
-        }
-        sf.setNotation(patient, this.notation);
+    public LocalDate createNotation(LocalDate date) {
         initializeDiary();
+        if (!(initializeNotation(LocalDate.now()))) {
+            System.out.println((initializeNotation(LocalDate.now())));
+            if (this.patient.getField() == UserRoles.PATIENT) {
+                this.notation = new Notation("", date, Notation.Field.DISABLED, user.getUsername());
+            } else {
+                this.notation = new Notation("", date, Notation.Field.DRUG, user.getUsername());
+            }
+            sf.setNotation(patient, this.notation);
+            initializeDiary();
+
+        }
         return this.notation.getDate();
     }
 
     @Override
     public LocalDate getNotationDate() {
         return this.notation.getDate();
+    }
+
+    /**
+     * @param userName String with user name.
+     * @param password String with password.
+     * @return true if correct.
+     */
+    @Override
+    public boolean login(String userName, String password) {
+        if (userName.length() < 1 | password.length() < 1) {
+            return false;
+        }
+        user = sf.getUser(userName);
+        if (user == null) {
+            return false;
+        }
+
+        sensum_bosted.PrintHandler.println(user.getPassword());
+
+        PasswordHashing pw = new PasswordHashing(PasswordHashing.extractSalt(user.getPassword()));
+        String pwH = pw.hash(password);
+        if (pwH.equals(user.getPassword())) {
+            sensum_bosted.PrintHandler.println(pwH);
+            return true;
+        } else {
+            user = null;
+            return false;
+
+        }
+    }
+
+    /**
+     *
+     * @return true if the user is logged out.
+     */
+    @Override
+    public boolean logout() {
+        user = null;
+        return true;
+    }
+
+    @Override
+    public boolean isPrivileged() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean createUser(String userName, String password, String field, String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Map<LocalDateTime, String[]> getNotationHistory() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

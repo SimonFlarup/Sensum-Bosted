@@ -39,26 +39,26 @@ public class CRUD {
 
     /*
     public void test() {
-        System.out.println("Testing");
+        sensum_bosted.PrintHandler.println("Testing");
         try {
             Connection db = DriverManager.getConnection(url, username, password);
             Statement st = db.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM \"User\"");
             while (rs.next()) {
-                System.out.print("Column 1 returned ");
-                System.out.println(rs.getString(1));
-                System.out.print("Column 2 returned ");
-                System.out.println(rs.getString(2));
+                sensum_bosted.PrintHandler.print("Column 1 returned ");
+                sensum_bosted.PrintHandler.println(rs.getString(1));
+                sensum_bosted.PrintHandler.print("Column 2 returned ");
+                sensum_bosted.PrintHandler.println(rs.getString(2));
             }
             rs.close();
             st.close();
         } catch (java.sql.SQLException e) {
-            System.out.println(e.getMessage());
+            sensum_bosted.PrintHandler.println(e.getMessage());
         }
     }
      */
     public void create(String table, String values) {
-        System.out.println("Creating");
+        sensum_bosted.PrintHandler.println("Creating");
         try {
             Connection db = DriverManager.getConnection(url, username, password);
             Statement st = db.createStatement();
@@ -66,23 +66,23 @@ public class CRUD {
 //            ResultSet rs = st.executeQuery("SELECT * FROM \"User\"");
 //            ResultSetMetaData rsmd = rs.getMetaData();
 //            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-//                System.out.println(rsmd.getColumnName(i));
+//                sensum_bosted.PrintHandler.println(rsmd.getColumnName(i));
 //            }
 //            while (rs.next()) {
 //                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-//                    System.out.println(rsmd.getColumnName(i));
+//                    sensum_bosted.PrintHandler.println(rsmd.getColumnName(i));
 //                    result.put(Fields.UserFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));
 //                }
-//                System.out.print("Column 1 returned ");
-//                System.out.println(rs.getString(2));
-//                System.out.print("Column 2 returned ");
-//                System.out.println(rs.getString(3));
+//                sensum_bosted.PrintHandler.print("Column 1 returned ");
+//                sensum_bosted.PrintHandler.println(rs.getString(2));
+//                sensum_bosted.PrintHandler.print("Column 2 returned ");
+//                sensum_bosted.PrintHandler.println(rs.getString(3));
 //            }
 //            rs.close();
             st.close();
             db.close();
         } catch (java.sql.SQLException e) {
-            System.out.println(e.getMessage());
+            sensum_bosted.PrintHandler.println(e.getMessage());
         }
     }
 
@@ -97,19 +97,19 @@ public class CRUD {
 //            st.executeLargeUpdate("DELETE FROM mytable WHERE columnfoo = ?");
 //            st.set(1, foovalue);
 //            int rowsDeleted = st.executeUpdate();
-//            System.out.println(rowsDeleted + " rows deleted");
+//            sensum_bosted.PrintHandler.println(rowsDeleted + " rows deleted");
 //            st.close();
 //            st.executeUpdate
 //                
 //        } catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
+//            sensum_bosted.PrintHandler.println(ex.getMessage());
 //        }
 //        return affectedrows;
 //    }
 //}
     //NEXT TO DO
     public HashMap<Enum, String>[] read(String table, String condition) {
-        System.out.println("Whereing: " + table + " | " + condition);
+        sensum_bosted.PrintHandler.println("Whereing: " + table + " | " + condition);
         ArrayList<HashMap<Enum, String>> result = new ArrayList<>();
         try {
             Connection db = DriverManager.getConnection(url, username, password);
@@ -122,10 +122,10 @@ public class CRUD {
             }
             ResultSetMetaData rsmd = rs.getMetaData();
             for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                System.out.println(rsmd.getColumnName(i));
+                sensum_bosted.PrintHandler.println(rsmd.getColumnName(i));
             }
             while (rs.next()) {
-                System.out.println("Creating row - 2");
+                sensum_bosted.PrintHandler.println("Creating row - 2");
                 HashMap<Enum, String> row = new HashMap<>();
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     if (table.equals(ASSIGNMENTS.getTableName())) {
@@ -144,7 +144,7 @@ public class CRUD {
             st.close();
             db.close();
         } catch (java.sql.SQLException e) {
-            System.out.println(e.getMessage());
+            sensum_bosted.PrintHandler.println(e.getMessage());
         }
 
         if (result.isEmpty()) {
@@ -156,7 +156,7 @@ public class CRUD {
     }
 
     public void update(String table, String values, String condition) {
-        System.out.println("Updating: " + table + " | " + condition + " | " + values);
+        sensum_bosted.PrintHandler.println("Updating: " + table + " | " + condition + " | " + values);
         try {
             Connection db = DriverManager.getConnection(url, username, password);
             Statement st = db.createStatement();
@@ -164,7 +164,7 @@ public class CRUD {
             st.close();
             db.close();
         } catch (java.sql.SQLException e) {
-            System.out.println(e.getMessage());
+            sensum_bosted.PrintHandler.println(e.getMessage());
         }
     }
 }
