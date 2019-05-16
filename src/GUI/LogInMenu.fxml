@@ -16,7 +16,7 @@
          </font></PasswordField>
       <Label layoutX="97.0" layoutY="55.0" text="Brugernavn" />
       <Label layoutX="97.0" layoutY="121.0" text="Kodeord" />
-      <Button fx:id="loginButton" layoutX="143.0" layoutY="204.0" mnemonicParsing="false" onAction="#login" text="Log ind" />
+      <Button fx:id="loginButton" layoutX="143.0" layoutY="204.0" mnemonicParsing="false" onAction="#login" onKeyPressed="#loginKeyPressed" text="Log ind" />
       <Label layoutX="77.0" layoutY="22.0" text="Velkommen til Sensum Bosted">
          <font>
             <Font name="Helvetica Bold" size="14.0" />

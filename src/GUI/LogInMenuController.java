@@ -22,6 +22,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import sensum_bosted.DomainFacade;
 import javafx.stage.WindowEvent;
@@ -79,6 +81,13 @@ public class LogInMenuController implements Initializable {
         } else {
             message.setText("Invalid credentials!");
             password.setText("");
+        }
+    }
+
+    @FXML
+    private void loginKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            loginButton.fire();
         }
     }
 
