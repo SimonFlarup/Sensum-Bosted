@@ -6,6 +6,7 @@
 package GUI;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -45,14 +46,14 @@ public interface SensumInterface {
 
     /**
      *
-     * @return Map containing UUIDs of all patients along with the associated
-     * names.
+     * @return Map containing CPR of all patients along with the associated
+     * name.
      */
     public Map<String, String> getPatientsMap();
 
     /**
      *
-     * @param cpr the cpr associated with the patient.
+     * @param cpr the CPR associated with the patient.
      */
     public void initializePatient(String cpr);
 
@@ -91,7 +92,7 @@ public interface SensumInterface {
 
     /**
      *
-     * @return Map containing dates of all diaries along with the associated id.
+     * @return List containing dates of all notations.
      */
     public List<LocalDate> getNotationsList();
 
@@ -101,7 +102,7 @@ public interface SensumInterface {
      *
      * @param date the date associated with the notation you want to
      * initialize.
-     * @return 
+     * @return true if successful.
      */
     public boolean initializeNotation(LocalDate date);
     
@@ -125,11 +126,18 @@ public interface SensumInterface {
     boolean saveNotation(String content);
     
     /**
-     * 
-     * @param date
-     * @return true if the notation is created.
+     *
+     * @param date creation date for the notation.
+     * @return date for the created notation.
      */
     public LocalDate createNotation(LocalDate date);
+    
+//    /**
+//     *
+//     * @return a Map containing the timestamps of all versions of the notation along with a String[] that has username on index 0 and content on index 1.
+//     */
+//    public Map<LocalDateTime,String[]> getNotationHistory();
+    
     /**
      *
      * @param notationId id of notation to be locked.

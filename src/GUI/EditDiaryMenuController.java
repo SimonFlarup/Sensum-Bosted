@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 import sensum_bosted.DomainFacade;
 
 /**
@@ -91,6 +92,11 @@ public class EditDiaryMenuController implements Initializable {
                 sensum_bosted.PrintHandler.println(ex.getMessage(), true);
             }
         }
+    }
+
+    @FXML
+    private void onKeyPressed(KeyEvent event) {
+        saveSuccessful.setText("");
     }
 
 }
