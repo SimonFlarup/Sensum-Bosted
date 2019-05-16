@@ -87,7 +87,7 @@ public class LogInMenuController implements Initializable {
     @FXML
     private void loginKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            loginButton.fire();
+                loginButton.fire();
         }
     }
 
