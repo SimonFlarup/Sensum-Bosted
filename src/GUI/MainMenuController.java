@@ -66,7 +66,6 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //createUserButton.setVisible(false);
-        //createUserButton.setDisable(true);
         fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
         imageView.setImage(new Image("/images/house.png"));
@@ -77,8 +76,7 @@ public class MainMenuController implements Initializable {
         patientList.setItems(patients.sorted());
 
 //        if(fc.isPrivileged()) {
-//            createUserButton.setVisible(true);
-//            createUserButton.setDisable(false);
+//            createUserButton.setVisible(true);          
 //        }
     }
 
