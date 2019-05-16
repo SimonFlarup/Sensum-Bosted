@@ -61,9 +61,13 @@ public class NotationHistoryWindowController implements Initializable {
 
     @FXML
     private void selectNotation(MouseEvent event) {
-        int selectedNotationIndex = notationHistoryList.getSelectionModel().getSelectedIndex();
-        userLabel.setText(notationHistoryList.getItems().get(selectedNotationIndex).getUsername());
-        notationField.setText(notationHistoryList.getItems().get(selectedNotationIndex).getContent());
+        try {
+            int selectedNotationIndex = notationHistoryList.getSelectionModel().getSelectedIndex();
+            userLabel.setText(notationHistoryList.getItems().get(selectedNotationIndex).getUsername());
+            notationField.setText(notationHistoryList.getItems().get(selectedNotationIndex).getContent());
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            sensum_bosted.PrintHandler.println(ex.getMessage(), true);
+        }
     }
 
     @FXML

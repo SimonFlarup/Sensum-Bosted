@@ -75,7 +75,7 @@ public class MainMenuController implements Initializable {
             patients.add(lvf);
         }
         patientList.setItems(patients.sorted());
-        
+
 //        if(fc.isPrivileged()) {
 //            createUserButton.setVisible(true);
 //            createUserButton.setDisable(false);
@@ -95,6 +95,7 @@ public class MainMenuController implements Initializable {
                 System.out.println(ex.getMessage());
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
+            sensum_bosted.PrintHandler.println(ex.getMessage(), true);
         }
     }
 
