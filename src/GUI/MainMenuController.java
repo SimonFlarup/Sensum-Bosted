@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -26,6 +25,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sensum_bosted.DomainFacade;
@@ -49,6 +50,8 @@ public class MainMenuController implements Initializable {
     private Button logoutButton;
     @FXML
     private Button createUserButton;
+    @FXML
+    private ImageView imageView;
 
     private SensumInterface fc;
     private ObservableList patients = FXCollections.observableArrayList();
@@ -62,14 +65,19 @@ public class MainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        createUserButton.setVisible(false);
+        //createUserButton.setVisible(false);
         fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
+        imageView.setImage(new Image("/images/house.png"));
         for (Map.Entry<String, String> entry : fc.getPatientsMap().entrySet()) {
             ListViewInfo lvf = new ListViewInfo(entry.getKey(), entry.getValue());
             patients.add(lvf);
         }
         patientList.setItems(patients.sorted());
+
+//        if(fc.isPrivileged()) {
+//            createUserButton.setVisible(true);          
+//        }
     }
 
     @FXML
@@ -85,6 +93,7 @@ public class MainMenuController implements Initializable {
                 System.out.println(ex.getMessage());
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
+            sensum_bosted.PrintHandler.println(ex.getMessage(), true);
         }
     }
 
@@ -123,6 +132,7 @@ public class MainMenuController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/GUI/LogInMenu.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Sensum Bosted");
+                stage.getIcons().add(new Image("/images/house.png"));
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException ex) {
@@ -133,6 +143,16 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void createUser(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/CreateUserMenu.fxml"));
+            Scene scene = nameUser.getScene();
+            Stage currentStage = (Stage) createUserButton.getScene().getWindow();
+            currentStage.setHeight(260);
+            currentStage.setWidth(525);
+            scene.setRoot(root);
+        } catch (IOException ex) {
+            System.out.println("Error" + ex.getMessage());
+        }
     }
 
 }

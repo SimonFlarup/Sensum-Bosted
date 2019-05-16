@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="225.0" prefWidth="525.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CreateUserMenuController">
+   <children>
+      <TextField fx:id="nameField" layoutX="148.0" layoutY="29.0" />
+      <TextField fx:id="userNameField" layoutX="148.0" layoutY="66.0" />
+      <RadioButton fx:id="handiRadio" layoutX="387.0" layoutY="70.0" mnemonicParsing="false" text="Handikap">
+         <toggleGroup>
+            <ToggleGroup fx:id="fieldGroup" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="drugRadio" layoutX="386.0" layoutY="106.0" mnemonicParsing="false" text="Stofmisbrug" toggleGroup="$fieldGroup" />
+      <Label layoutX="94.0" layoutY="34.0" text="Navn:" />
+      <Label layoutX="62.0" layoutY="71.0" text="Brugernavn:" />
+      <Label layoutX="73.0" layoutY="107.0" text="Password:" />
+      <Label layoutX="386.0" layoutY="42.0" text="Område:" />
+      <Button fx:id="backButton" layoutX="23.0" layoutY="184.0" mnemonicParsing="false" onAction="#goBack" text="Tilbage" />
+      <Button fx:id="createUserButton" layoutX="387.0" layoutY="184.0" mnemonicParsing="false" onAction="#createUser" text="Opret bruger" />
+      <RadioButton fx:id="bothRadio" layoutX="387.0" layoutY="142.0" mnemonicParsing="false" text="Begge" toggleGroup="$fieldGroup" />
+      <PasswordField fx:id="passwordField" layoutX="148.0" layoutY="102.0" prefHeight="27.0" prefWidth="167.0">
+         <font>
+            <Font size="8.0" />
+         </font></PasswordField>
+      <PasswordField fx:id="repeatPasswordField" layoutX="148.0" layoutY="138.0" prefHeight="27.0" prefWidth="167.0">
+         <font>
+            <Font size="8.0" />
+         </font></PasswordField>
+      <Label layoutX="31.0" layoutY="143.0" text="Gentag password:" />
+   </children>
+</AnchorPane>

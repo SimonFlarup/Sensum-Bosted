@@ -7,7 +7,7 @@ package GUI;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 import sensum_bosted.DomainFacade;
 
 /**
@@ -44,6 +45,7 @@ public class EditDiaryMenuController implements Initializable {
     private SensumInterface fc;
     private Alert alert;
     private boolean goBack;
+    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 
     /**
      * Initializes the controller class.
@@ -55,7 +57,7 @@ public class EditDiaryMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
         notationText.setText(fc.getNotation());
-        notationID.setText(fc.getNotationDate().toString());
+        notationID.setText(fc.getNotationDate().format(dateFormat));
     }
 
     @FXML
@@ -91,6 +93,11 @@ public class EditDiaryMenuController implements Initializable {
                 sensum_bosted.PrintHandler.println(ex.getMessage(), true);
             }
         }
+    }
+
+    @FXML
+    private void onKeyPressed(KeyEvent event) {
+        saveSuccessful.setText("");
     }
 
 }

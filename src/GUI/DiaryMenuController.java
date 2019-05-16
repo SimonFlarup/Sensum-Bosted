@@ -38,6 +38,8 @@ public class DiaryMenuController implements Initializable {
     private TextArea notationText;
     @FXML
     private Button newNotationButton;
+    @FXML
+    private Button historyButton;
 
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
@@ -52,10 +54,11 @@ public class DiaryMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         editButton.setDisable(true);
+        historyButton.setDisable(true);
         fc = DomainFacade.getInstance();
         ListViewInfo lvi;
         for (LocalDate d : fc.getNotationsList()) {
-        lvi = new ListViewInfo(d);
+            lvi = new ListViewInfo(d);
             notations.add(lvi);
         }
         notationList.setItems(notations.sorted(ListViewInfo.BY_DATE));
@@ -65,11 +68,12 @@ public class DiaryMenuController implements Initializable {
     @FXML
     private void openNotation(MouseEvent event) {
         try {
-        int selectedNotationIndex = notationList.getSelectionModel().getSelectedIndex();
-        selectedNotationId = notationList.getItems().get(selectedNotationIndex).getDate();
-        fc.initializeNotation(selectedNotationId);
-        notationText.setText(fc.getNotation());
-        editButton.setDisable(false);
+            int selectedNotationIndex = notationList.getSelectionModel().getSelectedIndex();
+            selectedNotationId = notationList.getItems().get(selectedNotationIndex).getDate();
+            fc.initializeNotation(selectedNotationId);
+            notationText.setText(fc.getNotation());
+            editButton.setDisable(false);
+            historyButton.setDisable(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
             sensum_bosted.PrintHandler.println(ex.getMessage(), true);
         }
@@ -105,6 +109,18 @@ public class DiaryMenuController implements Initializable {
         } else {
             selectedNotationId = fc.createNotation(LocalDate.now());
             editButton.fire();
+        }
+    }
+
+    @FXML
+    private void openHistory(ActionEvent event) {
+        fc.initializeNotation(selectedNotationId);
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/GUI/NotationHistoryWindow.fxml"));
+            Scene scene = editButton.getScene();
+            scene.setRoot(root);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }
