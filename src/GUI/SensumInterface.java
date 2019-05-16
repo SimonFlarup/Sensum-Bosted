@@ -40,6 +40,8 @@ public interface SensumInterface {
      *
      * @param userName String with user name.
      * @param password String with password.
+     * @param field String with the field associated with the user.
+     * @param name String with the users name.
      * @return true if the user was created.
      */
     boolean createUser(String userName, String password, String field, String name);
@@ -146,14 +148,12 @@ public interface SensumInterface {
     
     /**
      *
-     * @param notationId id of notation to be locked.
      * @return true if the notation is locked successfully.
      */
     //boolean lockNotation();
     
     /**
      *
-     * @param notationId id of notation to be unlocked.
      * @return true if the notation is unlocked successfully.
      */
     //boolean unlockNotation();

@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -67,6 +66,7 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //createUserButton.setVisible(false);
+        //createUserButton.setDisable(true);
         fc = DomainFacade.getInstance();
         nameUser.setText(fc.getUserName());
         imageView.setImage(new Image("/images/house.png"));
@@ -78,6 +78,7 @@ public class MainMenuController implements Initializable {
         
 //        if(fc.isPrivileged()) {
 //            createUserButton.setVisible(true);
+//            createUserButton.setDisable(false);
 //        }
     }
 
