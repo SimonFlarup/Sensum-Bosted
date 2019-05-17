@@ -92,7 +92,8 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public boolean createPatient(String name, String cpr, String info) {
-        this.patient = new Patient(name, "test1234", UserRoles.PATIENT, cpr, info);
+        String password = new PasswordHashing().hash("test1234");
+        this.patient = new Patient(name, password, UserRoles.PATIENT, cpr, info);
         sf.setPatient(this.patient);
         sf.setAssignment(this.user, this.patient);
         this.user = sf.getUser(this.user.getUsername());
@@ -205,7 +206,7 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public boolean createUser(String userName, String password, String field, String name) {
-        //User(String name, String username, String password, UserRoles field, List<String> patients) {
+        password = new PasswordHashing().hash(password);
         User user = new User(name, userName, password, UserRoles.valueOf(field), new ArrayList<>());
         sf.setUser(user);
         return true;
