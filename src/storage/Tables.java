@@ -13,6 +13,7 @@ public enum Tables {
     USERS("User"),
     PATIENTS("Patient"),
     NOTATIONS("Notation"),
+    NOTATIONS_HISTORY("Notation_History"),
     ASSIGNMENTS("Assignment");
 
     private String path;

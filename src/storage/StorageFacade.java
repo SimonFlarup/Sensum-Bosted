@@ -85,9 +85,9 @@ public class StorageFacade implements StorageInterface {
     public User getUser(String username) {
         //    public User(String name, String username, String password, UserRoles field) {
         HashMap<Enum, String> userMap;
-        try{
-        userMap = CRUD.readFromKey(Tables.USERS, new String[]{username}, null)[0];
-        }catch (NullPointerException ex) {
+        try {
+            userMap = CRUD.readFromKey(Tables.USERS, new String[]{username}, null)[0];
+        } catch (NullPointerException ex) {
             sensum_bosted.PrintHandler.println(ex.toString(), true);
             return null;
         }
@@ -155,7 +155,6 @@ public class StorageFacade implements StorageInterface {
 
         //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         //String sDate = dateFormat.format(data.getDate());
-
         HashMap<Enum, String> map = new HashMap<>();
         map.put(Fields.NotationFields.CONTENT, data.getContent());
         map.put(Fields.NotationFields.DATE, data.getDate().toString());
@@ -163,11 +162,12 @@ public class StorageFacade implements StorageInterface {
         map.put(Fields.NotationFields.PATIENT_ID, patient.getCpr());
         map.put(Fields.NotationFields.LAST_USER, data.getLastUser());
         map.put(Fields.NotationFields.TIME_STAMP, data.getTimestamp().toString());
-
-        if (CRUD.readFromKey(Tables.NOTATIONS, new String[]{data.getDate().toString(), patient.getCpr()}, null) == null) {
+        HashMap<Enum, String>[] readFromKey = CRUD.readFromKey(Tables.NOTATIONS, new String[]{data.getDate().toString(), patient.getCpr()}, null);
+        if (readFromKey == null) {
             CRUD.create(Tables.NOTATIONS, map, null);
             return true;
         } else {
+            CRUD.create(Tables.NOTATIONS_HISTORY, readFromKey[0], null);
             CRUD.update(Tables.NOTATIONS, new String[]{data.getDate().toString(), patient.getCpr()}, map, null);
             return true;
         }
@@ -184,8 +184,42 @@ public class StorageFacade implements StorageInterface {
     }
 
     @Override
-    public Diary getDiaryHistory(Patient patient, Date date) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Diary getDiaryHistory(Patient patient, LocalDate date) {
+        //    public Notation(String content, Date date, Notation.Field field) {
+        HashMap<Enum, String>[] array = CRUD.readFromKey(Tables.NOTATIONS_HISTORY, new String[]{date.toString(), patient.getCpr()}, null);
+        ArrayList<Notation> notations = new ArrayList<>();
+        if (!(array == null)) {
+            for (HashMap<Enum, String> map : array) {
+                if (map == null) {
+                    sensum_bosted.PrintHandler.print("map was null", true);
+                    continue;
+                }
+                String content = map.get(Fields.NotationFields.CONTENT);
+                String sDate = map.get(Fields.NotationFields.DATE);
+                sensum_bosted.PrintHandler.print(sDate, true);
+                LocalDate lDate;
+                if (!(sDate == null)) {
+                    lDate = LocalDate.parse(sDate);
+                } else {
+                    lDate = date;
+                }
+                String sField = map.get(Fields.NotationFields.FIELD);
+                if (sField == null) {
+                    continue;
+                }
+                Notation.Field field = Notation.Field.valueOf(sField);
+                String user = map.get(Fields.NotationFields.LAST_USER);
+                String sTime = map.get(Fields.NotationFields.TIME_STAMP);
+                if (!(sTime == null)) {
+                    LocalDateTime timestamp = LocalDateTime.parse(sTime);
+                    Notation notation = new Notation(content, lDate, field, user, timestamp);
+                    notations.add(notation);
+                }
+            }
+        }
+        Diary diary = new Diary(notations);
+
+        return diary;
     }
 
 }

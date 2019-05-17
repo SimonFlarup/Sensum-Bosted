@@ -8,7 +8,6 @@ package GUI;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +41,8 @@ public class NotationHistoryWindowController implements Initializable {
     private Button backButton;
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
+    
+    private LocalDateTime selectedNotationId;
 
     /**
      * Initializes the controller class.
@@ -52,9 +53,9 @@ public class NotationHistoryWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         fc = DomainFacade.getInstance();
-        for (Map.Entry<LocalDateTime, String[]> entry : fc.getNotationHistory().entrySet()) {
-            ListViewInfo lvf = new ListViewInfo(entry.getKey(), entry.getValue());
-            notations.add(lvf);
+        for (LocalDateTime d : fc.getNotationsHistoryList()) {
+            ListViewInfo lvi = new ListViewInfo(d);
+            notations.add(lvi);
         }
         notationHistoryList.setItems(notations.sorted(ListViewInfo.BY_TIME));
     }
@@ -63,8 +64,10 @@ public class NotationHistoryWindowController implements Initializable {
     private void selectNotation(MouseEvent event) {
         try {
             int selectedNotationIndex = notationHistoryList.getSelectionModel().getSelectedIndex();
-            userLabel.setText(notationHistoryList.getItems().get(selectedNotationIndex).getUsername());
-            notationField.setText(notationHistoryList.getItems().get(selectedNotationIndex).getContent());
+            selectedNotationId = notationHistoryList.getItems().get(selectedNotationIndex).getTime();
+            fc.initializeNotationHistory(selectedNotationId);
+            userLabel.setText(fc.getLastUser());
+            notationField.setText(fc.getNotation());
         } catch (ArrayIndexOutOfBoundsException ex) {
             sensum_bosted.PrintHandler.println(ex.getMessage(), true);
         }

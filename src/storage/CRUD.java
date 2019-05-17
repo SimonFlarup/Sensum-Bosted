@@ -5,17 +5,14 @@
  */
 package storage;
 
-import GUI.ListViewInfo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import static storage.Tables.*;
 
 /**
  *
- * @author Simon Holland Flarup
+ * @author Jonas Ahwazian
  */
 public class CRUD {
 
@@ -36,78 +33,20 @@ public class CRUD {
         }
         return CRUD.instance;
     }
-
-    /*
-    public void test() {
-        sensum_bosted.PrintHandler.println("Testing");
-        try {
-            Connection db = DriverManager.getConnection(url, username, password);
-            Statement st = db.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM \"User\"");
-            while (rs.next()) {
-                sensum_bosted.PrintHandler.print("Column 1 returned ");
-                sensum_bosted.PrintHandler.println(rs.getString(1));
-                sensum_bosted.PrintHandler.print("Column 2 returned ");
-                sensum_bosted.PrintHandler.println(rs.getString(2));
-            }
-            rs.close();
-            st.close();
-        } catch (java.sql.SQLException e) {
-            sensum_bosted.PrintHandler.println(e.getMessage());
-        }
-    }
-     */
+    
     public void create(String table, String values) {
         sensum_bosted.PrintHandler.println("Creating");
         try {
             Connection db = DriverManager.getConnection(url, username, password);
             Statement st = db.createStatement();
             st.executeUpdate("INSERT INTO \"" + table + "\" VALUES (" + values + ")"); // change values to patient data
-//            ResultSet rs = st.executeQuery("SELECT * FROM \"User\"");
-//            ResultSetMetaData rsmd = rs.getMetaData();
-//            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-//                sensum_bosted.PrintHandler.println(rsmd.getColumnName(i));
-//            }
-//            while (rs.next()) {
-//                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-//                    sensum_bosted.PrintHandler.println(rsmd.getColumnName(i));
-//                    result.put(Fields.UserFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));
-//                }
-//                sensum_bosted.PrintHandler.print("Column 1 returned ");
-//                sensum_bosted.PrintHandler.println(rs.getString(2));
-//                sensum_bosted.PrintHandler.print("Column 2 returned ");
-//                sensum_bosted.PrintHandler.println(rs.getString(3));
-//            }
-//            rs.close();
             st.close();
             db.close();
         } catch (java.sql.SQLException e) {
             sensum_bosted.PrintHandler.println(e.getMessage());
         }
     }
-
-//    public int updateName() {
-//
-//        try {
-//            Connection db = DriverManager.getConnection(url, username, password);
-//            Statement st = db.createStatement();
-//            
-//            
-//            int foovalue = 500;
-//            st.executeLargeUpdate("DELETE FROM mytable WHERE columnfoo = ?");
-//            st.set(1, foovalue);
-//            int rowsDeleted = st.executeUpdate();
-//            sensum_bosted.PrintHandler.println(rowsDeleted + " rows deleted");
-//            st.close();
-//            st.executeUpdate
-//                
-//        } catch (SQLException ex) {
-//            sensum_bosted.PrintHandler.println(ex.getMessage());
-//        }
-//        return affectedrows;
-//    }
-//}
-    //NEXT TO DO
+    
     public HashMap<Enum, String>[] read(String table, String condition) {
         sensum_bosted.PrintHandler.println("Whereing: " + table + " | " + condition);
         ArrayList<HashMap<Enum, String>> result = new ArrayList<>();
@@ -118,6 +57,7 @@ public class CRUD {
             if (condition == null) {
                 rs = st.executeQuery("SELECT * FROM \"" + table + "\"");
             } else {
+                sensum_bosted.PrintHandler.println("SELECT * FROM \"" + table + "\" WHERE " + condition, true);
                 rs = st.executeQuery("SELECT * FROM \"" + table + "\" WHERE " + condition);
             }
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -130,7 +70,7 @@ public class CRUD {
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     if (table.equals(ASSIGNMENTS.getTableName())) {
                         row.put(Fields.AssignmentFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));
-                    } else if (table.equals(NOTATIONS.getTableName())) {
+                    } else if (table.equals(NOTATIONS.getTableName()) || table.equals(NOTATIONS_HISTORY.getTableName())) {
                         row.put(Fields.NotationFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));
                     } else if (table.equals(PATIENTS.getTableName())) {
                         row.put(Fields.PatientFields.valueOf(rsmd.getColumnName(i).toUpperCase()), rs.getString(i));

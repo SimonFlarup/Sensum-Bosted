@@ -91,8 +91,8 @@ public class DomainFacadeTest {
         System.out.println("getPatientsMap");
         DomainFacade instance = DomainFacadeTest.instance;
         Map<UUID, String> expResult = null;
-        Map<UUID, String> result = instance.getPatientsMap();
-        assertEquals(expResult, result);
+        //Map<UUID, String> result = instance.getPatientsMap();
+        //assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
