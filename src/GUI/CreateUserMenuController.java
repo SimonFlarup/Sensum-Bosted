@@ -116,6 +116,9 @@ public class CreateUserMenuController implements Initializable {
                 try {
                     Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainMenu.fxml"));
                     Scene scene = createUserButton.getScene();
+                    Stage currentStage = (Stage) createUserButton.getScene().getWindow();
+                    currentStage.setHeight(420);
+                    currentStage.setWidth(620);
                     scene.setRoot(root);
                 } catch (IOException ex) {
                     System.out.println("Error");
