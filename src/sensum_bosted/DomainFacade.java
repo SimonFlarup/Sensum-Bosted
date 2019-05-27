@@ -41,14 +41,6 @@ public class DomainFacade implements SensumInterface {
     private Notation notation;
     private StorageInterface sf = StorageFacade.getInstance();
 
-    public static void main(String[] args) {
-        PasswordHashing hashing = new PasswordHashing();
-        String password = hashing.hash("VOP");
-        sensum_bosted.PrintHandler.println(password);
-        byte[] salt = PasswordHashing.extractSalt(password);
-        hashing = new PasswordHashing(salt);
-        sensum_bosted.PrintHandler.println(hashing.compare("VOP", password));
-    }
 
     @Override
     public String getUserName() {
