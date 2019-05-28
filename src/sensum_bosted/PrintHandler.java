@@ -11,7 +11,7 @@ package sensum_bosted;
  */
 public class PrintHandler {
 
-    private static boolean allow = false;
+    private static boolean allow = true;
 
     public static void print(String output, boolean override) {
         if (allow || override) {

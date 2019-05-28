@@ -19,11 +19,10 @@ public class ListViewInfo {
     private String id;
     private String name;
     private String userName;
-    private String content;
     private LocalDate date;
     private LocalDateTime timestamp;
     private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-    private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm:ss");
     public static final Comparator<ListViewInfo> BY_DATE = new SortByDate();
     public static final Comparator<ListViewInfo> BY_TIME = new SortByTime();
 
@@ -37,10 +36,8 @@ public class ListViewInfo {
         this.date = date;
     }
     
-    public ListViewInfo(LocalDateTime timestamp, String[] info) {
+    public ListViewInfo(LocalDateTime timestamp) {
         this.name = timestamp.format(timeFormat);
-        this.userName = info[0];
-        this.content = info[1];
         this.timestamp = timestamp;
     }
 
@@ -57,12 +54,8 @@ public class ListViewInfo {
         return date;
     }
     
-    public String getUsername() {
-        return userName;
-    }
-    
-    public String getContent() {
-        return content;
+    public LocalDateTime getTime() {
+        return timestamp;
     }
 
     private static class SortByDate implements Comparator<ListViewInfo> {

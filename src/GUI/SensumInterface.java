@@ -126,6 +126,8 @@ public interface SensumInterface {
      */
     public LocalDate getNotationDate();
     
+    public String getLastUser();
+    
     /**
      *
      * @param content String with the content to be saved.
@@ -142,9 +144,19 @@ public interface SensumInterface {
     
     /**
      *
-     * @return a Map containing the timestamps of all versions of the notation along with a String[] that has username on index 0 and content on index 1.
+     * @return a List containing the timestamps of all versions of the notation.
      */
-    public Map<LocalDateTime,String[]> getNotationHistory();
+    public List<LocalDateTime> getNotationsHistoryList();
+    
+    /**
+     *
+     * @param timestamp the timestamp associated with the notation you want to
+     * initialize.
+     * @return true if successful.
+     */
+    public boolean initializeNotationHistory(LocalDateTime timestamp);
+    
+    public String getTime();
     
     /**
      *

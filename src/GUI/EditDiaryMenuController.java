@@ -44,7 +44,6 @@ public class EditDiaryMenuController implements Initializable {
 
     private SensumInterface fc;
     private Alert alert;
-    private boolean goBack;
     private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 
     /**
@@ -75,7 +74,7 @@ public class EditDiaryMenuController implements Initializable {
 
     @FXML
     private void goBack(ActionEvent event) {
-        goBack = true;
+        boolean goBack = true;
         if (!fc.getNotation().equals(notationText.getText())) {
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Vil du forlade dette vindue? Alt data, der ikke er gemt bliver mistet.");

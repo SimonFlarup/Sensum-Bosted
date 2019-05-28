@@ -10,10 +10,14 @@
    <children>
       <ListView fx:id="notationList" layoutX="14.0" layoutY="41.0" onMouseClicked="#openNotation" prefHeight="310.0" prefWidth="200.0" />
       <Label layoutX="90.0" layoutY="14.0" text="Dagbog" />
-      <TextArea fx:id="notationText" editable="false" layoutX="255.0" layoutY="41.0" prefHeight="310.0" prefWidth="324.0" wrapText="true" />
+      <TextArea fx:id="notationText" editable="false" layoutX="253.0" layoutY="64.0" prefHeight="287.0" prefWidth="324.0" wrapText="true" />
       <Label layoutX="391.0" layoutY="14.0" text="Notation" />
       <Button fx:id="historyButton" layoutX="14.0" layoutY="359.0" mnemonicParsing="false" onAction="#openHistory" text="Historik" />
       <Button fx:id="editButton" layoutX="255.0" layoutY="359.0" mnemonicParsing="false" onAction="#editNotation" text="Redigér" />
       <Button fx:id="newNotationButton" layoutX="500.0" layoutY="359.0" mnemonicParsing="false" onAction="#createNewNotation" text="Ny notation" />
+      <Label layoutX="255.0" layoutY="33.0" text="Seneste ændring af:" />
+      <Label fx:id="username" layoutX="385.0" layoutY="33.0" />
+      <Label layoutX="430.0" layoutY="33.0" text="\@" />
+      <Label fx:id="timestamp" layoutX="451.0" layoutY="33.0" prefHeight="17.0" prefWidth="127.0" />
    </children>
 </AnchorPane>

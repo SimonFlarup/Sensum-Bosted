@@ -5,7 +5,6 @@
  */
 package storage;
 
-
 import java.util.HashMap;
 import java.util.Map;
 import sensum_bosted.User;
@@ -36,6 +35,15 @@ public class CRUDFacade implements CRUDInterface {
         return "\"" + string + "\"";
     }
 
+    private String notationConditionTwoKeys(String[] primaryKey) {
+        return (doubleQuoteValues(Fields.NotationFields.DATE.toString().toLowerCase())
+                + " = " + quoteValues(primaryKey[0])
+                + " AND "
+                + doubleQuoteValues(Fields.NotationFields.PATIENT_ID.toString().toLowerCase())
+                + " = "
+                + quoteValues(primaryKey[1]));
+    }
+
     private String conditionFromKeys(Tables table, String[] primaryKey) {
         String condition = "";
         switch (table) {
@@ -53,18 +61,28 @@ public class CRUDFacade implements CRUDInterface {
                 }
                 break;
             case NOTATIONS:
-                if (primaryKey.length == 2) {
-                    condition = (doubleQuoteValues(Fields.NotationFields.DATE.toString().toLowerCase())
-                            + " = " + quoteValues(primaryKey[0])
-                            + " AND "
-                            + doubleQuoteValues(Fields.NotationFields.PATIENT_ID.toString().toLowerCase())
-                            + " = "
-                            + quoteValues(primaryKey[1]));
-                } else {
-                    condition = (doubleQuoteValues(Fields.NotationFields.PATIENT_ID.toString().toLowerCase())
-                            + " = " + quoteValues(primaryKey[0]));
+            case NOTATIONS_HISTORY:
+                switch (primaryKey.length) {
+                    case 2:
+                        condition = notationConditionTwoKeys(primaryKey);
+                        break;
+                    case 3:
+                        condition = (doubleQuoteValues(Fields.NotationFields.DATE.toString().toLowerCase())
+                                + " = " + quoteValues(primaryKey[0])
+                                + " AND "
+                                + doubleQuoteValues(Fields.NotationFields.PATIENT_ID.toString().toLowerCase())
+                                + " = "
+                                + quoteValues(primaryKey[1])
+                                + " AND "
+                                + doubleQuoteValues(Fields.NotationFields.TIME_STAMP.toString().toLowerCase())
+                                + " = "
+                                + quoteValues(primaryKey[2]));
+                        break;
+                    default:
+                        condition = (doubleQuoteValues(Fields.NotationFields.PATIENT_ID.toString().toLowerCase())
+                                + " = " + quoteValues(primaryKey[0]));
+                        break;
                 }
-
                 break;
             case PATIENTS:
                 condition = (doubleQuoteValues(Fields.PatientFields.CPR.toString().toLowerCase())
@@ -85,16 +103,17 @@ public class CRUDFacade implements CRUDInterface {
         String values = "";
         switch (table) {
             case ASSIGNMENTS:
-                values = ("" + quoteValues(data.get(Fields.AssignmentFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.AssignmentFields.USER_ID)));
+                values = (quoteValues(data.get(Fields.AssignmentFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.AssignmentFields.USER_ID)));
                 break;
             case NOTATIONS:
-                values = ("'" + data.get(Fields.NotationFields.DATE) + "'," + quoteValues(data.get(Fields.NotationFields.CONTENT)) + "," + quoteValues(data.get(Fields.NotationFields.FIELD)) + "," + quoteValues(data.get(Fields.NotationFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.NotationFields.LAST_USER)) + "," + quoteValues(data.get(Fields.NotationFields.TIME_STAMP)));
+            case NOTATIONS_HISTORY:
+                values = (quoteValues(data.get(Fields.NotationFields.DATE)) + "," + quoteValues(data.get(Fields.NotationFields.CONTENT)) + "," + quoteValues(data.get(Fields.NotationFields.FIELD)) + "," + quoteValues(data.get(Fields.NotationFields.PATIENT_ID)) + "," + quoteValues(data.get(Fields.NotationFields.LAST_USER)) + "," + quoteValues(data.get(Fields.NotationFields.TIME_STAMP)));
                 break;
             case PATIENTS:
-                values = ("" + quoteValues(data.get(Fields.PatientFields.CPR)) + "," + quoteValues(data.get(Fields.PatientFields.INFO)));
+                values = (quoteValues(data.get(Fields.PatientFields.CPR)) + "," + quoteValues(data.get(Fields.PatientFields.INFO)));
                 break;
             case USERS:
-                values = ("" + quoteValues(data.get(Fields.UserFields.USERNAME)) + ", " + quoteValues(data.get(Fields.UserFields.PASSWORD)) + ", " + quoteValues(data.get(Fields.UserFields.NAME)) + ", " + quoteValues(data.get(Fields.UserFields.USERROLES)) + "");
+                values = (quoteValues(data.get(Fields.UserFields.USERNAME)) + "," + quoteValues(data.get(Fields.UserFields.PASSWORD)) + "," + quoteValues(data.get(Fields.UserFields.NAME)) + "," + quoteValues(data.get(Fields.UserFields.USERROLES)));
                 break;
             default:
                 break;
@@ -136,6 +155,7 @@ public class CRUDFacade implements CRUDInterface {
                 }
                 break;
             case NOTATIONS:
+            case NOTATIONS_HISTORY:
                 for (Enum field : Fields.NotationFields.values()) {
                     values = valueCreation(values, field, currentData.get(field));
                 }

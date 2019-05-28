@@ -62,7 +62,7 @@ public class Notation {
     public void setContent(String content, String lastUser) {
         this.content = content;
         this.lastUser = lastUser;
-        LocalDate.now();
+        this.timestamp = LocalDateTime.now();
     }
 
     public String getLastUser() {

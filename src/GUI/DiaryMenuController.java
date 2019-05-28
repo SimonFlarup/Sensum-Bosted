@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -40,10 +41,15 @@ public class DiaryMenuController implements Initializable {
     private Button newNotationButton;
     @FXML
     private Button historyButton;
+    @FXML
+    private Label username;
+    @FXML
+    private Label timestamp;
 
     private SensumInterface fc;
     private ObservableList notations = FXCollections.observableArrayList();
     private LocalDate selectedNotationId;
+
 
     /**
      * Initializes the controller class.
@@ -72,6 +78,8 @@ public class DiaryMenuController implements Initializable {
             selectedNotationId = notationList.getItems().get(selectedNotationIndex).getDate();
             fc.initializeNotation(selectedNotationId);
             notationText.setText(fc.getNotation());
+            username.setText(fc.getLastUser());
+            timestamp.setText(fc.getTime());
             editButton.setDisable(false);
             historyButton.setDisable(false);
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -121,6 +129,7 @@ public class DiaryMenuController implements Initializable {
             scene.setRoot(root);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 }

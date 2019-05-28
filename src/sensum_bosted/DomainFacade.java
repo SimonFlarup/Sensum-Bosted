@@ -8,6 +8,7 @@ package sensum_bosted;
 import GUI.SensumInterface;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,17 +37,10 @@ public class DomainFacade implements SensumInterface {
     private User user;
     private Patient patient;
     private Diary diary;
+    private Diary historyDiary;
     private Notation notation;
     private StorageInterface sf = StorageFacade.getInstance();
 
-    public static void main(String[] args) {
-        PasswordHashing hashing = new PasswordHashing();
-        String password = hashing.hash("VOP");
-        sensum_bosted.PrintHandler.println(password);
-        byte[] salt = PasswordHashing.extractSalt(password);
-        hashing = new PasswordHashing(salt);
-        sensum_bosted.PrintHandler.println(hashing.compare("VOP", password));
-    }
 
     @Override
     public String getUserName() {
@@ -90,7 +84,8 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public boolean createPatient(String name, String cpr, String info) {
-        this.patient = new Patient(name, "test1234", UserRoles.PATIENT, cpr, info);
+        String password = new PasswordHashing().hash("test1234");
+        this.patient = new Patient(name, password, UserRoles.PATIENT, cpr, info);
         sf.setPatient(this.patient);
         sf.setAssignment(this.user, this.patient);
         this.user = sf.getUser(this.user.getUsername());
@@ -198,17 +193,50 @@ public class DomainFacade implements SensumInterface {
 
     @Override
     public boolean isPrivileged() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return user.getField() == UserRoles.PRIVILEGED;
     }
 
     @Override
     public boolean createUser(String userName, String password, String field, String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        password = new PasswordHashing().hash(password);
+        User user = new User(name, userName, password, UserRoles.valueOf(field), new ArrayList<>());
+        sf.setUser(user);
+        return true;
     }
 
     @Override
-    public Map<LocalDateTime, String[]> getNotationHistory() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getLastUser() {
+        return notation.getLastUser();
     }
 
+    @Override
+    public List<LocalDateTime> getNotationsHistoryList() {
+        historyDiary = sf.getDiaryHistory(patient, notation.getDate());
+        
+        List<LocalDateTime> notationsList = new ArrayList<>();
+        List<Notation> temp = historyDiary.getNotations();
+        for (Notation n : temp) {
+            notationsList.add(n.getTimestamp());
+        }
+        return notationsList;
+    }
+
+    @Override
+    public boolean initializeNotationHistory(LocalDateTime timestamp) {
+        List<Notation> temp = historyDiary.getNotations();
+        for (Notation notat : temp) {
+            if (notat.getTimestamp().equals(timestamp)) {
+                this.notation = notat;
+                return true;
+            }
+        }
+        sensum_bosted.PrintHandler.println("Couldn't initializeNotationHistory", true);
+        return false;
+    }
+
+    @Override
+    public String getTime() {
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm:ss");
+        return notation.getTimestamp().format(timeFormat);
+    }
 }

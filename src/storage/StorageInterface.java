@@ -5,7 +5,7 @@
  */
 package storage;
 
-import java.util.Date;
+import java.time.LocalDate;
 import sensum_bosted.Diary;
 import sensum_bosted.Notation;
 import sensum_bosted.Patient;
@@ -31,7 +31,7 @@ public interface StorageInterface {
     public Diary getDiary(Patient patient);
     public boolean setNotation(Patient patient, Notation data);
     
-    public Diary getDiaryHistory(Patient patient, Date date);
+    public Diary getDiaryHistory(Patient patient, LocalDate date);
     
     //public Notation getNotation(UUID id);
     //public boolean setNotation(UUID id, Notation data);
