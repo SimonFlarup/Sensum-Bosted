@@ -5,6 +5,7 @@
  */
 package sensum_bosted;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,17 +40,18 @@ public class PasswordHashingTest {
 
     /**
      * Test of hash method, of class PasswordHashing.
+     * Test if the plain text password has been changed
+     * and if a new instance of PasswordHashing returns a different result
      */
     @Test
     public void testHash() {
         System.out.println("hash");
-        String password = "";
+        String password = "Test";
         PasswordHashing instance = new PasswordHashing();
-        String expResult = "";
+        PasswordHashing secondInstance = new PasswordHashing();
         String result = instance.hash(password);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String secondResult = secondInstance.hash(password);
+        assert(!result.equals(password) && !result.equals(secondResult));
     }
 
     /**
@@ -58,14 +60,15 @@ public class PasswordHashingTest {
     @Test
     public void testCompare() {
         System.out.println("compare");
-        String password = "";
-        String hash = "";
-        PasswordHashing instance = new PasswordHashing();
-        boolean expResult = false;
-        boolean result = instance.compare(password, hash);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String password = "Test";
+        String hashed = "2/fYpzQLGN3FGXqVf4yHaQ==::hZe8Q11TuPK7sB0Od6AXzg==";
+        byte[] salt = PasswordHashing.extractSalt(hashed);
+        byte[] secondSalt = PasswordHashing.extractSalt("e/GZxGp/RuKihcQ3Du/UZg==::DbEZE1e17ezGEbGKnGaTrA==");
+        PasswordHashing instance = new PasswordHashing(salt);
+        PasswordHashing secondInstance = new PasswordHashing(secondSalt);
+        boolean result = instance.compare(password, hashed);
+        boolean secondResult = secondInstance.compare(password, hashed);
+        assert(result && !secondResult);
     }
 
     /**
@@ -74,12 +77,10 @@ public class PasswordHashingTest {
     @Test
     public void testExtractSalt() {
         System.out.println("extractSalt");
-        String hash = "";
-        byte[] expResult = null;
+        String hash = "e/GZxGp/RuKihcQ3Du/UZg==::DbEZE1e17ezGEbGKnGaTrA==";
+        byte[] expResult = Base64.decode("DbEZE1e17ezGEbGKnGaTrA==");
         byte[] result = PasswordHashing.extractSalt(hash);
         assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
